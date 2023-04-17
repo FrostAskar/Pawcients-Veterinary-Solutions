@@ -6,13 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Routes/Root";
 import Home from "./Routes/Home";
+import Login from "./Routes/Login";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     errorElement: <div>404 Error pawcients</div>,
-    children: [{ path: "/home", element: <Home /> }],
+    children: [
+      { path: "/home", element: <Home /> },
+      { path: "/login", element: <Login /> },
+    ],
   },
 ]);
 
