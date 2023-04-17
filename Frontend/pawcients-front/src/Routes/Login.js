@@ -12,13 +12,13 @@ function Login() {
 
       <div className="login-container">
         <form action="/login" method="post">
-          <label htmlFor="email">Correo electrónico</label>
+          <label htmlFor="email">Email</label>
           <input type="email" name="email" id="email" required />
 
-          <label htmlFor="password">Contraseña</label>
+          <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" required />
 
-          <button type="submit">Iniciar sesión</button>
+          <button type="submit">Log in</button>
         </form>
       </div>
     </div>
