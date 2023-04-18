@@ -5,17 +5,18 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Routes/Root";
-import Home from "./Routes/Home";
 import Login from "./Routes/Login";
+import NotFoundPage from "./Routes/NotFoundPage";
+import PresentationPage from "./Routes/PresentationPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    errorElement: <div>404 Error pawcients</div>,
+    errorElement: <NotFoundPage />,
     children: [
-      { path: "/home", element: <Home /> },
       { path: "/login", element: <Login /> },
+      { path: "/", element: <PresentationPage /> },
     ],
   },
 ]);

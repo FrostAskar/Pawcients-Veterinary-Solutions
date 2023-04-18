@@ -1,0 +1,78 @@
+/* PresentationPage Component CSS */
+.presentation-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.presentation-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.logo-image {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #3cd264;
+}
+
+.presentation-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.presentation-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #3cd264;
+}
+
+.presentation-text {
+  width: 50%;
+}
+
+.presentation-image {
+  width: 40%;
+  height: auto;
+  object-fit: cover;
+  padding-bottom: 5px;
+  border-radius: 5px;
+}
+
+.presentation-section:nth-child(even) .presentation-text {
+  order: 2;
+}
+
+.presentation-section:nth-child(even) .presentation-image {
+  order: 1;
+}
+
+.presentation-section:nth-child(even) img.presentation-image {
+  margin-right: 50px;
+}
+
+.presentation-section:nth-child(odd) img.presentation-image {
+  margin-left: 50px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #3cd264;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #333;
+}
