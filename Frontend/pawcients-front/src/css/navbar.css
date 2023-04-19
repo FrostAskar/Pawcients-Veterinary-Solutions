@@ -18,6 +18,9 @@
   display: flex;
   margin: 0;
   padding: 0;
+  /* Move list to the left */
+  margin-right: auto;
+  margin-left: 4%;
 }
 
 .nav-links li {

@@ -14,7 +14,7 @@ export default function Root() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/acerca-de">About us</Link>
+            <Link to="/aboutus">About us</Link>
           </li>
           <li>
             <Link to="/servicios">Services</Link>
