@@ -1,0 +1,31 @@
+Arrancar como docker compose up, sin -d
+En segunda terminal entrar en el contenedor y usar mongosh para arrancar el gestor
+
+En docker desktop:
+Ejecutar container y en powershell entrar en el contenedor y usar el comando mongosh
+
+Comandos de MongoDB
+
+Tablas = Collections
+
+show dbs => Muestra las bases de datos;
+
+use [nombre_de_base_de_datos] (Aunque no exista, se puede usar y lo primero que crees, la instancia)
+
+--- Ver datos en colección ---
+db.[nombre_de_colección].find();
+
+--- Meter Datos ---
+db.[nombre_de_colección].insertOne({JSON_datos});
+
+--- Actualizar Datos ---
+db.[nombre_de_colección].updateOne({JSON_que_describe_el_objeto}, {$set:{JSON_con_valores_que_se_actualizarán}}); (Si el segundo JSON tiene las mismas claves, sobreescribe valores. Si metes nuevas claves, se añaden)
+
+--- Borrar datos ---
+db.[nombre_de_colección].deleteOne({JSON_que_describe_el_objeto});
+
+--- Borrar todos los datos en la colección ---
+db.[nombre_de_colección].deleteMany({});
+
+--- Borrar base de datos ---
+db.dropDatabase();

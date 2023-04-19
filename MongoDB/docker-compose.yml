@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  mongoDB:
+    image: mongo
+    container_name: "mongodb"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/Pawcients:/data/db
