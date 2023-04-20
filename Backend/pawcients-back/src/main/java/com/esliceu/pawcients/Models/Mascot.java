@@ -16,6 +16,8 @@ public class Mascot {
     String race;
     LocalDate birthDate;
 
+    public Mascot(){}
+
     public Mascot(String id, String name, String species, String race, LocalDate birthDate) {
         this.id = id;
         this.name = name;

@@ -23,6 +23,8 @@ public class History {
 
     LocalDate date;
 
+    public History(){}
+
     public History(String id, String mascotId, String type, LocalDate date) {
         this.id = id;
         this.mascotId = mascotId;

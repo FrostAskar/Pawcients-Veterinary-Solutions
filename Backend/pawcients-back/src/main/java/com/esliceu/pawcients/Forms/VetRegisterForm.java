@@ -1,45 +1,13 @@
-package com.esliceu.pawcients.Models;
+package com.esliceu.pawcients.Forms;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collation = "worker")
-public class Worker {
-
-    @Id
-    String id;
+public class VetRegisterForm {
 
     String name;
     String surname;
-    @Indexed(unique = true)
     String license;
-    @Indexed(unique = true)
     String email;
     String phone;
-
-    //"vet" for Veterinary or "aux" for Auxiliary
     String type;
-
-    public Worker(){}
-
-    public Worker(String id, String name, String surname, String license, String email, String phone, String type) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.license = license;
-        this.email = email;
-        this.phone = phone;
-        this.type = type;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

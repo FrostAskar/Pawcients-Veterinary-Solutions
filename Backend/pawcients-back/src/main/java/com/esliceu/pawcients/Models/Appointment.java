@@ -24,6 +24,9 @@ public class Appointment {
     //Nature of the appointment: "" for revision, "" for vaccination and "" for ***
     String type;
 
+    public Appointment() {
+    }
+
     public Appointment(String id, LocalDate date, String workerId, String ownerId, String mascotId, String type) {
         this.id = id;
         this.date = date;

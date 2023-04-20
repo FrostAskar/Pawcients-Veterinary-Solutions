@@ -16,6 +16,8 @@ public class Client {
 
     String phone;
 
+    public Client() {}
+
     public Client(String id, String name, String surname, String password, String email, String phone) {
         this.id = id;
         this.name = name;
