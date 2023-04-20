@@ -1,3 +1,4 @@
+/* Navbar styles */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -60,11 +61,30 @@
   border-radius: 0.25rem;
   text-decoration: none;
 }
+
+/* Mobile styles */
+
 @media only screen and (max-width: 768px) {
-  .nav-links {
-    display: none;
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: center;
   }
+  /* Hacer que la pagina en tamaño movil no se pueda reducir mas */
+
+  .nav-links {
+    flex-basis: 100%;
+    justify-content: center;
+    /* CEnter */
+    margin-left: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-links li {
+    margin: 0.5rem 0;
+  }
+
   .auth-buttons {
-    margin-left: auto;
+    margin: 1rem 0;
   }
 }

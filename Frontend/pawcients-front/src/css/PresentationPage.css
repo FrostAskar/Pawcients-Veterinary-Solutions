@@ -75,4 +75,23 @@ p {
   font-size: 18px;
   line-height: 1.5;
   color: #333;
+  /* Align vertically */
+}
+@media only screen and (max-width: 768px) {
+  .presentation-image {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* Center */
+    margin-left: auto;
+  }
+
+  .presentation-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .presentation-text {
+    width: 100%;
+  }
 }

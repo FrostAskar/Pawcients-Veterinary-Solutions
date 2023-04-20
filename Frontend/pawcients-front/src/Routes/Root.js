@@ -17,10 +17,10 @@ export default function Root() {
             <Link to="/aboutus">About us</Link>
           </li>
           <li>
-            <Link to="/servicios">Services</Link>
+            <Link to="/services">Services</Link>
           </li>
           <li>
-            <Link to="/contacto">Contact</Link>
+            <Link to="/contact">Contact</Link>
           </li>
         </ul>
         <div className="auth-buttons">

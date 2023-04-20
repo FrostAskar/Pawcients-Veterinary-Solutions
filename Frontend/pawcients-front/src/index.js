@@ -9,6 +9,7 @@ import Login from "./Routes/Login";
 import NotFoundPage from "./Routes/NotFoundPage";
 import PresentationPage from "./Routes/PresentationPage";
 import AboutUs from "./Routes/AboutUs";
+import Contact from "./Routes/Contact";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/", element: <PresentationPage /> },
       { path: "/aboutus", element: <AboutUs /> },
+      { path: "/contact", element: <Contact /> },
     ],
   },
 ]);
