@@ -20,15 +20,83 @@
 }
 
 .login-container {
-  max-width: 800px; /* establece el ancho máximo deseado */
-  margin: 0 auto; /* centra el contenedor horizontalmente */
-  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.toggle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.toggle-switch input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider {
+  background-color: #3cd264;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-label {
+  font-weight: bold;
+  margin-right: 1rem;
 }
 
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
 label {
@@ -53,6 +121,7 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 button:hover {
@@ -66,20 +135,250 @@ button:active {
 @media only screen and (max-width: 768px) {
   .page-container {
     max-width: 100%;
-
     overflow-x: hidden;
   }
+
   .page-container {
     flex-direction: column;
   }
+
   .brand-container {
     width: 100%;
     border-right: none;
     padding-right: 0;
     padding-bottom: 2rem;
   }
+
   .login-container {
     width: 100%;
     padding-left: 0;
   }
+
+  .toggle-container {
+    display: flex;
+    /* flex column */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 1rem;
+  }
+
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 34px;
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .toggle-slider {
+    background-color: #3cd264;
+  }
+
+  input:focus + .toggle-slider {
+    box-shadow: 0 0 1px #3cd264;
+  }
+
+  input:checked + .toggle-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  .toggle-label {
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+
+  .toggle-container,
+  .login-container {
+    max-width: 800px; /* establece el ancho máximo deseado /
+margin: 0 auto; / centra el contenedor horizontalmente */
+    padding-left: 1rem;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #bbcdc3;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    align-self: flex-start;
+  }
+
+  .form-input {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 2px solid #bbcdc3;
+    border-radius: 0.5rem;
+  }
+
+  .form-button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #3cd264;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .form-button:hover {
+    background-color: #66d083;
+  }
+
+  .form-button:active {
+    background-color: #90cea3;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .page-container {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .page-container {
+    flex-direction: column;
+  }
+
+  .brand-container {
+    width: 100%;
+    border-right: none;
+    padding-right: 0;
+    padding-bottom: 2rem;
+  }
+
+  .login-container {
+    width: 50%;
+    margin-top: 2rem;
+    margin-left: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  input {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 2px solid #bbcdc3;
+    border-radius: 0.5rem;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .client-button,
+  .worker-button {
+    padding: 0.5rem 2rem;
+    background-color: #3cd264;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+
+  .client-button:hover,
+  .worker-button:hover {
+    background-color: #66d083;
+  }
+
+  .client-button:active,
+  .worker-button:active {
+    background-color: #90cea3;
+  }
+
+  .client-button.active {
+    background-color: #66d083;
+  }
+
+  .worker-button.active {
+    background-color: #bbcdc3;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .page-container {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .page-container {
+    flex-direction: column;
+  }
+
+  .brand-container {
+    width: 100%;
+    border-right: none;
+    padding-right: 0;
+    padding-bottom: 2rem;
+  }
+
+  .login-container {
+    width: 100%;
+    padding-left: 0;
+    margin-left: 0;
+    margin-top: 0;
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
 }
