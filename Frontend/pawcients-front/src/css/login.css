@@ -382,3 +382,10 @@ margin: 0 auto; / centra el contenedor horizontalmente */
   color: red;
   font-size: 0.8rem;
 }
+
+/* Add minim width on mobile*/
+@media screen and (max-width: 768px) {
+  .page-container {
+    min-width: 100%;
+  }
+}
