@@ -10,6 +10,7 @@ import NotFoundPage from "./Routes/NotFoundPage";
 import PresentationPage from "./Routes/PresentationPage";
 import AboutUs from "./Routes/AboutUs";
 import Contact from "./Routes/Contact";
+import ConfirmationEmail from "./Routes/ConfirmationEmail";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "/", element: <PresentationPage /> },
       { path: "/aboutus", element: <AboutUs /> },
       { path: "/contact", element: <Contact /> },
+      { path: "/confirmationemail", element: <ConfirmationEmail /> },
     ],
   },
 ]);

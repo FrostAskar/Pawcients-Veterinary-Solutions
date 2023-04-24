@@ -1,0 +1,88 @@
+.confirmation-code-container {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  text-align: center;
+  height: 100vh;
+}
+
+.code-inputs-container {
+  display: flex;
+  justify-content: center;
+}
+
+.code-input {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  margin-right: 0.25rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 2px solid #bbcdc3;
+  background-color: #90cea3;
+  color: #fff;
+  outline: none;
+}
+
+.code-input:focus {
+  border-color: #66d083;
+}
+
+.clear-code-button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  /* align vertically */
+  display: flex;
+}
+
+.clear-code-button:hover {
+  background-color: #ff4d4d;
+}
+
+.button-container {
+  margin-top: 1rem;
+}
+
+.send-code-button {
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  background-color: #3cd264;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 8rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.send-code-button:hover {
+  background-color: #66d083;
+}
+
+@media only screen and (max-width: 768px) {
+  .code-inputs-container {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .code-input {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+    margin-right: 0.1rem;
+  }
+}
