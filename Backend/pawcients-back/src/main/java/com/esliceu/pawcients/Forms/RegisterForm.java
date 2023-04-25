@@ -1,6 +1,6 @@
 package com.esliceu.pawcients.Forms;
 
-public class VetRegisterForm {
+public class RegisterForm {
 
     String name;
     String surname;

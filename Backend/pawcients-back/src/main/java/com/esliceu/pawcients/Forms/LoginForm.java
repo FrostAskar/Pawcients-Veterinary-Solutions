@@ -1,6 +1,6 @@
 package com.esliceu.pawcients.Forms;
 
-public class VetLoginForm {
+public class LoginForm {
 
         String email;
         String password;
