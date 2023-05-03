@@ -29,7 +29,7 @@ public class UserService {
         //Generate a random nuber of 6 characters
         String code = String.valueOf((int)(Math.random()*1000000));
         user.setVerification_code_email(code);
-        user.setVerification_code_email_checked("false");
+        user.setVerification_code_email_checked(false);
 
 
 

@@ -2,16 +2,16 @@ package com.esliceu.pawcients.Controllers;
 
 import com.esliceu.pawcients.Forms.LoginForm;
 import com.esliceu.pawcients.Forms.RegisterForm;
+import com.esliceu.pawcients.Services.EmailSenderService;
 import com.esliceu.pawcients.Services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class UserController {
@@ -59,6 +59,8 @@ public class UserController {
         
         return result;
     }
+
+
 
 
 }

@@ -22,7 +22,7 @@ public class User {
     String profile_picture;
 
     String verification_code_email;
-    String verification_code_email_checked;
+    Boolean verification_code_email_checked;
     public User(){}
     public User(String id, String name, String surname, String license, String email, String phone, String type, String password, String profile_picture, String verification_code_email) {
         this.id = id;
@@ -35,7 +35,7 @@ public class User {
         this.password = password;
         this.profile_picture = profile_picture;
         this.verification_code_email = verification_code_email;
-        this.verification_code_email_checked = "false";
+        this.verification_code_email_checked = false;
     }
 
     public String getId() {
@@ -46,11 +46,11 @@ public class User {
         this.id = id;
     }
 
-    public String getVerification_code_email_checked() {
+    public Boolean getVerification_code_email_checked() {
         return verification_code_email_checked;
     }
 
-    public void setVerification_code_email_checked(String verification_code_email_checked) {
+    public void setVerification_code_email_checked(Boolean verification_code_email_checked) {
         this.verification_code_email_checked = verification_code_email_checked;
     }
 
