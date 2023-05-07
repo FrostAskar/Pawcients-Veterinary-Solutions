@@ -11,6 +11,7 @@ import PresentationPage from "./Routes/PresentationPage";
 import AboutUs from "./Routes/AboutUs";
 import Contact from "./Routes/Contact";
 import ConfirmationEmail from "./Routes/ConfirmationEmail";
+import SignUp from "./Routes/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       { path: "/login", element: <Login /> },
+      { path: "/signup", element: <SignUp /> },
       { path: "/", element: <PresentationPage /> },
       { path: "/aboutus", element: <AboutUs /> },
       { path: "/contact", element: <Contact /> },

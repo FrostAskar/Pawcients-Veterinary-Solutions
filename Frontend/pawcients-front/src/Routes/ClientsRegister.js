@@ -5,8 +5,9 @@ import "../css/forms.css";
 import "../css/global.css";
 import "../css/variables.css";
 import { fetchLogin } from "../fetches/FetchLogin";
+import { fetchClientRegister } from "../fetches/FetchClientRegister";
 
-function Login() {
+function ClientRegister() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
@@ -17,10 +18,9 @@ function Login() {
 
     try {
       // Fetch para login de cliente
-      const response = await fetchLogin(email, password);
+      const response = await fetchClientRegister(email, password);
       if (response.success) {
-        // Lógica de redirección o mensaje de éxito para cliente
-        console.log("Login de cliente exitoso");
+
       } else {
         // Mensaje de error para cliente
         setErrorMessage(response.message);
@@ -48,7 +48,7 @@ function Login() {
               <input type="password" name="password" id="password" required />
               {/* Captcha: */}
 
-              <button type="submit">Log in</button>
+              <button type="submit">Sign up client</button>
               {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
           </div>
@@ -58,4 +58,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ClientRegister;

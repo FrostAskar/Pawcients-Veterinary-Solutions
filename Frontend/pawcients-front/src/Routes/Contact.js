@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/contact.css";
+import "../css/variables.css";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
@@ -25,7 +26,7 @@ const Contact = () => {
             <label htmlFor="message">Message:</label>
             <textarea id="message" name="message" required></textarea>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Send</button>
         </form>
       </div>
 

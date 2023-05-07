@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f9f9f9;
+  background-color: var(--background-page);
 }
 
 .brand-container {
@@ -19,7 +19,7 @@
   max-width: 100%;
 }
 
-.login-container {
+.main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,7 +77,7 @@
 }
 
 .toggle-switch input[type="checkbox"]:checked + .toggle-slider {
-  background-color: #3cd264;
+  background-color: var(--main-green);
 }
 
 .toggle-switch input[type="checkbox"]:checked + .toggle-slider:before {
@@ -88,6 +88,23 @@
   font-weight: bold;
   margin-right: 1rem;
 }
+
+.signup-details {
+  display: flex;
+  
+}
+
+.clinic-details, .vet-details {
+  padding: 5px 60px;
+}
+
+.details-title {
+  margin-bottom: 20px;
+}
+
+.vet-details{
+    border-right: 2px solid #bbcdc3;
+  }
 
 form {
   display: flex;
@@ -112,25 +129,6 @@ input {
   border-radius: 0.5rem;
 }
 
-button {
-  width: 100%;
-  padding: 0.5rem;
-  background-color: #3cd264;
-  border: none;
-  border-radius: 0.5rem;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-button:hover {
-  background-color: #66d083;
-}
-
-button:active {
-  background-color: #90cea3;
-}
 
 @media only screen and (max-width: 768px) {
   .page-container {
@@ -149,7 +147,7 @@ button:active {
     padding-bottom: 2rem;
   }
 
-  .login-container {
+  .main-container {
     width: 100%;
     padding-left: 0;
   }
@@ -223,7 +221,7 @@ button:active {
   }
 
   .toggle-container,
-  .login-container {
+  .main-container {
     max-width: 800px; /* establece el ancho máximo deseado /
 margin: 0 auto; / centra el contenedor horizontalmente */
     padding-left: 1rem;
@@ -289,7 +287,7 @@ margin: 0 auto; / centra el contenedor horizontalmente */
     padding-bottom: 2rem;
   }
 
-  .login-container {
+  .main-container {
     width: 50%;
     margin-top: 2rem;
     margin-left: 1rem;
@@ -370,7 +368,7 @@ margin: 0 auto; / centra el contenedor horizontalmente */
     padding-bottom: 2rem;
   }
 
-  .login-container {
+  .main-container {
     width: 100%;
     padding-left: 0;
     margin-left: 0;

@@ -3,14 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color: var(--background-card);
   padding: 1rem;
 }
 
 .logo {
   font-size: 2rem;
   font-weight: bold;
-  color: #3cd264;
+  color: var(--main-green);
   text-decoration: none;
 }
 
@@ -44,8 +44,8 @@
 }
 
 .sign-in-button {
-  background-color: #66d083;
-  color: #f9f9f9;
+  background-color: var(--main-green);
+  color: var(--background-card);
   border: none;
   padding: 0.5rem 1rem;
   margin-right: 1rem;
@@ -54,8 +54,8 @@
 }
 
 .register-button {
-  background-color: #3cd264;
-  color: #f9f9f9;
+  background-color: var(--main-green);
+  color: var(--background-card);
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;

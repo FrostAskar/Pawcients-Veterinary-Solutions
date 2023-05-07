@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import "../css/navbar.css";
+import "../css/variables.css"
 import Paw from "../media/paw.png";
 
 export default function Root() {
@@ -27,7 +28,7 @@ export default function Root() {
           <Link to="/login" className="sign-in-button">
             Login
           </Link>
-          <Link to="/register" className="register-button">
+          <Link to="/signup" className="register-button">
             Register
           </Link>
         </div>

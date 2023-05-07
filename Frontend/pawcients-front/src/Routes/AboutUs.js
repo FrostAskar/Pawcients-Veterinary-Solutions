@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/aboutus.css";
+import "../css/variables.css";
 import pawcientsImage from "../media/logo.png";
 
 const AboutUs = () => {
