@@ -12,6 +12,7 @@ import AboutUs from "./Routes/AboutUs";
 import Contact from "./Routes/Contact";
 import ConfirmationEmail from "./Routes/ConfirmationEmail";
 import SignUp from "./Routes/SignUp";
+import SessionExpired from "./Routes/SessionExpired";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: "/aboutus", element: <AboutUs /> },
       { path: "/contact", element: <Contact /> },
       { path: "/confirmationemail", element: <ConfirmationEmail /> },
+      { path: "/sessionexpired", element: <SessionExpired /> },
     ],
   },
 ]);
