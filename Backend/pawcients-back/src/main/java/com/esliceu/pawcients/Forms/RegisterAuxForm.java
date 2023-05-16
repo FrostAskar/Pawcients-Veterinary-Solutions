@@ -1,6 +1,6 @@
 package com.esliceu.pawcients.Forms;
 
-public class RegisterForm {
+public class RegisterAuxForm {
 
     String name;
     String surname;
@@ -9,7 +9,6 @@ public class RegisterForm {
     String phone;
     String type;
     String password;
-
 
     public String getName() {
         return name;
@@ -65,4 +64,5 @@ public class RegisterForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

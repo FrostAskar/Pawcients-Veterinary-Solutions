@@ -18,13 +18,15 @@ public class User {
 
     //"vet" for Veterinary or "aux" for Auxiliary, "client" for Client
     String type;
+
     String password;
+    String clinic_id;
     String profile_picture;
 
     String verification_code_email;
     Boolean verification_code_email_checked;
     public User(){}
-    public User(String id, String name, String surname, String license, String email, String phone, String type, String password, String profile_picture, String verification_code_email) {
+    public User(String id, String name, String surname, String license, String email, String phone, String type, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -33,8 +35,7 @@ public class User {
         this.phone = phone;
         this.type = type;
         this.password = password;
-        this.profile_picture = profile_picture;
-        this.verification_code_email = verification_code_email;
+        this.profile_picture = "https://www.w3schools.com/howto/img_avatar.png";
         this.verification_code_email_checked = false;
     }
 
@@ -124,5 +125,13 @@ public class User {
 
     public void setVerification_code_email(String verification_code_email) {
         this.verification_code_email = verification_code_email;
+    }
+
+    public String getClinic_id() {
+        return clinic_id;
+    }
+
+    public void setClinic_id(String clinic_id) {
+        this.clinic_id = clinic_id;
     }
 }

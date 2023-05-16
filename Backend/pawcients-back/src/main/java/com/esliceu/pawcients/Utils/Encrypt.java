@@ -1,21 +1,22 @@
 package com.esliceu.pawcients.Utils;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Encrypt {
-    public static String sha512(String password) throws NoSuchAlgorithmException {
+    public static String sha512(String pass) {
         // Encrypt password with sha256
-        MessageDigest digest = MessageDigest.getInstance("SHA-512");
-        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : hash) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
+        String encodedPass = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
+            digest.reset();
+            digest.update(pass.getBytes(StandardCharsets.UTF_8));
+            encodedPass = String.format("%0128x", new BigInteger(1,digest.digest()));
+        } catch (Exception e) {
+            System.err.println(e);
         }
-        return hexString.toString();
-
+        return encodedPass;
     }
 }
