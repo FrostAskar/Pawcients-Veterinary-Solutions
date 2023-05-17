@@ -1,0 +1,113 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  height: 100%;
+}
+
+.side-navbar {
+  background-color: #363636;
+  color: #f9f9f9;
+  padding: 20px;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+
+  justify-items: center;
+}
+
+.logo img {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid #bbcdc3;
+}
+
+.user-profile span {
+  font-weight: bold;
+}
+
+.nav-links {
+  padding-top: 10%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10%;
+}
+
+.nav-links li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+.logout {
+  /* El boton del logout estará debajo del todo */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.nav-links li a {
+  color: #f9f9f9;
+  text-decoration: none;
+}
+
+.animal-list {
+  padding: 20px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.animal-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #bbcdc3;
+  border-radius: 4px;
+}
+
+.animal-picture {
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+  margin-right: 10px;
+  border: #363636 1px solid;
+}
+
+.animal-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.animal-details span {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.animal-details a {
+  color: #3cd264;
+  text-decoration: none;
+}

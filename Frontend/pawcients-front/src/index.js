@@ -4,15 +4,17 @@ import "./index.css";
 
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "./Routes/Root";
+
 import Login from "./Routes/Login";
 import NotFoundPage from "./Routes/NotFoundPage";
 import PresentationPage from "./Routes/PresentationPage";
 import AboutUs from "./Routes/AboutUs";
 import Contact from "./Routes/Contact";
 import ConfirmationEmail from "./Routes/ConfirmationEmail";
-import SignUp from "./Routes/SignUp";
+import SignUp from "./Routes/Worker/SignUp";
 import SessionExpired from "./Routes/SessionExpired";
+import MyMascots from "./Routes/MyMascots";
+import Root from "./Routes/Root";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/confirmationemail", element: <ConfirmationEmail /> },
       { path: "/sessionexpired", element: <SessionExpired /> },
+      { path: "/mymascots", element: <MyMascots /> },
     ],
   },
 ]);
