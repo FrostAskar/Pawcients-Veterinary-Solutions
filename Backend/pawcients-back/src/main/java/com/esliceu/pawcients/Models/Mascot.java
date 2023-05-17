@@ -15,17 +15,17 @@ public class Mascot {
     String species;
     String race;
     LocalDate birthDate;
-    String owner_id;
+    String ownerId;
 
     public Mascot(){}
 
-    public Mascot(String id, String name, String species, String race, LocalDate birthDate, String owner_id) {
+    public Mascot(String id, String name, String species, String race, LocalDate birthDate, String ownerId) {
         this.id = id;
         this.name = name;
         this.species = species;
         this.race = race;
         this.birthDate = birthDate;
-        this.owner_id = owner_id;
+        this.ownerId = ownerId;
     }
 
     public String getId() {
@@ -68,11 +68,11 @@ public class Mascot {
         this.birthDate = birthDate;
     }
 
-    public String getOwner_id() {
-        return owner_id;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner_id(String owner_id) {
-        this.owner_id = owner_id;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }

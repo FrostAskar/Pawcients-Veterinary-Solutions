@@ -1,14 +1,14 @@
 package com.esliceu.pawcients.Services;
 
 import com.esliceu.pawcients.Exceptions.IncorrectRegisterException;
-import com.esliceu.pawcients.Forms.LoginForm;
-import com.esliceu.pawcients.Forms.RegisterAuxForm;
-import com.esliceu.pawcients.Forms.RegisterClientForm;
-import com.esliceu.pawcients.Forms.RegisterVetAndClinicForm;
+import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.UserRepo;
 import com.esliceu.pawcients.Utils.Encrypt;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -103,5 +103,17 @@ public class UserService {
 
     public User generateUser(String userId) {
         return userRepo.findById(userId).get();
+    }
+
+    //Debugging to get data from users through postman
+    //todo Pending
+    public List<User> getUsersByForm(FindUserForm fuf) {
+//        List<User> users = new ArrayList<>();
+//        if(!fuf.getId().isEmpty()) {
+//            users.add(userRepo.findById(fuf.getId()).get());
+//        } else if(!fuf.getName().isEmpty() && !fuf.getSurname().isEmpty()) {
+//            users = userRepo.findByNameAndSurname();
+//        }
+        return null;
     }
 }

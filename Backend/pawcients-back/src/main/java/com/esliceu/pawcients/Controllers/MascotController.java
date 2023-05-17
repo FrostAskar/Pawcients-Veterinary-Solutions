@@ -21,15 +21,28 @@ public class MascotController {
         this.mascotService = mascotService;
     }
 
-    @GetMapping
+    @GetMapping("/mascot/{mascotId}")
     @CrossOrigin
-    public List<Mascot> getMascot(@RequestBody FindMascotForm findMascotForm) {
-        return mascotService.findMascot(findMascotForm);
+    public Mascot getMascot(@PathVariable String mascotId) {
+        return mascotService.findMascotById(mascotId);
     }
 
-    @PostMapping
+    @GetMapping("/client/{clientId}/mascots")
     @CrossOrigin
-    public Map<String, Object> registerMascot (@RequestBody RegisterMascotForm registerMascotForm) {
+    public List<Mascot> getMascotsFromClient(@PathVariable String clientId) {
+        return mascotService.findMascotsByUser(clientId);
+    }
+
+    @PostMapping("/mascot")
+    @CrossOrigin
+    public List<Mascot> searchMascot(@RequestBody FindMascotForm findMascotForm) {
+        return mascotService.findMascotByForm(findMascotForm);
+    }
+
+    @PostMapping("/client/{clientId}/mascot")
+    @CrossOrigin
+    public Map<String, Object> registerMascot (@RequestBody RegisterMascotForm registerMascotForm,
+                                               @PathVariable String clientId) {
         Map<String, Object> result = new HashMap<>();
 
         mascotService.saveMascot(registerMascotForm);

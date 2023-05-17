@@ -1,9 +1,6 @@
 package com.esliceu.pawcients.Controllers;
 
-import com.esliceu.pawcients.Forms.LoginForm;
-import com.esliceu.pawcients.Forms.RegisterAuxForm;
-import com.esliceu.pawcients.Forms.RegisterClientForm;
-import com.esliceu.pawcients.Forms.RegisterVetAndClinicForm;
+import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Services.ClinicService;
 import com.esliceu.pawcients.Services.UserService;
@@ -11,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -89,5 +87,10 @@ public class UserController {
         return result;
     }
 
-
+    //Debugger methods to recover data for postman
+    @GetMapping("/users")
+    @CrossOrigin
+    public List<User> getUsers(@RequestBody FindUserForm findUserForm) {
+        return userService.getUsersByForm(findUserForm);
+    }
 }
