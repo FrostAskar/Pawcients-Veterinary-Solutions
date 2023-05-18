@@ -12,7 +12,12 @@ export default function NavbarLanding() {
     // Lógica para determinar si se muestra el navbar
 
     // Ejemplo: Mostrar el navbar en todas las rutas excepto en la página de inicio "/"
-    const locationsWithoutNavbar = ["/mymascots", "/login", "/signup"];
+    const locationsWithoutNavbar = [
+      "/mymascots",
+      "/login",
+      "/signup",
+      "/clientdashboard",
+    ];
 
     setShowNavbar(!locationsWithoutNavbar.includes(location.pathname));
   }, [location]);

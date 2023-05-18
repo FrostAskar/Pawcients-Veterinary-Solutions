@@ -15,6 +15,7 @@ import SignUp from "./Routes/Worker/SignUp";
 import SessionExpired from "./Routes/SessionExpired";
 import MyMascots from "./Routes/MyMascots";
 import Root from "./Routes/Root";
+import ClientDashboard from "./Routes/ClientDashboard";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: "/confirmationemail", element: <ConfirmationEmail /> },
       { path: "/sessionexpired", element: <SessionExpired /> },
       { path: "/mymascots", element: <MyMascots /> },
+      { path: "/clientdashboard", element: <ClientDashboard /> },
     ],
   },
 ]);

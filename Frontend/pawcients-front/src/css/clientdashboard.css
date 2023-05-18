@@ -58,8 +58,9 @@
   font-size: 16px;
   padding-bottom: 10px;
 }
+
 .logout {
-  /* El boton del logout estará debajo del todo */
+  /* El botón de logout estará debajo del todo */
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -69,6 +70,26 @@
 .nav-links li a {
   color: #f9f9f9;
   text-decoration: none;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .side-navbar {
+    grid-template-rows: auto auto;
+  }
+
+  .nav-links {
+    padding-top: 0;
+  }
+
+  .logout {
+    position: relative;
+    bottom: auto;
+  }
 }
 
 .animal-list {
@@ -110,4 +131,70 @@
 .animal-details a {
   color: #3cd264;
   text-decoration: none;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.titledash {
+  padding-top: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #3cd264;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.dashboard-button {
+  width: 200px;
+  height: 200px;
+  background-color: #3cd264;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  border: 1px solid black;
+}
+
+.dashboard-button img {
+  width: 100px;
+  height: 100px;
+
+  margin-bottom: 10px;
+}
+
+.dashboard-button h2 {
+  font-size: 18px;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+
+.dashboard-button:nth-child(2n) {
+  background-color: #66d083;
+}
+
+.dashboard-button:nth-child(3n) {
+  background-color: #90cea3;
+}
+
+.dashboard-button:nth-child(4n) {
+  background-color: #bbcdc3;
 }

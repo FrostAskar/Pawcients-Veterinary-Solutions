@@ -3,6 +3,7 @@ import "../css/clientdashboard.css";
 import Logo from "../media/paw.png";
 import Profile from "../media/vet.png";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const animalsData = [
   {
@@ -32,14 +33,21 @@ const profileData = [
   },
 ];
 
+const Goprofile = () => {
+  const navigate = useNavigate();
+  navigate("/profile");
+};
+
 const MyMascots = () => {
+  // On click on user profile, redirect to profile page
+
   return (
     <div className="dashboard">
       <div className="side-navbar">
         <div className="logo">
           <img src={Logo} alt="Logo" />
         </div>
-        <div className="user-profile">
+        <div className="user-profile" onClick={Goprofile()}>
           <img src={Profile} alt="Profile" className="profile-picture" />
           <span>{profileData[0].name}</span>
         </div>
