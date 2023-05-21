@@ -128,9 +128,9 @@ public class UserController {
         return result;
     }
 
-    @GetMapping("/getToken")
+    @GetMapping("/getProfile")
     @CrossOrigin
-    public User getToken(HttpServletRequest req) {
+    public User getProfile(HttpServletRequest req) {
         return (User) req.getAttribute("user");
     }
 

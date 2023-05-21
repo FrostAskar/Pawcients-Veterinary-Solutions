@@ -45,7 +45,7 @@ public class ClinicService {
             return "Clinic not found";
         }
         clinicRepo.deleteById(clinicId);
-        
+
         //Verification delete has proceeded without error
         clinics = findClinicById(clinicId);
         if(clinics.size() < 1) {

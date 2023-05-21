@@ -22,6 +22,6 @@ public class PawcientsApplication implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(tokenInterceptor)
-				.addPathPatterns("/vet/**");
+				.addPathPatterns("/vetdashboard");
 	}
 }
