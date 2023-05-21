@@ -33,7 +33,7 @@ public class TokenService {
         payload.put("name", user.getName());
         payload.put("surname", user.getSurname());
         payload.put("email", user.getEmail());
-        payload.put("profilePicture", user.getProfile_picture());
+        payload.put("profilePicture", user.getProfilePicture());
         payload.put("id", user.getId());
         payload.put("type", user.getType());
         payload.put("iat", new Date(System.currentTimeMillis() + tokenExpire));

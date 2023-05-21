@@ -1,5 +1,6 @@
-Arrancar como docker compose up, sin -d
-En segunda terminal entrar en el contenedor y usar mongosh para arrancar el gestor
+Arrancar como docker compose up -d
+
+docker compose exec -it mongoDB bash --> mongosh
 
 En docker desktop:
 Ejecutar container y en powershell entrar en el contenedor y usar el comando mongosh

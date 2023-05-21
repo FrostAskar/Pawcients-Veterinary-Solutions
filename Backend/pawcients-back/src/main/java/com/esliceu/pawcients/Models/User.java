@@ -1,5 +1,6 @@
 package com.esliceu.pawcients.Models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,12 +20,14 @@ public class User {
     //"vet" for Veterinary or "aux" for Auxiliary, "client" for Client
     String type;
 
+    //Password field is not sent in the request to the front
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
-    String clinic_id;
-    String profile_picture;
+    String clinicId;
+    String profilePicture;
 
-    String verification_code_email;
-    Boolean verification_code_email_checked;
+    String verificationCodeEmail;
+    boolean verificationCodeEmailCheck;
     public User(){}
     public User(String id, String name, String surname, String license, String email, String phone, String type, String password) {
         this.id = id;
@@ -35,8 +38,8 @@ public class User {
         this.phone = phone;
         this.type = type;
         this.password = password;
-        this.profile_picture = "https://www.w3schools.com/howto/img_avatar.png";
-        this.verification_code_email_checked = false;
+        this.profilePicture = "https://www.w3schools.com/howto/img_avatar.png";
+        this.verificationCodeEmailCheck = false;
     }
 
     public String getId() {
@@ -47,12 +50,12 @@ public class User {
         this.id = id;
     }
 
-    public Boolean getVerification_code_email_checked() {
-        return verification_code_email_checked;
+    public boolean getVerificationCodeEmailCheck() {
+        return verificationCodeEmailCheck;
     }
 
-    public void setVerification_code_email_checked(Boolean verification_code_email_checked) {
-        this.verification_code_email_checked = verification_code_email_checked;
+    public void setVerificationCodeEmailCheck(boolean verificationCodeEmailCheck) {
+        this.verificationCodeEmailCheck = verificationCodeEmailCheck;
     }
 
     public String getName() {
@@ -111,27 +114,27 @@ public class User {
         this.password = password;
     }
 
-    public String getProfile_picture() {
-        return profile_picture;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setProfile_picture(String profile_picture) {
-        this.profile_picture = profile_picture;
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
-    public String getVerification_code_email() {
-        return verification_code_email;
+    public String getVerificationCodeEmail() {
+        return verificationCodeEmail;
     }
 
-    public void setVerification_code_email(String verification_code_email) {
-        this.verification_code_email = verification_code_email;
+    public void setVerificationCodeEmail(String verificationCodeEmail) {
+        this.verificationCodeEmail = verificationCodeEmail;
     }
 
-    public String getClinic_id() {
-        return clinic_id;
+    public String getClinicId() {
+        return clinicId;
     }
 
-    public void setClinic_id(String clinic_id) {
-        this.clinic_id = clinic_id;
+    public void setClinicId(String clinicId) {
+        this.clinicId = clinicId;
     }
 }
