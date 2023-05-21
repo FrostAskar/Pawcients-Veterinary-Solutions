@@ -6,7 +6,7 @@ public class RegisterClientForm {
     String surname;
     String email;
     String phone;
-    String clinic_id;
+    String clinicId;
     String type;
     String password;
 
@@ -42,12 +42,12 @@ public class RegisterClientForm {
         this.phone = phone;
     }
 
-    public String getClinic_id() {
-        return clinic_id;
+    public String getClinicId() {
+        return clinicId;
     }
 
-    public void setClinic_id(String clinic_id) {
-        this.clinic_id = clinic_id;
+    public void setClinicId(String clinicId) {
+        this.clinicId = clinicId;
     }
 
     public String getType() {

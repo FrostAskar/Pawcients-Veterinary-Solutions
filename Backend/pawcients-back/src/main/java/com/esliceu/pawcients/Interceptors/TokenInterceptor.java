@@ -25,11 +25,15 @@ public class TokenInterceptor implements HandlerInterceptor {
         if(authHeader == null) {
             return false;
         } else {
-            String token = authHeader.replace("Bearer ", "");
-            String user_id = tokenService.getUser(token);
-            User user = userService.generateUser(user_id);
-            req.setAttribute("user", user);
-            return true;
+            try {
+                String token = authHeader.replace("Bearer ", "");
+                String userId = tokenService.getUser(token);
+                User user = userService.generateUser(userId);
+                req.setAttribute("user", user);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
 }

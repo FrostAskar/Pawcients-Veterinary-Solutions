@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class TokenService {
 
-    @Value("${token.secret")
+    @Value("${token.secret}")
     String tokenSecret;
 
     @Value("${token.expire}")
@@ -36,7 +36,7 @@ public class TokenService {
         payload.put("profilePicture", user.getProfilePicture());
         payload.put("id", user.getId());
         payload.put("type", user.getType());
-        payload.put("iat", new Date(System.currentTimeMillis() + tokenExpire));
+        payload.put("iat", new Date(System.currentTimeMillis()));
         return payload;
     }
 
