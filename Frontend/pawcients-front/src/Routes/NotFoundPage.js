@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/notfound.css";
-import Logo from "../media/logo.png";
+import "css/notfound.css";
+import Logo from "media/logo.png";
 
 const NotFoundPage = () => {
   return (

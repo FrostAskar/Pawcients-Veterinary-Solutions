@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.dashboard-page {
+    background-color: var(--background-page);
+}
+
+.dashboard-header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+        font-size: 22px;
+        margin: 10px;
+    }
+    
+}
+
+.input-wrapper {
+    position: relative;
+
+    input {
+        margin: 10px;
+    }
+    i {
+        position: absolute;
+        top: 16px;
+        right: 0px;
+        color: var(--dark-grey);
+    }
+}
+
+.today-patients {
+    margin: 20px;
+}
+
+.today-patients-header {
+    padding: 10px;
+    background-color: white;
+    h2 {
+        color: black;
+        font-size: 18px; 
+    }
+}
+
+.patient-name {
+    flex-basis: 45%
+}
+
+.patient-owner {
+    flex-basis: 45%;
+}
+
+.patient-status {
+    flex-basis: 10%;
+}
+
+.card-info {
+    background-color: white;
+    margin: 20px;
+    padding: 10px;
+    display: flex;
+    font-weight: bold;
+}
+

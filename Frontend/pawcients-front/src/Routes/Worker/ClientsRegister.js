@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import Logo from "../media/logo.png";
+import Logo from "media/logo.png";
 
-import "../css/forms.css";
-import "../css/global.css";
-import "../css/variables.css";
-import { fetchLogin } from "../fetches/FetchLogin";
-import { fetchClientRegister } from "../fetches/FetchClientRegister";
+import "css/forms.css";
+import "css/global/global.scss";
+import "css/global/variables.css";
+import { fetchClientRegister } from "fetches/FetchClientRegister";
 
 function ClientRegister() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,11 +40,14 @@ function ClientRegister() {
         <div className="toggle-container">
           <div className="form-container">
             <form onSubmit={handleSubmit} method="post">
-              <label htmlFor="email">Email</label>
-              <input type="email" name="email" id="email" required />
+              <label htmlFor="name">Name</label>
+              <input type="text" name="name" id="password" required />
 
-              <label htmlFor="password">Password</label>
-              <input type="password" name="password" id="password" required />
+              <label htmlFor="lastname">Lastname</label>
+              <input type="text" name="lastname" id="password" required />
+              <label htmlFor="email">Email</label>
+
+              <input type="email" name="email" id="email" required />
               {/* Captcha: */}
 
               <button type="submit">Sign up client</button>

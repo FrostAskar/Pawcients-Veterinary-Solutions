@@ -1,0 +1,22 @@
+.patient-card-wrapper {
+    background-color: white;
+    margin: 20px;
+    padding: 10px;
+    display: flex;
+}
+
+.patient-name {
+    flex-basis: 45%
+}
+
+.patient-owner {
+    flex-basis: 45%;
+}
+
+.patient-status {
+    flex-basis: 10%;
+}
+
+.completed-status {
+    background-color: rgb(44, 44, 183);
+}

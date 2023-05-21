@@ -1,21 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "index.css";
 
-import reportWebVitals from "./reportWebVitals";
+import reportWebVitals from "reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Login from "./Routes/Login";
-import NotFoundPage from "./Routes/NotFoundPage";
-import PresentationPage from "./Routes/PresentationPage";
-import AboutUs from "./Routes/AboutUs";
-import Contact from "./Routes/Contact";
-import ConfirmationEmail from "./Routes/ConfirmationEmail";
-import SignUp from "./Routes/Worker/SignUp";
-import SessionExpired from "./Routes/SessionExpired";
-import MyMascots from "./Routes/MyMascots";
-import Root from "./Routes/Root";
-import ClientDashboard from "./Routes/ClientDashboard";
+import Login from "Routes/LandingPage/Login";
+import NotFoundPage from "Routes/NotFoundPage";
+import PresentationPage from "Routes/LandingPage/PresentationPage";
+import AboutUs from "Routes/LandingPage/AboutUs";
+import Contact from "Routes/LandingPage/Contact";
+import ConfirmationEmail from "Routes/ConfirmationEmail";
+import SignUp from "Routes/Worker/SignUp";
+import SessionExpired from "Routes/SessionExpired";
+import MyMascots from "Routes/Client/MyMascots";
+import Root from "Routes/Root";
+import ClientDashboard from "Routes/Client/ClientDashboard";
+import ClientRegister from "Routes/Worker/ClientsRegister"
+import VetDashboard from "Routes/Worker/VetDashboard";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,7 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       { path: "/login", element: <Login /> },
-      { path: "Worker/signup", element: <SignUp /> },
+      { path: "/signup", element: <SignUp /> },
       { path: "/", element: <PresentationPage /> },
       { path: "/aboutus", element: <AboutUs /> },
       { path: "/contact", element: <Contact /> },
@@ -32,6 +34,9 @@ const router = createBrowserRouter([
       { path: "/sessionexpired", element: <SessionExpired /> },
       { path: "/mymascots", element: <MyMascots /> },
       { path: "/clientdashboard", element: <ClientDashboard /> },
+      { path: "/clientregister", element: <ClientRegister /> },
+      { path: "/vetdashboard", element: <VetDashboard /> },
+
     ],
   },
 ]);

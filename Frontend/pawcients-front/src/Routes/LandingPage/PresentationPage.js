@@ -1,10 +1,10 @@
 import React from "react";
-import "../css/PresentationPage.css";
-import "../css/variables.css";
-import pawcientsLogo from "../media/paw.png";
-import clinicImage from "../media/clinic.png";
-import veterinarianImage from "../media/vet.png";
-import patientImage from "../media/pet.png";
+import "css/PresentationPage.css";
+import "css/global/variables.css";
+import pawcientsLogo from "media/paw.png";
+import clinicImage from "media/clinic.png";
+import veterinarianImage from "media/vet.png";
+import patientImage from "media/pet.png";
 
 const PresentationPage = () => {
   return (

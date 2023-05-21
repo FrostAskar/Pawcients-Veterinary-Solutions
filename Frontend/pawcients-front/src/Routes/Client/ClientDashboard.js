@@ -1,11 +1,13 @@
-import "../css/clientdashboard.css";
-import Logo from "../media/paw.png";
-import Profile from "../media/vet.png";
+import "css/clientdashboard.css";
+import "css/global/global.scss";
+import Logo from "media/paw.png";
+import Profile from "media/vet.png";
 import { Link } from "react-router-dom";
-import NotificationLogo from "../media/notificacion.png";
-import ConfiguracionLogo from "../media/configuraciones.png";
-import Grafico from "../media/grafico.png";
-import Euro from "../media/euro.png";
+import NotificationLogo from "media/notificacion.png";
+import ConfiguracionLogo from "media/configuraciones.png";
+import Grafico from "media/grafico.png";
+import Euro from "media/euro.png";
+
 
 //TODO FETCH PROFILE DATA
 const profileData = [
@@ -29,16 +31,19 @@ export default function ClientDashboard() {
         </div>
         <ul className="nav-links">
           <li>
+            <i className="material-icons"> pets </i>
             <Link to="/mymascots" className="active">
               My Pets
             </Link>
           </li>
           <li>
+            <i className="material-icons"> calendar_month </i>
             <Link to="/calendar" className="active">
               Calendar
             </Link>
           </li>
           <li className="logout">
+            <i className="material-icons"> logout </i>  
             <Link to="/logout" className="active">
               Logout
             </Link>
@@ -47,7 +52,7 @@ export default function ClientDashboard() {
       </div>
       <div className="showbuttons">
         <h1 className="titledash">Welcome, {profileData[0].name}</h1>
-        <div class="dashboard-container">
+        <div className="dashboard-container">
           <Link to="/notifications" className="dashboard-button">
             <h2>Notifications Section</h2>
             <img src={NotificationLogo} alt="Imagen 1"></img>

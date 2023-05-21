@@ -1,7 +1,7 @@
 import React from "react";
-import "../css/clientdashboard.css";
-import Logo from "../media/paw.png";
-import Profile from "../media/vet.png";
+import "css/clientdashboard.css";
+import Logo from "media/paw.png";
+import Profile from "media/vet.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -53,16 +53,19 @@ const MyMascots = () => {
         </div>
         <ul className="nav-links">
           <li>
+            <i className="material-icons"> pets </i>
             <Link to="/mymascots" className="active">
               My Pets
             </Link>
           </li>
           <li>
+            <i className="material-icons"> calendar_month </i>
             <Link to="/calendar" className="active">
               Calendar
             </Link>
           </li>
           <li className="logout">
+            <i className="material-icons"> logout </i>
             <Link to="/logout" className="active">
               Logout
             </Link>

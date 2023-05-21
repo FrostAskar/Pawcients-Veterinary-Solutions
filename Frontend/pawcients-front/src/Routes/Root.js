@@ -1,8 +1,8 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "../css/navbar.css";
-import "../css/variables.css";
-import Paw from "../media/paw.png";
+import "css/navbar.css";
+import "css/global/variables.css";
+import Paw from "media/paw.png";
 
 export default function NavbarLanding() {
   const location = useLocation();
@@ -17,6 +17,7 @@ export default function NavbarLanding() {
       "/login",
       "/signup",
       "/clientdashboard",
+      "/vetdashboard"
     ];
 
     setShowNavbar(!locationsWithoutNavbar.includes(location.pathname));
