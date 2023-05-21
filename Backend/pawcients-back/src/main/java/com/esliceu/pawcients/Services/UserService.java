@@ -23,7 +23,7 @@ public class UserService {
         this.clinicService = clinicService;
     }
 
-    public String saveVet(RegisterVetAndClinicForm registerVetAndClinicForm, String clinicId) {
+    public String saveAdmin(RegisterVetAndClinicForm registerVetAndClinicForm, String clinicId) {
         User user = new User();
         user.setName(registerVetAndClinicForm.getName());
         user.setSurname(registerVetAndClinicForm.getSurname());
@@ -46,16 +46,17 @@ public class UserService {
         return userRepo.save(user).getId();
     }
 
-    public String saveAux(RegisterAuxForm registerAuxForm) {
+    public String saveWorker(RegisterWorkerForm registerWorkerForm) {
         User user = new User(
                 null,
-                registerAuxForm.getName(),
-                registerAuxForm.getSurname(),
-                registerAuxForm.getLicense(),
-                registerAuxForm.getEmail(),
-                registerAuxForm.getPhone(),
-                registerAuxForm.getType(),
-                Encrypt.sha512(registerAuxForm.getPassword())
+                registerWorkerForm.getName(),
+                registerWorkerForm.getSurname(),
+                registerWorkerForm.getLicense(),
+                registerWorkerForm.getEmail(),
+                registerWorkerForm.getPhone(),
+                registerWorkerForm.getType(),
+                Encrypt.sha512(registerWorkerForm.getPassword()),
+                registerWorkerForm.getClinicId()
         );
         String code = String.valueOf((int)(Math.random()*1000000));
         user.setVerificationCodeEmail(code);
@@ -64,8 +65,7 @@ public class UserService {
             throw new IncorrectRegisterException("This email is already in use");
         }
 
-        userRepo.save(user);
-        return "ok";
+        return userRepo.save(user).getId();
     }
 
     public String saveClient(RegisterClientForm registerClientForm) {
@@ -77,7 +77,8 @@ public class UserService {
                 registerClientForm.getEmail(),
                 registerClientForm.getPhone(),
                 registerClientForm.getType(),
-                registerClientForm.getPassword()
+                Encrypt.sha512(registerClientForm.getPassword()),
+                registerClientForm.getClinicId()
         );
         String code = String.valueOf((int)(Math.random()*1000000));
         user.setVerificationCodeEmail(code);
@@ -86,24 +87,12 @@ public class UserService {
             throw new IncorrectRegisterException("This email is already in use");
         }
 
-        userRepo.save(user);
-        return "ok";
+        return userRepo.save(user).getId();
     }
 
     boolean checkEmailIsInUse(User user) {
         return userRepo.findByEmail(user.getEmail()).size() > 0;
     }
-
-//    public String checkLogin(LoginForm loginForm) {
-//        //return boolean if email and password are correct
-//        if (userRepo.findByEmail(loginForm.getEmail()).size() > 0) {
-//            User user = userRepo.findByEmail(loginForm.getEmail()).get(0);
-//            if (user.getPassword().equals(Encrypt.sha512(loginForm.getPassword()))) {
-//                return "ok";
-//            }
-//        }
-//        return "Email or password are incorrect";
-//    }
 
     public User authenticateUser(String email, String password) {
         User user = userRepo.findByEmail(email).get(0);

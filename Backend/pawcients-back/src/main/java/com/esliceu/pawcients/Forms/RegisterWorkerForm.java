@@ -1,6 +1,6 @@
 package com.esliceu.pawcients.Forms;
 
-public class RegisterAuxForm {
+public class RegisterWorkerForm {
 
     String name;
     String surname;
@@ -9,6 +9,7 @@ public class RegisterAuxForm {
     String phone;
     String type;
     String password;
+    String clinicId;
 
     public String getName() {
         return name;
@@ -65,4 +66,11 @@ public class RegisterAuxForm {
         this.password = password;
     }
 
+    public String getClinicId() {
+        return clinicId;
+    }
+
+    public void setClinicId(String clinicId) {
+        this.clinicId = clinicId;
+    }
 }

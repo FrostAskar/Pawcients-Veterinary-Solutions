@@ -29,7 +29,8 @@ public class User {
     String verificationCodeEmail;
     boolean verificationCodeEmailCheck;
     public User(){}
-    public User(String id, String name, String surname, String license, String email, String phone, String type, String password) {
+    public User(String id, String name, String surname, String license, String email, String phone,
+                String type, String password, String clinicId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -38,6 +39,7 @@ public class User {
         this.phone = phone;
         this.type = type;
         this.password = password;
+        this.clinicId = clinicId;
         this.profilePicture = "https://www.w3schools.com/howto/img_avatar.png";
         this.verificationCodeEmailCheck = false;
     }

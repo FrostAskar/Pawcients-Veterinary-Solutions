@@ -32,12 +32,12 @@ public class UserController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping("/signup/vet")
+    @PostMapping("/signup/admin")
     @CrossOrigin
-    public Map<String, String> registerVetAndClinic(@RequestBody RegisterVetAndClinicForm registerVetAndClinicForm, HttpServletResponse response) {
+    public Map<String, String> registerAdminAndClinic(@RequestBody RegisterVetAndClinicForm registerVetAndClinicForm, HttpServletResponse response) {
         Map<String, String> result = new HashMap<>();
         String clinicId = "";
-        String vetId = "";
+        String adminId = "";
 
         try {
             clinicId = clinicService.saveClinic(registerVetAndClinicForm);
@@ -48,7 +48,7 @@ public class UserController {
         }
 
         try {
-            vetId = userService.saveVet(registerVetAndClinicForm, clinicId);
+            adminId = userService.saveAdmin(registerVetAndClinicForm, clinicId);
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             response.setStatus(409);
@@ -56,14 +56,13 @@ public class UserController {
         }
 
         result.put("status", "Ok");
-        result.put("vetId", vetId);
+        result.put("adminId", adminId);
         result.put("clinicId", clinicId);
         response.setStatus(200);
 
         return result;
 
     }
-    //Logins de trabajadores y el de los clientes estará separado.
     @PostMapping("/login")
     @CrossOrigin
     public Map<String, Object> login(@RequestBody LoginForm loginForm, HttpServletResponse res) {
@@ -82,32 +81,34 @@ public class UserController {
         return result;
     }
 
-    @PostMapping("/vet/aux")
+    @PostMapping("/vet/worker")
     @CrossOrigin
-    public Map<String, String> registerAux(@RequestBody RegisterAuxForm registerAuxForm) {
+    public Map<String, String> registerWorker(@RequestBody RegisterWorkerForm registerWorkerForm,
+                                              HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
-        String execResult;
+        String workerId;
         try {
-            execResult = userService.saveAux(registerAuxForm);
-            result.put("result", execResult);
-        } catch (Exception e) {
-            execResult = e.getMessage();
-            result.put("result", execResult);
+            workerId = userService.saveWorker(registerWorkerForm);
+            result.put("workerId", workerId);
+        } catch (IncorrectRegisterException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
         }
         return result;
     }
 
     @PostMapping("/vet/client")
     @CrossOrigin
-    public Map<String, String> registerClient(@RequestBody RegisterClientForm registerClientForm) {
+    public Map<String, String> registerClient(@RequestBody RegisterClientForm registerClientForm,
+                                              HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
-        String execResult;
+        String clientId;
         try {
-            execResult = userService.saveClient(registerClientForm);
-            result.put("result", execResult);
-        } catch (Exception e) {
-            execResult = e.getMessage();
-            result.put("result", execResult);
+            clientId = userService.saveClient(registerClientForm);
+            result.put("clientId", clientId);
+        } catch (IncorrectRegisterException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
         }
         return result;
     }
