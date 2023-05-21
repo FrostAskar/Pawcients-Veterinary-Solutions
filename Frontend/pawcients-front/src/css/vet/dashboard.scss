@@ -1,67 +1,67 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 .dashboard-page {
-    background-color: var(--background-page);
+  background-color: var(--background-page);
 }
 
 .dashboard-header {
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    h1 {
-        font-size: 22px;
-        margin: 10px;
-    }
-    
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h1 {
+    font-size: 22px;
+    margin: 10px;
+  }
 }
 
 .input-wrapper {
-    position: relative;
+  position: relative;
 
-    input {
-        margin: 10px;
-    }
-    i {
-        position: absolute;
-        top: 16px;
-        right: 0px;
-        color: var(--dark-grey);
-    }
+  input {
+    width: 90%;
+    margin: 4px;
+    margin-right: 50px;
+  }
+  i {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    color: var(--dark-grey);
+  }
 }
 
 .today-patients {
-    margin: 20px;
+  margin: 20px;
 }
 
 .today-patients-header {
-    padding: 10px;
-    background-color: white;
-    h2 {
-        color: black;
-        font-size: 18px; 
-    }
+  padding: 10px;
+  background-color: white;
+  h2 {
+    color: black;
+    font-size: 18px;
+  }
 }
 
 .patient-name {
-    flex-basis: 45%
+  flex-basis: 45%;
 }
 
 .patient-owner {
-    flex-basis: 45%;
+  flex-basis: 45%;
 }
 
 .patient-status {
-    flex-basis: 10%;
+  flex-basis: 10%;
 }
 
 .card-info {
-    background-color: white;
-    margin: 20px;
-    padding: 10px;
-    display: flex;
-    font-weight: bold;
+  background-color: white;
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  font-weight: bold;
 }
-
