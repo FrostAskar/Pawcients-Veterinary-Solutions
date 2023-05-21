@@ -89,6 +89,28 @@
   margin-right: 1rem;
 }
 
+/* Buttons */
+
+button {
+  width: 150px;
+  padding: 0.5rem;
+  background-color: var(--main-green);
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: var(--hover-green);
+}
+
+button:active {
+  background-color: #90cea3;
+}
+
 .signup-details {
   display: flex;
   

@@ -13,22 +13,26 @@ import { fetchProfile } from "fetches/getProfile";
 // }
 // const profileData = getProfileData();
 
+
 const todayPatients = [
   {
     id: 1,
     name: "Laika",
+    kind: "Dog",
     owner: "Maru Suarez",
     active: true,
   },
   {
     id: 2,
-    name: "Lluna",
+    name: "Luna",
+    kind: "Dog",
     owner: "Dámaso Simal",
     active: true,
   },
   {
     id: 3,
     name: "Ander",
+    kind: "Cat",
     owner: "Andrés Pantoja",
     active: false,
   },
@@ -44,6 +48,7 @@ export default function VetDashboard() {
         <div className="user-profile">
           <img src={Profile} alt="Profile" className="profile-picture" />
           {/* <span>{profileData.user.name}</span> */}
+          Andrés Pantoja
         </div>
         <ul className="nav-links">
           <li>
@@ -95,11 +100,12 @@ export default function VetDashboard() {
       <div className="dashboard-page">
         <div className="dashboard-header">
           {/* <h1>Welcome, {profileData.user.name} </h1> */}
+          <h1>Welcome, Andrés Pantoja</h1>
           <div className="input-wrapper">
             <input
               type="text"
               className="search-input"
-              placeholder="Search for pet..."
+              placeholder="Search"
             ></input>
             <i className="material-icons">search</i>
           </div>
@@ -113,6 +119,7 @@ export default function VetDashboard() {
             <div className="today-patients-body">
               <div class="card-info">
                 <p className="patient-name">Pet name</p>
+                <p className="patient-kind">Kind</p>
                 <p className="patient-owner">Owner</p>
                 <p className="patient-status">Status</p>
               </div>

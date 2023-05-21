@@ -17,29 +17,32 @@
   }
 }
 
+.dashboard-content {
+  display: flex;
+}
+
 .input-wrapper {
   position: relative;
-
   input {
-    width: 90%;
-    margin: 4px;
-    margin-right: 50px;
+    margin: 10px;
+    width: 100px;
   }
   i {
     position: absolute;
-    top: 10px;
-    right: 0px;
+    top: 16px;
+    right: 20px;
     color: var(--dark-grey);
   }
 }
 
 .today-patients {
   margin: 20px;
+  background-color: white;
+  border-radius: 15px;
 }
 
 .today-patients-header {
   padding: 10px;
-  background-color: white;
   h2 {
     color: black;
     font-size: 18px;
@@ -47,11 +50,15 @@
 }
 
 .patient-name {
-  flex-basis: 45%;
+  flex-basis: 30%;
+}
+
+.patient-kind {
+  flex-basis: 30%;
 }
 
 .patient-owner {
-  flex-basis: 45%;
+  flex-basis: 30%;
 }
 
 .patient-status {
@@ -59,7 +66,7 @@
 }
 
 .card-info {
-  background-color: white;
+  background-color: var(--background-page);
   margin: 20px;
   padding: 10px;
   display: flex;

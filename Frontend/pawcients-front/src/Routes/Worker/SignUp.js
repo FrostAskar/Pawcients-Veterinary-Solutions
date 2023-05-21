@@ -23,29 +23,32 @@ function SignUp() {
     const city = e.target.city.value;
     const country = e.target.country.value;
 
-    try {
-      const response = await fetchSignup(
-        vetName,
-        email,
-        licenseNumber,
-        password,
-        confimartionPassword,
-        clinicName,
-        streetAddress,
-        streetNumber,
-        city,
-        country
-      );
-      if (response.success) {
-        // Redirección a Home o Login
-        console.log("Signup Successful");
-      } else {
-        // Mensaje de error para cliente
-        setErrorMessage(response.message);
+    if(!password.equals(confimartionPassword)) {
+      setErrorMessage("Passwords do not match");
+    } else {
+      try {
+        const response = await fetchSignup(
+          vetName,
+          email,
+          licenseNumber,
+          password,
+          clinicName,
+          streetAddress,
+          streetNumber,
+          city,
+          country
+        );
+        if (response.success) {
+          // Redirección a Home o Login
+          console.log("Signup Successful");
+        } else {
+          // Mensaje de error para cliente
+          setErrorMessage(response.message);
+        }
+      } catch (error) {
+        console.log(error);
+        setErrorMessage("Error connecting to server");
       }
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("Error connecting to server");
     }
   };
 
