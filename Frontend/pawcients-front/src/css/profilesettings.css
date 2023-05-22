@@ -1,0 +1,29 @@
+.profile-settings-page {
+  background-color: #f9f9f9;
+  padding: 20px;
+  /* Fit next to side navabar
+ */
+  grid-row: 2;
+  height: 100vh;
+}
+
+.password-change-button {
+  background-color: #3cd264;
+  color: #f9f9f9;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.profile-image-input {
+  margin-top: 10px;
+}
+
+.profile-image {
+  width: 200px;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 4px;
+}
