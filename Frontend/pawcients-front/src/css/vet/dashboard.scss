@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Times New Roman', Times, serif;
 }
 .dashboard-page {
   background-color: var(--background-page);
@@ -11,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   h1 {
     font-size: 22px;
     margin: 10px;
@@ -18,7 +20,7 @@
 }
 
 .dashboard-content {
-  display: flex;
+  // display: flex;
 }
 
 .input-wrapper {
@@ -36,7 +38,8 @@
 }
 
 .today-patients {
-  margin: 20px;
+  margin: 40px;
+  padding: 15px;
   background-color: white;
   border-radius: 15px;
 }
@@ -71,4 +74,5 @@
   padding: 10px;
   display: flex;
   font-weight: bold;
+  border-radius: 15px;
 }
