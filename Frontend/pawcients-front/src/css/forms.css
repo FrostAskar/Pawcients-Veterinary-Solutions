@@ -122,6 +122,7 @@ button:active {
 
 .details-title {
   margin-bottom: 20px;
+  color: var(--main-green);
 }
 
 .vet-details{
