@@ -3,8 +3,6 @@
   padding: 20px;
   /* Fit next to side navabar
  */
-  grid-row: 2;
-  height: 100vh;
 }
 
 .password-change-button {

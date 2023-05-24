@@ -7,13 +7,13 @@ import PatientCard from "Routes/Worker/PatientCard";
 import { Link } from "react-router-dom";
 import { fetchProfile } from "fetches/getProfile";
 
-// function getProfileData() {
-//   const token = localStorage.getItem("token");
-//   return fetchProfile(token).json;
-// }
-// const profileData = getProfileData();
+function getProfileData() {
+  const token = localStorage.getItem("token");
+  return fetchProfile(token).json;
+}
 
-
+//fetch data to display on web
+console.log(getProfileData());
 const todayPatients = [
   {
     id: 1,
