@@ -1,9 +1,8 @@
 import React from "react";
 import "css/clientdashboard.css";
-import Logo from "media/paw.png";
-import Profile from "media/vet.png";
+
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import SideNavbarClient from "Routes/Client/SideNavbarClient";
 
 const animalsData = [
   {
@@ -25,53 +24,13 @@ const animalsData = [
       "https://okdiario.com/img/2021/04/20/curiosidades-sobre-los-gatos-domesticos-635x358.jpg",
   },
 ];
-const profileData = [
-  {
-    id: 1,
-    name: "Andrés Pantoja",
-    image: "/path/to/andres.png",
-  },
-];
-
-const Goprofile = () => {
-  const navigate = useNavigate();
-  navigate("/profile");
-};
 
 const MyMascots = () => {
   // On click on user profile, redirect to profile page
 
   return (
     <div className="dashboard">
-      <div className="side-navbar">
-        <div className="logo">
-          <img src={Logo} alt="Logo" />
-        </div>
-        <div className="user-profile" onClick={Goprofile()}>
-          <img src={Profile} alt="Profile" className="profile-picture" />
-          <span>{profileData[0].name}</span>
-        </div>
-        <ul className="nav-links">
-          <li>
-            <i className="material-icons"> pets </i>
-            <Link to="/mymascots" className="active">
-              My Pets
-            </Link>
-          </li>
-          <li>
-            <i className="material-icons"> calendar_month </i>
-            <Link to="/calendar" className="active">
-              Calendar
-            </Link>
-          </li>
-          <li className="logout">
-            <i className="material-icons"> logout </i>
-            <Link to="/logout" className="active">
-              Logout
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <SideNavbarClient />
       <div className="animal-list">
         {animalsData.map((animal) => (
           <div className="animal-card" key={animal.id}>

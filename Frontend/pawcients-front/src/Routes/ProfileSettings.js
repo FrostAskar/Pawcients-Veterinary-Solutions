@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import Logo from "media/paw.png";
-import Profile from "media/vet.png";
-import { Link } from "react-router-dom";
 import "css/profilesettings.css";
 import "css/vet/dashboard.scss";
+import SideNavbarClient from "Routes/Client/SideNavbarClient";
+import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
+const profileData = [
+  {
+    name: "Andrés Pantoja",
+    type: "client",
+  },
+];
 
 const ProfileSettings = () => {
   const [password, setPassword] = useState("");
@@ -31,105 +36,39 @@ const ProfileSettings = () => {
 
   return (
     <div className="dashboard">
-      <div className="side-navbar">
-        <div className="logo">
-          <img src={Logo} alt="Logo" />
+      {profileData[0].type === "vet" ? (
+        <SideNavbarWorker />
+      ) : (
+        <SideNavbarClient />
+      )}
+      <div className="showbuttons">
+        <div className="profile-image-change">
+          <h3>Change Profile Picture</h3>
+          <input type="file" onChange={handleProfileImageChange} />
+          {profileImage && <img src={profileImage} alt="Profile" />}
         </div>
-        <div className="user-profile">
-          <img src={Profile} alt="Profile" className="profile-picture" />
-          {/* <span>{profileData.user.name}</span> */}
-        </div>
-        <ul className="nav-links">
-          <li>
-            <i className="material-icons">home</i>
-            <Link to="/vetdashboard" className="active">
-              Home
-            </Link>
-          </li>
-          <li>
-            <i className="material-icons">calendar_month</i>
-            <Link to="/calendar" className="active">
-              Calendar
-            </Link>
-          </li>
-          <h3>BASE</h3>
-          <li>
-            <i className="material-icons">local_hospital</i>
-            <Link to="/veterinarians" className="active">
-              Veterinarians
-            </Link>
-          </li>
-          <li>
-            <i className="material-icons">group</i>
-            <Link to="/clients" className="active">
-              Clients
-            </Link>
-          </li>
-          <li>
-            <i className="material-icons">pets</i>
-            <Link to="/mascots" className="active">
-              Mascots
-            </Link>
-          </li>
-          <h3>ACCOUNT</h3>
-          <li>
-            <i className="material-icons">settings</i>
-            <Link to="/logout" className="active">
-              Settings
-            </Link>
-          </li>
-          <li className="logout">
-            <i className="material-icons">logout</i>
-            <Link to="/logout" className="active">
-              Logout
-            </Link>
-          </li>
-        </ul>
-      </div>
-
-      <div className="profile-settings-page">
-        <h2>Configuración de perfil</h2>
-
-        <h3>Cambiar contraseña</h3>
-        <input
-          type="password"
-          placeholder="Contraseña actual"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Confirmar nueva contraseña"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <button
-          className="password-change-button"
-          onClick={handlePasswordChange}
-        >
-          Cambiar contraseña
-        </button>
-
-        <h3>Cambiar foto de perfil</h3>
-        <input
-          className="profile-image-input"
-          type="file"
-          accept="image/*"
-          onChange={handleProfileImageChange}
-        />
-        {profileImage && (
-          <img
-            className="profile-image"
-            src={profileImage}
-            alt="Foto de perfil"
+        <div className="password-change">
+          <h3>Change Password</h3>
+          <input
+            type="password"
+            placeholder="Current Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-        )}
+          <input
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Confirm New Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <button onClick={handlePasswordChange}>Change Password</button>
+        </div>
       </div>
     </div>
   );
