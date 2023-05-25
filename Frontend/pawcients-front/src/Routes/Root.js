@@ -21,7 +21,7 @@ export default function NavbarLanding() {
       "/profilesettings",
       "/vet/clients",
       "/vet/staff", 
-      "/vet/mascots"
+      "/vet/mascots",
       "/animalprofile",
     ];
 

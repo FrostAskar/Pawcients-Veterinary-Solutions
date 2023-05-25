@@ -6,7 +6,7 @@ export default function StaffManagement() {
             <SideNavbarWorker />
             <div className="dashboard-page">
                 <div className="dashboard-header">
-                    <h1>Patients</h1>
+                    <h1>Staff</h1>
                     <div className="input-wrapper">
                         <input
                             type="text"

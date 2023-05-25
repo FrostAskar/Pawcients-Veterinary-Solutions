@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "css/animalprofile.css";
+import "css/animalprofile.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 
 const animalData = {
@@ -16,7 +16,6 @@ const animalData = {
     { date: "2021-12-15", description: "Max has a broken leg." },
     { date: "2021-08-20", description: "Max has a broken tail." },
   ],
-
   vaccines: [
     { name: "Rabies", date: "2022-12-15" },
     { name: "Distemper", date: "2022-08-20" },
@@ -221,6 +220,7 @@ const AnimalManagementPage = () => {
                 <strong>Breed:</strong>{" "}
                 {isEditing ? (
                   <input
+                    className="animalprofile-input"
                     type="text"
                     name="breed"
                     value={breed}
@@ -234,6 +234,7 @@ const AnimalManagementPage = () => {
                 <strong>Age:</strong>{" "}
                 {isEditing ? (
                   <input
+                    className="animalprofile-input"
                     type="text"
                     name="age"
                     value={age}
@@ -247,6 +248,7 @@ const AnimalManagementPage = () => {
                 <strong>Gender:</strong>{" "}
                 {isEditing ? (
                   <input
+                    className="animalprofile-input"
                     type="text"
                     name="gender"
                     value={gender}
@@ -260,6 +262,7 @@ const AnimalManagementPage = () => {
                 <strong>Weight:</strong>{" "}
                 {isEditing ? (
                   <input
+                    className="animalprofile-input"
                     type="text"
                     name="weight"
                     value={weight}
@@ -273,6 +276,7 @@ const AnimalManagementPage = () => {
                 <strong>Color:</strong>{" "}
                 {isEditing ? (
                   <input
+                    className="animalprofile-input"
                     type="text"
                     name="color"
                     value={color}
@@ -288,10 +292,11 @@ const AnimalManagementPage = () => {
               <p>
                 <strong>Medical History:</strong>{" "}
                 {isEditing ? (
-                  <ul>
+                  < ul>
                     {medicalHistory.map((history, index) => (
                       <li key={index}>
                         <input
+                          className="animalprofile-input"
                           type="text"
                           name={`history-${index}`}
                           value={history.description}
@@ -300,6 +305,7 @@ const AnimalManagementPage = () => {
                           }
                         />{" "}
                         <input
+                          className="animalprofile-input"
                           type="text"
                           name={`history-date-${index}`}
                           value={history.date}
@@ -310,7 +316,7 @@ const AnimalManagementPage = () => {
                       </li>
                     ))}
                     <li>
-                      <button onClick={handleAddHistory}>New</button>
+                      <button className="animalprofile-button" onClick={handleAddHistory}>New</button>
                     </li>
                   </ul>
                 ) : (
@@ -334,6 +340,7 @@ const AnimalManagementPage = () => {
                       {vaccines.map((vaccine, index) => (
                         <li key={index}>
                           <input
+                            className="animalprofile-input"
                             type="text"
                             name={`vaccine-${index}`}
                             value={vaccine.name}
@@ -343,6 +350,7 @@ const AnimalManagementPage = () => {
                           />{" "}
                           -{" "}
                           <input
+                            className="animalprofile-input"
                             type="text"
                             name={`vaccine-date-${index}`}
                             value={vaccine.date}
@@ -353,7 +361,7 @@ const AnimalManagementPage = () => {
                         </li>
                       ))}
                       <li>
-                        <button onClick={handleAddVaccine}>New</button>
+                        <button className="animalprofile-button" onClick={handleAddVaccine}>New</button>
                       </li>
                     </ul>
                   ) : (
@@ -373,6 +381,7 @@ const AnimalManagementPage = () => {
                       {deworming.map((deworm, index) => (
                         <li key={index}>
                           <input
+                            className="animalprofile-input"
                             type="text"
                             name={`deworm-${index}`}
                             value={deworm.name}
@@ -382,6 +391,7 @@ const AnimalManagementPage = () => {
                           />{" "}
                           -{" "}
                           <input
+                            className="animalprofile-input"
                             type="text"
                             name={`deworm-date-${index}`}
                             value={deworm.date}
@@ -392,7 +402,7 @@ const AnimalManagementPage = () => {
                         </li>
                       ))}
                       <li>
-                        <button onClick={handleAddDeworm}>New</button>
+                        <button className="animalprofile-button" onClick={handleAddDeworm}>New</button>
                       </li>
                     </ul>
                   ) : (
@@ -421,6 +431,7 @@ const AnimalManagementPage = () => {
                           <br />
                           <label>Date:</label>{" "}
                           <input
+                            className="animalprofile-input"
                             type="text"
                             name="sterilization-date"
                             value={sterilization.date}
@@ -429,6 +440,7 @@ const AnimalManagementPage = () => {
                           <br />
                           <label>Details:</label>{" "}
                           <input
+                            className="animalprofile-input"
                             type="text"
                             name="sterilization-details"
                             value={sterilization.details}
@@ -449,6 +461,7 @@ const AnimalManagementPage = () => {
                   <h4>Allergies</h4>
                   {isEditing ? (
                     <input
+                      className="animalprofile-input"
                       type="text"
                       name="allergies"
                       value={allergies}
@@ -457,13 +470,14 @@ const AnimalManagementPage = () => {
                   ) : (
                     <p>{allergies}</p>
                   )}
-                  {isEditing && <button onClick={handleAddAllergy}>New</button>}
+                  {isEditing && <button className="animalprofile-button" onClick={handleAddAllergy}>New</button>}
                 </div>
               </div>
               <div className="special-notes">
                 <h4>Special Notes</h4>
                 {isEditing ? (
                   <textarea
+                    className="animalprofile-input"
                     name="specialNotes"
                     value={specialNotes}
                     onChange={handleChange}

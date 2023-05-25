@@ -1,4 +1,5 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
+import "css/global/global.scss"
 
 export default function MascotsManagement() {
     return (
@@ -6,7 +7,7 @@ export default function MascotsManagement() {
             <SideNavbarWorker />
             <div className="dashboard-page">
                 <div className="dashboard-header">
-                    <h1>Patients</h1>
+                    <h1>Mascots</h1>
                     <div className="input-wrapper">
                         <input
                             type="text"

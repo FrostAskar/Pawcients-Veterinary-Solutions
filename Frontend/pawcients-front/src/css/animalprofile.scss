@@ -41,15 +41,22 @@
 
 .profile-details {
   margin-bottom: 20px;
+  p {
+    margin: 10px 0;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    li {
+      margin-bottom: 5px;
+    }
+  }
 }
 
 .section-title {
   margin-top: 0;
 }
 
-.profile-details p {
-  margin: 10px 0;
-}
 
 .additional-info {
   background-color: #f5f5f5;
@@ -74,15 +81,6 @@
   margin-top: 0;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul li {
-  margin-bottom: 5px;
-}
-
 .button-container {
   display: flex;
   justify-content: center;
@@ -105,15 +103,14 @@ ul li {
   background-color: #0c7cd5;
 }
 
-input[type="text"],
-textarea {
+.animalprofile-input {
   width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
 
-button {
+.animalprofile-button {
   padding: 5px 10px;
   background-color: #2196f3;
   color: #fff;
@@ -124,7 +121,7 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.animalprofile-button:hover {
   background-color: #0c7cd5;
 }
 

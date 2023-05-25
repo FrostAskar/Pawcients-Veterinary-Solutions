@@ -1,4 +1,7 @@
-
+* {
+  margin: 0;
+  padding: 0;
+}
 /* Dashboard */
 
 .dashboard {
@@ -26,16 +29,13 @@
   }
 }
 
-.dashboard-content {
-  height: 100vh;
-}
-
 .input-wrapper {
   position: relative;
 
   input {
     margin: 10px;
-    width: 100px;
+    width: 200px;
+    overflow: hidden;
   }
 
   i {
@@ -45,7 +45,6 @@
     color: var(--dark-grey);
   }
 }
-
 
 /* NavBar */
 
@@ -116,13 +115,6 @@
 }
 
 
-
-/* .logout {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-} */
 
 
   

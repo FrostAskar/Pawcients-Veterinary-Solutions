@@ -21,7 +21,7 @@ const todayPatients = [
     hour: "9:30",
     type: "Checkup",
     owner: "Maru Suarez",
-    active: true,
+    active: false,
   },
   {
     id: 2,
@@ -39,7 +39,7 @@ const todayPatients = [
     hour: "11:30",
     type: "Surgery",
     owner: "Andrés Pantoja",
-    active: false,
+    active: true,
   },
 ];
 

@@ -43,7 +43,11 @@ const router = createBrowserRouter([
       { path: "/clientdashboard", element: <ClientDashboard /> },
       { path: "/clientregister", element: <ClientRegister /> },
       { path: "/vetdashboard", element: <VetDashboard /> },
+      { path: "/vet/clients", element: <CustomerManagement /> },
+      { path: "/vet/mascots", element: <MascotsManagement /> },
+      { path: "/vet/staff", element: <StaffManagement /> },
       { path: "/profilesettings", element: <ProfileSettings /> },
+      { path: "/animalprofile", element: <AnimalProfile /> },
     ],
   },
 ]);
