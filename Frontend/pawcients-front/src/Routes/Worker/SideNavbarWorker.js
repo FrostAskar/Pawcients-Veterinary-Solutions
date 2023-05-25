@@ -7,7 +7,6 @@ import "css/global/variables.css";
 import "css/vet/dashboard.scss";
 
 const SideNavbarWorker = () => {
-  //TODO Fetch Today patitents
 
   return (
     <div className="dashboard">
@@ -35,19 +34,19 @@ const SideNavbarWorker = () => {
           <h3>BASE</h3>
           <li>
             <i className="material-icons"> local_hospital </i>
-            <Link to="/veterinarians" className="active">
+            <Link to="/vet/staff" className="active">
               Veterinarians
             </Link>
           </li>
           <li>
             <i className="material-icons"> group </i>
-            <Link to="/clients" className="active">
+            <Link to="/vet/clients" className="active">
               Clients
             </Link>
           </li>
           <li>
             <i className="material-icons"> pets </i>
-            <Link to="/mascots" className="active">
+            <Link to="/vet/mascots" className="active">
               Mascots
             </Link>
           </li>

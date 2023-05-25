@@ -19,6 +19,9 @@ export default function NavbarLanding() {
       "/clientdashboard",
       "/vetdashboard",
       "/profilesettings",
+      "/vet/clients",
+      "/vet/staff", 
+      "/vet/mascots"
     ];
 
     setShowNavbar(!locationsWithoutNavbar.includes(location.pathname));

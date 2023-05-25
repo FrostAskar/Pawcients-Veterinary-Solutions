@@ -3,7 +3,7 @@ import "css/global/variables.css";
 import "css/vet/dashboard.scss";
 import TodayPatient from "Routes/Worker/TodayPatient";
 import { fetchProfile } from "fetches/getProfile";
-import SideNavbarWorker from "./SideNavbarWorker";
+import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import Paw from "../../media/paw.png"
 
 function getProfileData() {
@@ -11,7 +11,7 @@ function getProfileData() {
   return fetchProfile(token).json;
 }
 
-//fetch data to display on web
+//fetch data to display on weby
 console.log(getProfileData());
 const todayPatients = [
   {
@@ -60,7 +60,6 @@ export default function VetDashboard() {
             <i className="material-icons">search</i>
           </div>
         </div>
-
         <div className="dashboard-content">
           <section className="row-dashboard">
             <div className="modal">
@@ -129,8 +128,6 @@ export default function VetDashboard() {
               </div>
             </div>
           </section>
-
-
         </div>
       </div>
     </div>

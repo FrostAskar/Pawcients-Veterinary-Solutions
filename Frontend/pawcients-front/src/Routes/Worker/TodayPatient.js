@@ -2,13 +2,13 @@ import "css/vet/patientCard.scss";
 
 export default function TodayPatient(props) {
     function getAppointmentType () {
-        if(props.patient.type == "Vaccine") {
+        if(props.patient.type === "Vaccine") {
             return "vaccines"
-        } else if(props.patient.type == "Checkup") {
+        } else if(props.patient.type === "Checkup") {
             return "medical_services"
-        } else if(props.patient.type == "Surgery") {
+        } else if(props.patient.type === "Surgery") {
             return "monitor_heart";
-        } else if(props.patient.type == "Healing") {
+        } else if(props.patient.type === "Healing") {
             return "healing"
         }
     }
