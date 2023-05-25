@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "css/animalprofile.css";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 
@@ -12,7 +12,10 @@ const animalData = {
   weight: "25 kg",
   color: "Golden",
   identificationNumber: "ABC123",
-  medicalHistory: "none",
+  medicalHistory: [
+    { date: "2021-12-15", description: "Max has a broken leg." },
+    { date: "2021-08-20", description: "Max has a broken tail." },
+  ],
 
   vaccines: [
     { name: "Rabies", date: "2022-12-15" },
@@ -32,6 +35,153 @@ const animalData = {
 };
 
 const AnimalManagementPage = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedAnimalData, setEditedAnimalData] = useState(animalData);
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    // Aquí puedes guardar los datos editados, por ejemplo, enviar una solicitud al servidor
+    // usando editedAnimalData como los nuevos datos de la mascota
+    setIsEditing(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedAnimalData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleChangeVaccine = (index, value) => {
+    setEditedAnimalData((prevData) => {
+      const vaccines = [...prevData.vaccines];
+      vaccines[index].name = value;
+      return {
+        ...prevData,
+        vaccines,
+      };
+    });
+  };
+
+  const handleChangeVaccineDate = (index, value) => {
+    setEditedAnimalData((prevData) => {
+      const vaccines = [...prevData.vaccines];
+      vaccines[index].date = value;
+      return {
+        ...prevData,
+        vaccines,
+      };
+    });
+  };
+
+  const handleChangeDeworm = (index, value) => {
+    setEditedAnimalData((prevData) => {
+      const deworming = [...prevData.deworming];
+      deworming[index].name = value;
+      return {
+        ...prevData,
+        deworming,
+      };
+    });
+  };
+
+  const handleChangeDewormDate = (index, value) => {
+    setEditedAnimalData((prevData) => {
+      const deworming = [...prevData.deworming];
+      deworming[index].date = value;
+      return {
+        ...prevData,
+        deworming,
+      };
+    });
+  };
+
+  const handleSterilizationChange = (e) => {
+    const { name, checked } = e.target;
+    setEditedAnimalData((prevData) => ({
+      ...prevData,
+      sterilization: {
+        ...prevData.sterilization,
+        [name]: checked,
+      },
+    }));
+  };
+
+  const handleChangeSterilizationDate = (e) => {
+    const { value } = e.target;
+    setEditedAnimalData((prevData) => ({
+      ...prevData,
+      sterilization: {
+        ...prevData.sterilization,
+        date: value,
+      },
+    }));
+  };
+
+  const handleChangeSterilizationDetails = (e) => {
+    const { value } = e.target;
+    setEditedAnimalData((prevData) => ({
+      ...prevData,
+      sterilization: {
+        ...prevData.sterilization,
+        details: value,
+      },
+    }));
+  };
+  const handleChangeHistory = (index, value) => {
+    setEditedAnimalData((prevData) => {
+      const medicalHistory = [...prevData.medicalHistory];
+      medicalHistory[index].description = value;
+      return {
+        ...prevData,
+        medicalHistory,
+      };
+    });
+  };
+
+  const handleAddVaccine = () => {
+    setEditedAnimalData((prevData) => {
+      const vaccines = [...prevData.vaccines, { name: "", date: "" }];
+      return {
+        ...prevData,
+        vaccines,
+      };
+    });
+  };
+
+  const handleAddDeworm = () => {
+    setEditedAnimalData((prevData) => {
+      const deworming = [...prevData.deworming, { name: "", date: "" }];
+      return {
+        ...prevData,
+        deworming,
+      };
+    });
+  };
+
+  const handleAddAllergy = () => {
+    setEditedAnimalData((prevData) => ({
+      ...prevData,
+      allergies: "",
+    }));
+  };
+  const handleAddHistory = () => {
+    setEditedAnimalData((prevData) => {
+      const medicalHistory = [
+        ...prevData.medicalHistory,
+        { date: "", description: "" },
+      ];
+      return {
+        ...prevData,
+        medicalHistory,
+      };
+    });
+  };
+
   const {
     name,
     image,
@@ -48,7 +198,7 @@ const AnimalManagementPage = () => {
     sterilization,
     allergies,
     specialNotes,
-  } = animalData;
+  } = isEditing ? editedAnimalData : animalData;
 
   return (
     <div className="dashboard">
@@ -68,25 +218,110 @@ const AnimalManagementPage = () => {
             <div className="profile-details">
               <h3 className="section-title">Profile Details</h3>
               <p>
-                <strong>Breed:</strong> {breed}
+                <strong>Breed:</strong>{" "}
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="breed"
+                    value={breed}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  breed
+                )}
               </p>
               <p>
-                <strong>Age:</strong> {age}
+                <strong>Age:</strong>{" "}
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="age"
+                    value={age}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  age
+                )}
               </p>
               <p>
-                <strong>Gender:</strong> {gender}
+                <strong>Gender:</strong>{" "}
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="gender"
+                    value={gender}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  gender
+                )}
               </p>
               <p>
-                <strong>Weight:</strong> {weight}
+                <strong>Weight:</strong>{" "}
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="weight"
+                    value={weight}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  weight
+                )}
               </p>
               <p>
-                <strong>Color:</strong> {color}
+                <strong>Color:</strong>{" "}
+                {isEditing ? (
+                  <input
+                    type="text"
+                    name="color"
+                    value={color}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  color
+                )}
               </p>
               <p>
                 <strong>Identification Number:</strong> {identificationNumber}
               </p>
               <p>
-                <strong>Medical History:</strong> {medicalHistory}
+                <strong>Medical History:</strong>{" "}
+                {isEditing ? (
+                  <ul>
+                    {medicalHistory.map((history, index) => (
+                      <li key={index}>
+                        <input
+                          type="text"
+                          name={`history-${index}`}
+                          value={history.description}
+                          onChange={(e) =>
+                            handleChangeHistory(index, e.target.value)
+                          }
+                        />{" "}
+                        <input
+                          type="text"
+                          name={`history-date-${index}`}
+                          value={history.date}
+                          onChange={(e) =>
+                            handleChangeHistory(index, e.target.value)
+                          }
+                        />
+                      </li>
+                    ))}
+                    <li>
+                      <button onClick={handleAddHistory}>New</button>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul>
+                    {medicalHistory.map((history, index) => (
+                      <li key={index}>
+                        {history.description} - {history.date}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </p>
             </div>
             <div className="additional-info">
@@ -94,44 +329,161 @@ const AnimalManagementPage = () => {
               <div className="info-group">
                 <div className="info-item">
                   <h4>Vaccines</h4>
-                  <ul>
-                    {vaccines.map((vaccine, index) => (
-                      <li key={index}>
-                        {vaccine.name} - {vaccine.date}
+                  {isEditing ? (
+                    <ul>
+                      {vaccines.map((vaccine, index) => (
+                        <li key={index}>
+                          <input
+                            type="text"
+                            name={`vaccine-${index}`}
+                            value={vaccine.name}
+                            onChange={(e) =>
+                              handleChangeVaccine(index, e.target.value)
+                            }
+                          />{" "}
+                          -{" "}
+                          <input
+                            type="text"
+                            name={`vaccine-date-${index}`}
+                            value={vaccine.date}
+                            onChange={(e) =>
+                              handleChangeVaccineDate(index, e.target.value)
+                            }
+                          />
+                        </li>
+                      ))}
+                      <li>
+                        <button onClick={handleAddVaccine}>New</button>
                       </li>
-                    ))}
-                  </ul>
+                    </ul>
+                  ) : (
+                    <ul>
+                      {vaccines.map((vaccine, index) => (
+                        <li key={index}>
+                          {vaccine.name} - {vaccine.date}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
                 <div className="info-item">
                   <h4>Deworming</h4>
-                  <ul>
-                    {deworming.map((deworm, index) => (
-                      <li key={index}>
-                        {deworm.name} - {deworm.date}
+                  {isEditing ? (
+                    <ul>
+                      {deworming.map((deworm, index) => (
+                        <li key={index}>
+                          <input
+                            type="text"
+                            name={`deworm-${index}`}
+                            value={deworm.name}
+                            onChange={(e) =>
+                              handleChangeDeworm(index, e.target.value)
+                            }
+                          />{" "}
+                          -{" "}
+                          <input
+                            type="text"
+                            name={`deworm-date-${index}`}
+                            value={deworm.date}
+                            onChange={(e) =>
+                              handleChangeDewormDate(index, e.target.value)
+                            }
+                          />
+                        </li>
+                      ))}
+                      <li>
+                        <button onClick={handleAddDeworm}>New</button>
                       </li>
-                    ))}
-                  </ul>
+                    </ul>
+                  ) : (
+                    <ul>
+                      {deworming.map((deworm, index) => (
+                        <li key={index}>
+                          {deworm.name} - {deworm.date}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
                 <div className="info-item">
                   <h4>Sterilization</h4>
-                  {sterilization.isSterilized ? (
-                    <p>
-                      Date: {sterilization.date} - {sterilization.details}
-                    </p>
+                  {isEditing ? (
+                    <>
+                      <input
+                        type="checkbox"
+                        name="isSterilized"
+                        checked={sterilization.isSterilized}
+                        onChange={handleSterilizationChange}
+                      />{" "}
+                      Sterilized
+                      {sterilization.isSterilized && (
+                        <>
+                          <br />
+                          <label>Date:</label>{" "}
+                          <input
+                            type="text"
+                            name="sterilization-date"
+                            value={sterilization.date}
+                            onChange={handleChangeSterilizationDate}
+                          />
+                          <br />
+                          <label>Details:</label>{" "}
+                          <input
+                            type="text"
+                            name="sterilization-details"
+                            value={sterilization.details}
+                            onChange={handleChangeSterilizationDetails}
+                          />
+                        </>
+                      )}
+                    </>
                   ) : (
-                    <p>Not sterilized.</p>
+                    <p>
+                      {sterilization.isSterilized
+                        ? `Sterilized (${sterilization.date}): ${sterilization.details}`
+                        : "Not sterilized"}
+                    </p>
                   )}
                 </div>
                 <div className="info-item">
                   <h4>Allergies</h4>
-                  <p>{allergies}</p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="allergies"
+                      value={allergies}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    <p>{allergies}</p>
+                  )}
+                  {isEditing && <button onClick={handleAddAllergy}>New</button>}
                 </div>
               </div>
               <div className="special-notes">
                 <h4>Special Notes</h4>
-                <p>{specialNotes}</p>
+                {isEditing ? (
+                  <textarea
+                    name="specialNotes"
+                    value={specialNotes}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <p>{specialNotes}</p>
+                )}
               </div>
             </div>
+          </div>
+          <div className="button-container">
+            {isEditing ? (
+              <button className="btn-save" onClick={handleSaveClick}>
+                Save
+              </button>
+            ) : (
+              <button className="btn-edit" onClick={handleEditClick}>
+                Edit
+              </button>
+            )}
           </div>
         </div>
       </div>

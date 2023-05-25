@@ -21,7 +21,6 @@ import VetDashboard from "Routes/Worker/VetDashboard";
 
 import ProfileSettings from "Routes/Client/ProfileSettings";
 
-import ProfileSettings from "Routes/ProfileSettings";
 import AnimalProfile from "Routes/AnimalProfile";
 
 const router = createBrowserRouter([
