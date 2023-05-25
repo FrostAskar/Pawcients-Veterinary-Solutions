@@ -25,6 +25,7 @@
 .contact-form h2 {
   font-size: 28px;
   margin-bottom: 20px;
+  color: var(--main-green)
 }
 
 .form-group {

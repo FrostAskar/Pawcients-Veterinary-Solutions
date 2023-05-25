@@ -3,9 +3,12 @@
   padding: 0;
   // font-family: 'Times New Roman', Times, serif;
 }
+
 .dashboard-page {
   background-color: var(--background-page);
 }
+
+/* Dashboard header */
 
 .dashboard-header {
   background-color: white;
@@ -14,21 +17,19 @@
   align-items: center;
 
   h1 {
-    font-size: 22px;
-    margin: 10px;
+    font-size: 24px;
+    margin: 20px;
   }
-}
-
-.dashboard-content {
-  // display: flex;
 }
 
 .input-wrapper {
   position: relative;
+
   input {
     margin: 10px;
     width: 100px;
   }
+
   i {
     position: absolute;
     top: 16px;
@@ -37,42 +38,178 @@
   }
 }
 
-.today-patients {
-  margin: 40px;
-  padding: 15px;
+.dashboard-content {
+  // display: flex;
+}
+
+/* Generic modal */
+
+.modal-content {
   background-color: white;
-  border-radius: 15px;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5%;
+  margin: 20px;
+  width: fit-content;
+}
+
+.modal {
+  margin: 10px;
+  overflow: auto;
+  border-radius: 5%;
+}
+
+/* Dashboard sections */
+
+.row-dashboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Total patients section */
+
+.total-patients {
+  margin: 10px;
+  padding: 10px;
+  > p {
+    margin: 10px 0px 0px 10px;
+  }
+}
+
+.today-patients-number {
+  color: var(--main-green)
+}
+
+.total-patients-row {
+  display: flex;
+  align-items: center;
+  p {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  img {
+    border: 2px solid var(--light-grey);
+    background-color: var(--background-page);
+    padding: 10px;
+    border-radius: 50%;
+  }
+}
+
+.total-patients-number {
+  font-weight: bold;
+  font-size: 26px !important;
+}
+
+
+/* Pacients by type section */ 
+
+.patients-type {
+  margin: 15px;
+  h3 {
+    color: black;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+}
+
+.patients-type-class {
+  display: flex;
+  align-items: center;
+  p {
+    margin-left: 10px;
+  }
+}
+.blue-circle {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: blue;
+}
+
+.red-circle {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+}
+
+.yellow-circle {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: yellow;
+}
+
+/* Add patient section */
+
+.add-patient-button {
+  font-size: 20px;
+  box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin: 20px;
+  border-style: groove;
+  border-color: var(--light-green)
+}
+
+/* Today patients section */
+
+.today-patients {
+  margin: 15px;
+  width: 35em;
+  padding: 10px;
+  background-color: white;
 }
 
 .today-patients-header {
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
   h2 {
     color: black;
-    font-size: 18px;
+    font-size: 20px;
+  }
+  select {
+    padding: 5px;
+    font-size: 16px;
   }
 }
 
 .patient-name {
-  flex-basis: 30%;
+  flex-basis: 25%;
 }
 
 .patient-kind {
-  flex-basis: 30%;
+  flex-basis: 25%;
 }
 
 .patient-owner {
-  flex-basis: 30%;
+  flex-basis: 35%;
 }
 
 .patient-status {
-  flex-basis: 10%;
+  flex-basis: 15%;
 }
 
 .card-info {
-  background-color: var(--background-page);
-  margin: 20px;
-  padding: 10px;
   display: flex;
   font-weight: bold;
-  border-radius: 15px;
+  border-bottom: 1px solid var(--dark-grey);
+}
+
+
+/* Clinic revenue section */
+
+.clinic-revenue {
+ width: 45em;
+ height: 15em;
+ text-align: center;
+  h2 {
+    color:black;
+    font-size: 20px;
+  }
+  h3 {
+    color: black;
+  }
 }

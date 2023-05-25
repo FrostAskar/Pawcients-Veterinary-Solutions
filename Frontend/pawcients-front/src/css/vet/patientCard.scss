@@ -1,26 +1,37 @@
 .patient-card-wrapper {
-    background-color: var(--background-page);
-    margin: 20px;
-    padding: 10px;
     display: flex;
     align-items: center;
-    border-radius: 15px;
+    padding: 5px;
+    border-bottom: 1px solid var(--dark-grey);
+    i {
+        font-size: 40px;
+        margin: 5px;
+    }
 }
 
-.patient-name {
-    flex-basis: 30%
+#type-icon, #status {
+    flex-basis: 15%
 }
-.patient-kind {
+
+.appoint{
     flex-basis: 30%;
+    p {
+        line-height: 30px;
+    }
 }
 
-.patient-owner {
-    flex-basis: 30%;
+.patient {
+    flex-basis: 40%;
+    p {
+        line-height: 30px;
+    }
 }
 
-.patient-status {
-    flex-basis: 10%;
+
+.patient-name, .patient-hour {
+    font-weight: bold;
 }
+
 
 .completed-status {
     background-color: rgb(44, 44, 183);
@@ -29,3 +40,4 @@
 .completed-status:hover {
     background-color: rgba(50, 50, 175, 0.892);
 }
+

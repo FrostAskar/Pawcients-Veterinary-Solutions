@@ -1,9 +1,17 @@
 :root {
-    --background-page: #f5f5f5;
+    /* Brand colors */
+
     --background-card:  #f9f9f9;
+    --main-green: #3cd264;
+    --hover-green: #66d083;
+    --light-green: #90cea3;
+    --grey-green: #bbcdc3;
+
+    /* Other colors */
+    
+    --background-page: #f5f5f5;
     --input-color: #f0f0f0;
     --light-grey:#dad5d5;
     --dark-grey: #949494;
-    --main-green: #3cd264;
-    --hover-green: #66d083;
+
 }
