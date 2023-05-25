@@ -18,7 +18,10 @@ import Root from "Routes/Root";
 import ClientDashboard from "Routes/Client/ClientDashboard";
 import ClientRegister from "Routes/Worker/ClientsRegister";
 import VetDashboard from "Routes/Worker/VetDashboard";
+
 import ProfileSettings from "Routes/Client/ProfileSettings";
+
+import AnimalProfile from "Routes/AnimalProfile";
 import CustomerManagement from "Routes/Worker/Base/CustomerManagement";
 import MascotsManagement from "Routes/Worker/Base/MascotsManagement";
 import StaffManagement from "Routes/Worker/Base/StaffManagement";
@@ -41,9 +44,6 @@ const router = createBrowserRouter([
       { path: "/clientregister", element: <ClientRegister /> },
       { path: "/vetdashboard", element: <VetDashboard /> },
       { path: "/profilesettings", element: <ProfileSettings /> },
-      { path: "/vet/clients", element: <CustomerManagement /> },
-      { path: "/vet/mascots", element: <MascotsManagement /> },
-      { path: "/vet/staff", element: <StaffManagement /> },
     ],
   },
 ]);

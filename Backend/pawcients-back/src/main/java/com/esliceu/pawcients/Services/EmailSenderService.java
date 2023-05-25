@@ -38,4 +38,19 @@ public class EmailSenderService {
 
         }
     }
+
+    // TODO End verification welcome message
+    public String SendWelcomeEmail(String to, String name, String surname, String verificationCode) {
+//        HTML code to send welcome email
+        String subject = "Welcome to Pawcients";
+        String text = "<h1>Welcome to Pawcients</h1>" +
+                "<p>Hi " + name + " " + surname + ",</p>" +
+                "<p>Thank you for registering in Pawcients. Please verify your email by clicking the link below.</p>" +
+                "<a href=\"http://localhost:8080/verifyEmail/" + verificationCode + "\">Verify Email</a>" +
+                "<p>Thank you,</p>" +
+                "<p>Pawcients Team</p>";
+        return sendEmailWithoutAttachment(to, subject, text);
+
+
+    }
 }
