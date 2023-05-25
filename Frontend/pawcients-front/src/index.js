@@ -18,7 +18,11 @@ import Root from "Routes/Root";
 import ClientDashboard from "Routes/Client/ClientDashboard";
 import ClientRegister from "Routes/Worker/ClientsRegister";
 import VetDashboard from "Routes/Worker/VetDashboard";
+
 import ProfileSettings from "Routes/Client/ProfileSettings";
+
+import ProfileSettings from "Routes/ProfileSettings";
+import AnimalProfile from "Routes/AnimalProfile";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +42,7 @@ const router = createBrowserRouter([
       { path: "/clientregister", element: <ClientRegister /> },
       { path: "/vetdashboard", element: <VetDashboard /> },
       { path: "/profilesettings", element: <ProfileSettings /> },
+      { path: "/animalprofile", element: <AnimalProfile /> },
     ],
   },
 ]);

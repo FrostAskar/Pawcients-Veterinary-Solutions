@@ -1,0 +1,68 @@
+.animal-management-page {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  width: 90%;
+  height: 100vh;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+}
+
+.animal-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.animal-details {
+  flex: 1;
+}
+
+.animal-name {
+  font-size: 24px;
+  margin: 0;
+  color: black;
+}
+
+.profile-details,
+.additional-info {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.info-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.info-item {
+  flex: 1 1 300px;
+}
+
+.info-item h4 {
+  margin-top: 0;
+}
+
+.special-notes {
+  margin-top: 20px;
+}
+
+.special-notes h4 {
+  margin-bottom: 10px;
+}
+
+.special-notes p {
+  white-space: pre-wrap;
+}
