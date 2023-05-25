@@ -1,13 +1,12 @@
 import "css/clientdashboard.css";
 import "css/global/global.scss";
-import Logo from "media/paw.png";
-import Profile from "media/vet.png";
+
 import { Link } from "react-router-dom";
 import NotificationLogo from "media/notificacion.png";
 import ConfiguracionLogo from "media/configuraciones.png";
 import Grafico from "media/grafico.png";
 import Euro from "media/euro.png";
-
+import SideNavbarClient from "./SideNavbarClient";
 
 //TODO FETCH PROFILE DATA
 const profileData = [
@@ -21,35 +20,7 @@ const profileData = [
 export default function ClientDashboard() {
   return (
     <div className="dashboard">
-      <div className="side-navbar">
-        <div className="logo">
-          <img src={Logo} alt="Logo" />
-        </div>
-        <div className="user-profile">
-          <img src={Profile} alt="Profile" className="profile-picture" />
-          <span>{profileData[0].name}</span>
-        </div>
-        <ul className="nav-links">
-          <li>
-            <i className="material-icons"> pets </i>
-            <Link to="/mymascots" className="active">
-              My Pets
-            </Link>
-          </li>
-          <li>
-            <i className="material-icons"> calendar_month </i>
-            <Link to="/calendar" className="active">
-              Calendar
-            </Link>
-          </li>
-          <li className="logout">
-            <i className="material-icons"> logout </i>  
-            <Link to="/logout" className="active">
-              Logout
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <SideNavbarClient />
       <div className="showbuttons">
         <h1 className="titledash">Welcome, {profileData[0].name}</h1>
         <div className="dashboard-container">
