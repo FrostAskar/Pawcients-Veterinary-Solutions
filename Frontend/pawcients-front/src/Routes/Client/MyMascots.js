@@ -1,5 +1,5 @@
 import React from "react";
-import "css/clientdashboard.css";
+import "css/client/clientdashboard.css";
 
 import { Link } from "react-router-dom";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";

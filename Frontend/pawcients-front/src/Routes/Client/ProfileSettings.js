@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "css/profilesettings.css";
+import "css/client/profilesettings.css";
 import "css/vet/dashboard.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";

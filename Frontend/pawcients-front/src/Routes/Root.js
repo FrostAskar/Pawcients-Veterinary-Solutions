@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "css/navbar.css";
+import "css/common/navbar.css";
 import "css/global/variables.css";
 import Paw from "media/paw.png";
 

@@ -1,4 +1,4 @@
-import "css/clientdashboard.css";
+import "css/client/clientdashboard.css";
 import "css/global/global.scss";
 
 import { Link } from "react-router-dom";

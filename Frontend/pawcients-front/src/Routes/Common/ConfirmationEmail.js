@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "css/confirmationEmail.css";
+import "css/common/confirmationEmail.css";
 
 const ConfirmationEmail = () => {
   const [code, setCode] = useState(Array(6).fill(""));

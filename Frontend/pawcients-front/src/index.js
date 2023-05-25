@@ -6,19 +6,19 @@ import reportWebVitals from "reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Login from "Routes/LandingPage/Login";
-import NotFoundPage from "Routes/NotFoundPage";
+import NotFoundPage from "Routes/Common/NotFoundPage";
 import PresentationPage from "Routes/LandingPage/PresentationPage";
 import AboutUs from "Routes/LandingPage/AboutUs";
 import Contact from "Routes/LandingPage/Contact";
-import ConfirmationEmail from "Routes/ConfirmationEmail";
+import ConfirmationEmail from "Routes/Common/ConfirmationEmail";
 import SignUp from "Routes/Worker/SignUp";
-import SessionExpired from "Routes/SessionExpired";
+import SessionExpired from "Routes/Common/SessionExpired";
 import MyMascots from "Routes/Client/MyMascots";
 import Root from "Routes/Root";
 import ClientDashboard from "Routes/Client/ClientDashboard";
 import ClientRegister from "Routes/Worker/ClientsRegister";
 import VetDashboard from "Routes/Worker/VetDashboard";
-import ProfileSettings from "Routes/ProfileSettings";
+import ProfileSettings from "Routes/Client/ProfileSettings";
 
 const router = createBrowserRouter([
   {

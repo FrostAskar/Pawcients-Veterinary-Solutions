@@ -1,5 +1,5 @@
 import React from "react";
-import "css/aboutus.css";
+import "css/landingPage/aboutus.scss";
 import "css/global/variables.css";
 import pawcientsImage from "media/logo.png";
 
@@ -7,7 +7,7 @@ const AboutUs = () => {
   return (
     <div className="about">
       <div className="left-column">
-        <h1>About Us</h1>
+        <h1 class="aboutus-title">About Us</h1>
         <p>
           Pawcients Veterinary Solutions was born as a Final Degree Project at
           Es Liceu School, located in Marratxi, Balearic Islands. Our passion

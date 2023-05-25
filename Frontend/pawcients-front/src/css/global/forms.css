@@ -111,6 +111,8 @@ button:active {
   background-color: #90cea3;
 }
 
+/* Sign up */ 
+
 .signup-details {
   display: flex;
   
@@ -177,6 +179,7 @@ input {
 
   .toggle-container {
     display: flex;
+
     /* flex column */
     flex-direction: column;
     align-items: center;

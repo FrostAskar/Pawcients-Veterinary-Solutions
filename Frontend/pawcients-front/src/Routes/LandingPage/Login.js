@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Logo from "media/logo.png";
 
-import "css/forms.css";
+import "css/global/forms.css";
 import "css/global/global.scss";
 import "css/global/variables.css";
 import { fetchLogin } from "fetches/FetchLogin";

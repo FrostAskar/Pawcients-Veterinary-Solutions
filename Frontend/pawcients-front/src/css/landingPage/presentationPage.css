@@ -16,7 +16,7 @@
   margin-bottom: 10px;
 }
 
-h1 {
+.presentation-title {
   font-size: 36px;
   font-weight: bold;
   color: var(--main-green);
@@ -64,10 +64,10 @@ h1 {
   margin-left: 50px;
 }
 
-h2 {
+.presentation-subtitle {
   font-size: 28px;
   font-weight: bold;
-  color: #3cd264;
+  color: var(--main-green);
   margin-bottom: 10px;
 }
 

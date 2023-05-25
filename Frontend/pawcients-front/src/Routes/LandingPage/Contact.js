@@ -1,5 +1,5 @@
 import React from "react";
-import "css/contact.css";
+import "css/landingPage/contact.css";
 import "css/global/variables.css";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
