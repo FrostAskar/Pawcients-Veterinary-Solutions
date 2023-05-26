@@ -1,10 +1,25 @@
 .vet-clients {
-    margin: 10px;
+    margin: 20px;
 }
 
+.vet-clients-header {
+    display:flex;
+    justify-content: space-between;
+}
+
+
+
 .clients-table {
-    td, th {
-        border: 1px solid black;
-        border-collapse: collapse;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+    td {
+        border-bottom: 1px solid var(--dark-grey);
+        padding: 10px;
+    }
+    th {
+        border-bottom: 1px solid var(--grey);
+        padding: 10px;
     }
 }

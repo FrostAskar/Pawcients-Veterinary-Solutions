@@ -48,7 +48,7 @@ function Login() {
               <input type="password" name="password" id="password" required />
               {/* Captcha: */}
 
-              <button type="submit">Log in</button>
+              <button className="form-button" type="submit">Log in</button>
               {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
           </div>

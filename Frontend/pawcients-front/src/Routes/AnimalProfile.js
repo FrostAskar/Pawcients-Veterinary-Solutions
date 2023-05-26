@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "css/animalprofile.scss";
+import "css/global/animalprofile.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 
 const animalData = {

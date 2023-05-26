@@ -132,7 +132,7 @@ function SignUp() {
               </div>
               {/* Captcha: */}
 
-              <button type="submit">Sign up</button>
+              <button className="form-button" type="submit">Sign up</button>
               {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
           </div>

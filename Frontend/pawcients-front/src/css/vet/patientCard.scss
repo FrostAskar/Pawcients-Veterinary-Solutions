@@ -28,16 +28,32 @@
 }
 
 
+
 .patient-name, .patient-hour {
     font-weight: bold;
 }
 
+#status {
+    width: 150px;
+    padding: 0.5rem;
+    background-color: var(--main-green);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.active-status:hover {
+    background-color: var(--hover-green) !important;
+}
 
 .completed-status {
-    background-color: rgb(44, 44, 183);
+    background-color: rgb(44, 44, 183) !important; 
 }
 
 .completed-status:hover {
-    background-color: rgba(50, 50, 175, 0.892);
+    background-color: rgba(50, 50, 175, 0.892) !important;
 }
 

@@ -20,7 +20,7 @@ const clients = [
         id: 3,
         name: "Andrés",
         lastName: "Pantoja",
-        phone: "67690578",
+        phone: "676905781",
         email: "andres@gmail.com"
     },
 ];
@@ -41,33 +41,39 @@ export default function CustomerManagement() {
                     </div>
                 </div>
                 <div className="dashboard-content">
-                    <section className="modal">
-                        <div className="modal-content">
-                            <div className="vet-clients">
-                                <h1>{ clients.length } Total Patients</h1>
-                                <table className="clients-table">
-                                    <tr>
-                                        <td>ID</td>
-                                        <td>Name</td>
-                                        <td>LastName</td>
-                                        <td>Phone</td>
-                                        <td>Email</td>
-                                    </tr>
-                                    {clients.map((client, index) => (
-                                        <tr key={index}>
-                                            <th>{client.id}</th>
-                                            <th>{client.name}</th>
-                                            <th>{client.lastName}</th>
-                                            <th>{client.phone}</th>
-                                            <th>{client.email}</th>
+                    <section className="row-dashboard">
+                        <div className="modal">
+                            <div className="modal-content">
+                                <div className="vet-clients">
+                                    <div className="vet-clients-header">
+                                        <h1>{clients.length} Total Patients</h1>
+                                        <button className="clasic-button">Add Patient</button>
+                                    </div>
+                                    <table className="clients-table">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>LastName</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Pets</th>
                                         </tr>
-                                    ))}
-                                        
-                                    
-                                </table>
+                                        {clients.map((client, index) => (
+                                            <tr key={index}>
+                                                <td>{client.id}</td>
+                                                <td>{client.name}</td>
+                                                <td>{client.lastName}</td>
+                                                <td>{client.phone}</td>
+                                                <td>{client.email}</td>
+                                                <td><button className="clasic-button">View pets</button></td>
+                                            </tr>
+                                        ))}
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </section>
+
                 </div>
             </div>
         </div>

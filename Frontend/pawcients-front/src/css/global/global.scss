@@ -22,7 +22,6 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--light-grey);
-
   h1 {
     font-size: 24px;
     margin: 20px;
@@ -35,7 +34,6 @@
   input {
     margin: 10px;
     width: 200px;
-    overflow: hidden;
   }
 
   i {
@@ -114,6 +112,24 @@
   }
 }
 
+/* Button */
+
+.clasic-button {
+  cursor: pointer;
+  color: white;
+  background-color: var(--main-green);
+  border-radius: 0.5rem;
+  padding: 8px;
+  font-size: 15px;
+  border-style: groove;
+  border-color: var(--light-green);
+  box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.clasic-button:hover {
+  background-color: var(--hover-green);
+}
 
 
 

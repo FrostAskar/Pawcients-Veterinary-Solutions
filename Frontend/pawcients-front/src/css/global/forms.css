@@ -91,7 +91,7 @@
 
 /* Buttons */
 
-button {
+.form-button {
   width: 150px;
   padding: 0.5rem;
   background-color: var(--main-green);
@@ -103,11 +103,11 @@ button {
   margin-top: 1rem;
 }
 
-button:hover {
+.form-button:hover {
   background-color: var(--hover-green);
 }
 
-button:active {
+.form-button:active {
   background-color: #90cea3;
 }
 

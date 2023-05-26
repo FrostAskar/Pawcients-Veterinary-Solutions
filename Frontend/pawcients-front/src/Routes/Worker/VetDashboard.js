@@ -61,6 +61,9 @@ export default function VetDashboard() {
           </div>
         </div>
         <div className="dashboard-content">
+        <div className="add-patient">
+              <button class="add-patient-button">Add patient</button>
+        </div>
           <section className="row-dashboard">
             <div className="modal">
               <div className="modal-content">
@@ -94,9 +97,6 @@ export default function VetDashboard() {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="add-patient">
-              <button class="add-patient-button">Add patient</button>
             </div>
           </section>
           <section class="row-dashboard">
