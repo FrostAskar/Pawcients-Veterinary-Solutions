@@ -7,21 +7,25 @@ const clients = [
         name: "Maru",
         lastName: "Suarez",
         phone: "674014708",
-        email: "maru@gmail.com"
+        email: "maru@gmail.com",
+        nextAppoint: "05/06/2023"
     },
     {
         id: 2,
         name: "Dámaso",
         lastName: "Simal",
         phone: "678965122",
-        email: "damaso@gmail.com"
+        email: "damaso@gmail.com",
+        nextAppoint: null
+
     },
     {
         id: 3,
         name: "Andrés",
         lastName: "Pantoja",
         phone: "676905781",
-        email: "andres@gmail.com"
+        email: "andres@gmail.com",
+        nextAppoint: "30/05/2023"
     },
 ];
 export default function CustomerManagement() {
@@ -44,12 +48,12 @@ export default function CustomerManagement() {
                     <section className="row-dashboard">
                         <div className="modal">
                             <div className="modal-content">
-                                <div className="vet-clients">
-                                    <div className="vet-clients-header">
-                                        <h1>{clients.length} Total Patients</h1>
-                                        <button className="clasic-button">Add Patient</button>
+                                <div className="management">
+                                    <div className="management-header">
+                                        <h1>{clients.length} Total Clients</h1>
+                                        <button className="clasic-button">Add Client</button>
                                     </div>
-                                    <table className="clients-table">
+                                    <table className="management-table">
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
@@ -57,6 +61,7 @@ export default function CustomerManagement() {
                                             <th>Phone</th>
                                             <th>Email</th>
                                             <th>Pets</th>
+                                            <th>Next Appointment</th>
                                         </tr>
                                         {clients.map((client, index) => (
                                             <tr key={index}>
@@ -65,7 +70,14 @@ export default function CustomerManagement() {
                                                 <td>{client.lastName}</td>
                                                 <td>{client.phone}</td>
                                                 <td>{client.email}</td>
-                                                <td><button className="clasic-button">View pets</button></td>
+                                                <td><button className="small-button-green">View pets</button></td>
+                                                <td>
+                                                    {client.nextAppoint !== null ? (
+                                                        <p>{client.nextAppoint}</p>
+                                                    ) : (
+                                                        <button className="small-button-grey">Schedule</button>
+                                                    )}
+                                                </td>
                                             </tr>
                                         ))}
                                     </table>

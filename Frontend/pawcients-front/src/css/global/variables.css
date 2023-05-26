@@ -6,6 +6,7 @@
     --hover-green: #66d083;
     --light-green: #90cea3;
     --grey-green: #bbcdc3;
+    
 
     /* Other colors */
     
@@ -14,5 +15,7 @@
     --light-grey:#dad5d5;
     --grey:#b9b6b6;
     --dark-grey: #949494;
+    --main-green-strong: #34b958;
+    --dark-green: #7db68e;
 
 }

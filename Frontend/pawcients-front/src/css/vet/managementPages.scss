@@ -1,25 +1,51 @@
-.vet-clients {
+.management {
     margin: 20px;
 }
 
-.vet-clients-header {
+.management-header {
     display:flex;
     justify-content: space-between;
 }
 
+.small-button-green {
+    cursor: pointer;
+    padding: 4px;
+    font-size: 14px;
+    border-radius: 9px;
+    background-color: var(--light-green);
+    border: solid;
+    border-color: var(--light-green);
+    color:white;
+}
 
+.small-button-green:hover {
+    background-color: #90cea3d0;
+}
+.small-button-grey:hover {
+    background-color: #7db68ecb;;
+}
+.small-button-grey {
+    cursor: pointer;
+    padding: 4px;
+    font-size: 14px;
+    border-radius: 9px;
+    background-color: var(--dark-green);
+    border: solid;
+    border-color: var(--dark-green);
+    color:white;
+}
 
-.clients-table {
+.management-table {
     border-collapse: collapse;
     text-align: center;
     margin-top: 15px;
     font-size: 18px;
     td {
-        border-bottom: 1px solid var(--dark-grey);
-        padding: 10px;
+        border-bottom: 1px solid var(--grey);
+        padding: 10px 20px;
     }
     th {
-        border-bottom: 1px solid var(--grey);
-        padding: 10px;
+        border-bottom: 1px solid var(--dark-grey);
+        padding: 10px 20px;
     }
 }

@@ -23,8 +23,9 @@
   align-items: center;
   border-bottom: 1px solid var(--light-grey);
   h1 {
-    font-size: 24px;
+    font-size: 28px;
     margin: 20px;
+    color: var(--main-green);
   }
 }
 
@@ -43,6 +44,7 @@
     color: var(--dark-grey);
   }
 }
+
 
 /* NavBar */
 
@@ -121,6 +123,7 @@
   border-radius: 0.5rem;
   padding: 8px;
   font-size: 15px;
+  font-weight: bold;
   border-style: groove;
   border-color: var(--light-green);
   box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
