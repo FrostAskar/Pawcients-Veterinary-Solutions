@@ -2,16 +2,40 @@
   margin: 0;
   padding: 0;
 }
+
+/* Generic modal */
+
+.modal-content {
+  background-color: white;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  margin: 20px;
+  width: fit-content;
+}
+
+.modal {
+  margin: 10px;
+  overflow: auto;
+  border-radius: 5%;
+}
+
 /* Dashboard */
 
 .dashboard {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  height: 100%;
+  grid-template-columns: 250px 1fr;
+  height: 100vh;
 }
 
 .dashboard-page {
   background-color: var(--background-page);
+}
+
+.row-dashboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Dashboard header */

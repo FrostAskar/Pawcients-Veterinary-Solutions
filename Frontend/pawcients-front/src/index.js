@@ -19,9 +19,9 @@ import ClientDashboard from "Routes/Client/ClientDashboard";
 import ClientRegister from "Routes/Worker/ClientsRegister";
 import VetDashboard from "Routes/Worker/VetDashboard";
 
-import ProfileSettings from "Routes/Client/ProfileSettings";
+import ProfileSettings from "Routes/Common/ProfileSettings";
 
-import AnimalProfile from "Routes/AnimalProfile";
+import AnimalProfile from "Routes/Common/AnimalProfile";
 import CustomerManagement from "Routes/Worker/Base/CustomerManagement";
 import MascotsManagement from "Routes/Worker/Base/MascotsManagement";
 import StaffManagement from "Routes/Worker/Base/StaffManagement";

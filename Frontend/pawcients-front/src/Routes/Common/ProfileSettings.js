@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "css/client/profilesettings.css";
-import "css/vet/dashboard.scss";
+import "css/common/profilesettings.scss";
+import "css/vet/vetHome.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 const profileData = [
@@ -67,7 +67,7 @@ const ProfileSettings = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button onClick={handlePasswordChange}>Change Password</button>
+          <button className="clasic-button" onClick={handlePasswordChange}>Change Password</button>
         </div>
       </div>
     </div>

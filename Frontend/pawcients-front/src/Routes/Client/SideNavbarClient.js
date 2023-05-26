@@ -24,6 +24,12 @@ const SideNavbarClient = () => {
       </div>
       <ul className="nav-links">
         <li>
+          <i className="material-icons"> home </i>
+          <Link to="/clientdashboard" className="active">
+            Home
+          </Link>
+        </li>
+        <li>
           <i className="material-icons">pets</i>
           <Link to="/mymascots" className="active">
             My Pets
@@ -35,6 +41,7 @@ const SideNavbarClient = () => {
             Calendar
           </Link>
         </li>
+        <h3>ACCOUNT</h3>
         <li>
           <i className="material-icons"> settings </i>
           <Link to="/profilesettings" className="active">

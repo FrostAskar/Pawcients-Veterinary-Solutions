@@ -1,6 +1,6 @@
 import "css/global/global.scss";
 import "css/global/variables.css";
-import "css/vet/dashboard.scss";
+import "css/vet/vetHome.scss";
 import TodayPatient from "Routes/Worker/TodayPatient";
 import { fetchProfile } from "fetches/getProfile";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";

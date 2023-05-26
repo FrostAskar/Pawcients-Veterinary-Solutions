@@ -70,12 +70,12 @@ export default function CustomerManagement() {
                                                 <td>{client.lastName}</td>
                                                 <td>{client.phone}</td>
                                                 <td>{client.email}</td>
-                                                <td><button className="small-button-green">View pets</button></td>
+                                                <td><button className="small-button-color1">View pets</button></td>
                                                 <td>
                                                     {client.nextAppoint !== null ? (
                                                         <p>{client.nextAppoint}</p>
                                                     ) : (
-                                                        <button className="small-button-grey">Schedule</button>
+                                                        <button className="small-button-color2">Schedule</button>
                                                     )}
                                                 </td>
                                             </tr>

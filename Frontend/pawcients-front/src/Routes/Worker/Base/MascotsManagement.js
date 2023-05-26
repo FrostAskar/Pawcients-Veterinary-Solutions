@@ -71,7 +71,7 @@ export default function MascotsManagement() {
                                                 <td>{pet.gender}</td>
                                                 <td>{pet.age}</td>
                                                 <td>{pet.owner}</td>
-                                                <td><button className="small-button-green">View</button></td>
+                                                <td><button className="small-button-color1">View</button></td>
                                             </tr>
                                         ))}
                                     </table>

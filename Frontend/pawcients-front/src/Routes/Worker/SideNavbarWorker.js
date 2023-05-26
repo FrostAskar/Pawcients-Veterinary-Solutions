@@ -4,7 +4,7 @@ import Profile from "media/vet.png";
 import { Link } from "react-router-dom";
 import "css/global/global.scss";
 import "css/global/variables.css";
-import "css/vet/dashboard.scss";
+import "css/vet/vetHome.scss";
 
 const SideNavbarWorker = () => {
 
