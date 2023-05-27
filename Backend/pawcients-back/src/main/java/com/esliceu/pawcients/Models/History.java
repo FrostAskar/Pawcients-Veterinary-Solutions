@@ -10,7 +10,7 @@ import java.time.LocalDate;
     History is a collection of all the procedures, analysis and revisions a mascot
     can undergo during its lifetime
 */
-@Document
+@Document(collection = "History")
 public class History {
 
     @Id

@@ -9,12 +9,11 @@ import java.time.LocalDate;
     Appointment is a visit that a mascot does to a vet/aux and is requested by the owner
 */
 
-@Document
+@Document(collection = "Appointment")
 public class Appointment {
 
     @Id
     String id;
-
     LocalDate date;
     String workerId;
     String ownerId;

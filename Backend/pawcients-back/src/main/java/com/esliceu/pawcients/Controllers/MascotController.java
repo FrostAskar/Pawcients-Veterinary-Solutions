@@ -1,5 +1,7 @@
 package com.esliceu.pawcients.Controllers;
 
+import com.esliceu.pawcients.Exceptions.NotFoundUserException;
+import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Forms.FindMascotForm;
 import com.esliceu.pawcients.Forms.RegisterMascotForm;
 import com.esliceu.pawcients.Models.Mascot;
@@ -44,9 +46,16 @@ public class MascotController {
     public Map<String, Object> registerMascot (@RequestBody RegisterMascotForm registerMascotForm,
                                                @PathVariable String clientId) {
         Map<String, Object> result = new HashMap<>();
-
-        mascotService.saveMascot(registerMascotForm);
-
+        String mascotId;
+        try {
+            mascotId =  mascotService.saveMascot(registerMascotForm, clientId);
+            result.put("mascotId", mascotId);
+        } catch (NotFoundUserException e) {
+            result.put("error", e.getMessage());
+        //todo for this one to work we need to request user currently logged in case is a client trying to insert animal in other costumer
+        } catch (UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+        }
         return result;
     }
 }

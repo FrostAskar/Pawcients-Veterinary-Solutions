@@ -26,6 +26,7 @@ public class User {
     String clinicId;
     String profilePicture;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String verificationCodeEmail;
     boolean verificationCodeEmailCheck;
     public User(){}

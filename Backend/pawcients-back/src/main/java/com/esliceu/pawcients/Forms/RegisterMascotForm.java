@@ -12,7 +12,6 @@ public class RegisterMascotForm {
 
     LocalDate birthDate;
 
-    String owner_id;
 
     public String getMascot_name() {
         return mascot_name;
@@ -44,13 +43,5 @@ public class RegisterMascotForm {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public String getOwner_id() {
-        return owner_id;
-    }
-
-    public void setOwner_id(String owner_id) {
-        this.owner_id = owner_id;
     }
 }

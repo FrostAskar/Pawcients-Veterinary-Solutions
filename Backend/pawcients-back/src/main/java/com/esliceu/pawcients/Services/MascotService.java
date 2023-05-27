@@ -54,17 +54,15 @@ public class MascotService {
         return mascotRepo.findByOwnerId(userId);
     }
 
-    public String saveMascot(RegisterMascotForm registerMascotForm){
+    public String saveMascot(RegisterMascotForm registerMascotForm, String ownerId){
         Mascot mascot = new Mascot(
                 null,
                 registerMascotForm.getMascot_name(),
                 registerMascotForm.getSpecies(),
                 registerMascotForm.getRace(),
                 registerMascotForm.getBirthDate(),
-                registerMascotForm.getOwner_id()
+                ownerId
                 );
-        mascotRepo.save(mascot);
-        return "Ok";
+        return mascotRepo.save(mascot).getId();
     }
-
 }
