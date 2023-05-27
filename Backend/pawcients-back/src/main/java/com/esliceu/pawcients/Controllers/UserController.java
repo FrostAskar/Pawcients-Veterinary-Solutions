@@ -131,11 +131,7 @@ public class UserController {
 
     @GetMapping("/getprofile")
     @CrossOrigin
-    public User getProfile(HttpServletRequest req, HttpServletResponse res, @RequestHeader("Authorization") String token) {
-        if (tokenService.getUser(token.replace("Bearer ", "")) == null) {
-            res.setStatus(401);
-            return null;
-        }
+    public User getProfile(HttpServletRequest req) {
         return (User) req.getAttribute("user");
     }
 

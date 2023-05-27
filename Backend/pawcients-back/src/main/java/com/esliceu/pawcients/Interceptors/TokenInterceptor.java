@@ -21,6 +21,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
+        String method = req.getMethod();
+        if(method.equals("OPTIONS")) {
+            return true;
+        }
         String authHeader = req.getHeader("Authorization");
         if(authHeader == null) {
             return false;
