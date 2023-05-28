@@ -61,12 +61,12 @@ export default function VetDashboard() {
           </div>
         </div>
         <div className="dashboard-content">
-        <div className="add-patient">
-              <button class="add-patient-button">Add patient</button>
-        </div>
+          <div className="add-patient">
+            <button class="add-patient-button">Add patient</button>
+          </div>
           <section className="row-dashboard">
-            <div className="modal">
-              <div className="modal-content">
+            <div className="section">
+              <div className="section-content">
                 <div className="total-patients">
                   <div className="total-patients-row">
                     <img src={Paw} alt="paw" height="50px" width="auto" />
@@ -79,8 +79,8 @@ export default function VetDashboard() {
                 </div>
               </div>
             </div>
-            <div className="modal">
-              <div className="modal-content">
+            <div className="section">
+              <div className="section-content">
                 <div className="patients-type">
                   <h3>Patients by type</h3>
                   <div className="patients-type-class">
@@ -100,8 +100,8 @@ export default function VetDashboard() {
             </div>
           </section>
           <section class="row-dashboard">
-            <div className="modal">
-              <div className="modal-content">
+            <div className="section">
+              <div className="section-content">
                 <div className="today-patients">
                   <div className="today-patients-header">
                     <h2> Today Patients </h2>
@@ -119,8 +119,8 @@ export default function VetDashboard() {
             </div>
           </section>
           <section className="row-dashboard">
-            <div className="modal">
-              <div className="modal-content">
+            <div className="section">
+              <div className="section-content">
                 <div className="clinic-revenue">
                   <h2>Clinic Revenue</h2>
                   <h3>Gráfico to guapo</h3>

@@ -16,7 +16,6 @@ import SessionExpired from "Routes/Common/SessionExpired";
 import MyMascots from "Routes/Client/MyMascots";
 import Root from "Routes/Root";
 import ClientDashboard from "Routes/Client/ClientDashboard";
-import ClientRegister from "Routes/Worker/ClientsRegister";
 import VetDashboard from "Routes/Worker/VetDashboard";
 
 import ProfileSettings from "Routes/Common/ProfileSettings";
@@ -41,7 +40,6 @@ const router = createBrowserRouter([
       { path: "/sessionexpired", element: <SessionExpired /> },
       { path: "/mymascots", element: <MyMascots /> },
       { path: "/clientdashboard", element: <ClientDashboard /> },
-      { path: "/clientregister", element: <ClientRegister /> },
       { path: "/vetdashboard", element: <VetDashboard /> },
       { path: "/vet/clients", element: <CustomerManagement /> },
       { path: "/vet/mascots", element: <MascotsManagement /> },

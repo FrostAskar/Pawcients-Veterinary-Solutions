@@ -40,7 +40,7 @@ function Login() {
       <div className="main-container">
         <div className="toggle-container">
           <div className="form-container">
-            <form onSubmit={handleSubmit} method="post">
+            <form className="clasic-form" onSubmit={handleSubmit} method="post">
               <label htmlFor="email">Email</label>
               <input type="email" name="email" id="email" required />
 

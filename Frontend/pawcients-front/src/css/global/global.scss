@@ -5,7 +5,7 @@
 
 /* Generic modal */
 
-.modal-content {
+.section-content {
   background-color: white;
   border: 1px solid #888;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -14,7 +14,7 @@
   width: fit-content;
 }
 
-.modal {
+.section {
   margin: 10px;
   overflow: auto;
   border-radius: 5%;
@@ -46,6 +46,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--light-grey);
+
   h1 {
     font-size: 28px;
     margin: 20px;
@@ -117,21 +118,25 @@
   display: flex;
   flex-direction: column;
   color: var(--light-grey);
+
   h3 {
     font-size: 14px;
-    color:var(--dark-grey);
+    color: var(--dark-grey);
     margin: 15px 0px;
   }
+
   li {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     font-size: 16px;
     padding-bottom: 10px;
+
     a {
       color: var(--light-grey);
       text-decoration: none;
     }
+
     i {
       margin-right: 8px;
     }
@@ -150,7 +155,7 @@
   font-weight: bold;
   border-style: groove;
   border-color: var(--light-green);
-  box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 
@@ -159,5 +164,39 @@
 }
 
 
+/* Inputs */
 
-  
+
+.clasic-form {
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+
+  input,
+  textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--input-color)
+  }
+
+  button{
+    background-color: var(--main-green);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: var(--hover-green);
+  }
+
+}

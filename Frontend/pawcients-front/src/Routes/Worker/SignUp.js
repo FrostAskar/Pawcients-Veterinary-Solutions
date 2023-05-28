@@ -61,7 +61,7 @@ function SignUp() {
       <div className="main-container">
         <div className="toggle-container">
           <div className="form-container">
-            <form onSubmit={handleSubmit} method="post">
+            <form className="clasic-form" onSubmit={handleSubmit} method="post">
               <div class="signup-details">
                 <div class="vet-details">
                   <h2 class="details-title"> Veterinary details </h2>

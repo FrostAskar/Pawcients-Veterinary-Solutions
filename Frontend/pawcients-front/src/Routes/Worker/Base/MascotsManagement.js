@@ -1,5 +1,8 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/global/global.scss"
+import "css/vet/dataManagement.scss"
+import { fetchClientRegister } from "fetches/FetchClientRegister";
+import React, { useState } from "react";
 
 const mascots = [
     {
@@ -29,6 +32,39 @@ const mascots = [
     },
 ];
 export default function MascotsManagement() {
+    const [errorMessage, setErrorMessage] = useState("");
+    const [creationMode, setCreationMode] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const species = e.target.species.value;
+        const gender = e.target.gender.value;
+        const birthDate = e.target.birthDate.value;
+        const owner = e.target.owner.value;
+        try {
+            // Fetch para login de cliente
+            const response = await fetchClientRegister(name, species, gender, birthDate, owner);
+            if (response.success) {
+
+            } else {
+                // Mensaje de error para cliente
+                setErrorMessage(response.message);
+            }
+        } catch (error) {
+            console.log(error);
+            setErrorMessage("Error en la conexión con el servidor");
+        }
+    };
+
+
+    const openModal =  () => {
+        setCreationMode(true);
+    }
+
+    const cancelCreation = () => {
+        setCreationMode(false);
+    }
     return (
         <div className="dashboard">
             <SideNavbarWorker />
@@ -46,12 +82,12 @@ export default function MascotsManagement() {
                 </div>
                 <div className="dashboard-content">
                     <section className="row-dashboard">
-                        <div className="modal">
-                            <div className="modal-content">
+                        <div className="section">
+                            <div className="section-content">
                                 <div className="management">
                                     <div className="management-header">
                                         <h1>{mascots.length} Total Mascots</h1>
-                                        <button className="clasic-button">Add Mascot</button>
+                                        <button className="clasic-button" onClick={openModal}>Add Mascot</button>
                                     </div>
                                     <table className="management-table">
                                         <tr>
@@ -79,9 +115,36 @@ export default function MascotsManagement() {
                             </div>
                         </div>
                     </section>
+                    {creationMode && (
+                        <section className="creation-section">
+                            <div className="modal">
+                                <div className="modal-content">
+                                    <h1>Sign up mascot</h1>
+                                    <form className="clasic-form" onSubmit={handleSubmit} method="post">
+                                        <label htmlFor="name">Name</label>
+                                        <input type="text" name="name" id="name" required />
+                                        <label htmlFor="species">Species</label>
+                                        <input type="text" name="species" id="species" required />
+                                        <label htmlFor="gender">Gender</label>
+                                        <select name="gender">
+                                            <option value="F">Female</option>
+                                            <option value="F">Male</option>
+                                        </select>  
+                                        <label htmlFor="birthDate">Birth Date</label>
+                                        <input type="date" name="birthDate" id="birthDate" required />
+                                        <label htmlFor="owner">Owner</label>
+                                        <input type="text" name="owner" id="owner" required />
+                                        {/* Captcha: */}
 
+                                        <button className="clasic-button" type="submit">Sign up mascot</button>
+                                        <button className="clasic-button" type="button" onClick={cancelCreation}>Cancel</button>
+                                        {errorMessage && <p className="error-message">{errorMessage}</p>}
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                    )}
                 </div>
-
             </div>
         </div>
     )

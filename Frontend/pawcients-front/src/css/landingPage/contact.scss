@@ -20,47 +20,47 @@
   background-color: var(--background-card);
   padding: 20px;
   border-radius: 8px;
+  h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--main-green)
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--input-color)
+  }
+  
+  button[type="submit"] {
+    background-color: var(--main-green);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: var(--hover-green);
+  }
+  
 }
-
-.contact-form h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: var(--main-green)
-}
-
 .form-group {
   margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
 
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--input-color)
-}
-
-button[type="submit"] {
-  background-color: var(--main-green);
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-button[type="submit"]:hover {
-  background-color: var(--hover-green);
-}
 
 .contact-info {
   flex-basis: 45%;

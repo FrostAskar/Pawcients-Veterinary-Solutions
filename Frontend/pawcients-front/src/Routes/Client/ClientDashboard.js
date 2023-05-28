@@ -25,19 +25,19 @@ export default function ClientDashboard() {
         <h1 className="titledash">Welcome, {profileData[0].name}</h1>
         <div className="dashboard-container">
           <Link to="/notifications" className="dashboard-button">
-            <h2>Notifications Section</h2>
+            <h2 className="client-dash-card">Notifications Section</h2>
             <img src={NotificationLogo} alt="Imagen 1"></img>
           </Link>
           <Link to="/settings" className="dashboard-button">
-            <h2>Profile Settings</h2>
+            <h2 className="client-dash-card">Profile Settings</h2>
             <img src={ConfiguracionLogo} alt="Imagen 2"></img>
           </Link>
           <Link to="/stadistics" className="dashboard-button">
-            <h2>Statistics</h2>
+            <h2 className="client-dash-card">Statistics</h2>
             <img src={Grafico} alt="Imagen 3"></img>
           </Link>
           <Link to="/pricing" className="dashboard-button">
-            <h2>Pricing</h2>
+            <h2 className="client-dash-card">Pricing</h2>
             <img src={Euro} alt="Imagen 4"></img>
           </Link>
         </div>
