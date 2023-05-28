@@ -24,6 +24,7 @@ import AnimalProfile from "Routes/Common/AnimalProfile";
 import CustomerManagement from "Routes/Worker/Base/CustomerManagement";
 import MascotsManagement from "Routes/Worker/Base/MascotsManagement";
 import StaffManagement from "Routes/Worker/Base/StaffManagement";
+import CalendarPage from "Routes/Calendar/CalendarPage";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,8 @@ const router = createBrowserRouter([
       { path: "/vet/staff", element: <StaffManagement /> },
       { path: "/profilesettings", element: <ProfileSettings /> },
       { path: "/animalprofile", element: <AnimalProfile /> },
+      { path: "/calendar", element: <CalendarPage /> },
+
     ],
   },
 ]);

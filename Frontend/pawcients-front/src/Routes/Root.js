@@ -23,6 +23,7 @@ export default function NavbarLanding() {
       "/vet/staff", 
       "/vet/mascots",
       "/animalprofile",
+      "/calendar"
     ];
 
     setShowNavbar(!locationsWithoutNavbar.includes(location.pathname));

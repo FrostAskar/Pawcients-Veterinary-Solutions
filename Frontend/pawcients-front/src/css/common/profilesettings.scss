@@ -5,6 +5,28 @@
   justify-content: center;
   margin-top: 20px;
   height: 100vh;
+
+  input {
+    background-color: var(--input-color);
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  button{
+    background-color: var(--main-green);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: var(--hover-green);
+  }
 }
 
 .profile-image-change {
