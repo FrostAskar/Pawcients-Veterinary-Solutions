@@ -1,7 +1,9 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
-import { fetchClientRegister } from "fetches/FetchClientRegister";
+
 import React, { useState } from "react";
+import MascotCreation from "Routes/Worker/Base/MascotCreation";
+import ClientCreation from "./ClientCreation";
 
 const clients = [
     {
@@ -31,37 +33,23 @@ const clients = [
     },
 ];
 export default function CustomerManagement() {
-    const [errorMessage, setErrorMessage] = useState("");
-    const [creationMode, setCreationMode] = useState(false);
+    const [clientCreationMode, setClientCreationMode] = useState(false);
+    const [mascotCreationMode, setMascotCreationMode] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const name = e.target.name.value;
-        const lastName = e.target.lastname.value;
-        const email = e.target.email.value;
-        const phone = e.target.phone.value;
-        try {
-            // Fetch para login de cliente
-            const response = await fetchClientRegister(name, lastName, email, phone);
-            if (response.success) {
-
-            } else {
-                // Mensaje de error para cliente
-                setErrorMessage(response.message);
-            }
-        } catch (error) {
-            console.log(error);
-            setErrorMessage("Error en la conexión con el servidor");
-        }
-    };
-
-
-    const openModal =  () => {
-        setCreationMode(true);
+    const openClientModal =  () => {
+        setClientCreationMode(true);
     }
 
-    const cancelCreation = () => {
-        setCreationMode(false);
+    const cancelClientCreation = () => {
+        setClientCreationMode(false);
+    }
+
+    const openMascotModal =  () => {
+        setMascotCreationMode(true);
+    }
+
+    const cancelMascotCreation = () => {
+        setMascotCreationMode(false);
     }
 
 
@@ -87,7 +75,7 @@ export default function CustomerManagement() {
                                 <div className="management">
                                     <div className="management-header">
                                         <h1>{clients.length} Total Clients</h1>
-                                        <button className="clasic-button" onClick={openModal}>Add Client</button>
+                                        <button className="clasic-button" onClick={openClientModal}>Add Client</button>
                                     </div>
                                     <table className="management-table">
                                         <tr>
@@ -96,8 +84,9 @@ export default function CustomerManagement() {
                                             <th>LastName</th>
                                             <th>Phone</th>
                                             <th>Email</th>
-                                            <th>Pets</th>
                                             <th>Next Appointment</th>
+                                            <th>Pets</th>
+                                            <th>Add Pet</th>
                                         </tr>
                                         {clients.map((client, index) => (
                                             <tr key={index}>
@@ -106,14 +95,15 @@ export default function CustomerManagement() {
                                                 <td>{client.lastName}</td>
                                                 <td>{client.phone}</td>
                                                 <td>{client.email}</td>
-                                                <td><button className="small-button-color1">View pets</button></td>
                                                 <td>
                                                     {client.nextAppoint !== null ? (
                                                         <p>{client.nextAppoint}</p>
                                                     ) : (
-                                                        <button className="small-button-color2">Schedule</button>
+                                                        <button className="small-button">Schedule</button>
                                                     )}
                                                 </td>
+                                                <td><button className="small-button">View pets</button></td>
+                                                <td><button className="small-button" onClick={openMascotModal}>Add</button></td>
                                             </tr>
                                         ))}
                                     </table>
@@ -121,29 +111,12 @@ export default function CustomerManagement() {
                             </div>
                         </div>
                     </section>
-                    {creationMode && (
-                        <section className="creation-section">
-                            <div className="modal">
-                                <div className="modal-content">
-                                    <h1>Sign up client</h1>
-                                    <form className="clasic-form" onSubmit={handleSubmit} method="post">
-                                        <label htmlFor="name">Name</label>
-                                        <input type="text" name="name" id="name" required />
-                                        <label htmlFor="lastname">Lastname</label>
-                                        <input type="text" name="lastname" id="lastname" required />
-                                        <label htmlFor="email">Email</label>
-                                        <input type="email" name="email" id="email" required />
-                                        <label htmlFor="phone">Phone</label>
-                                        <input type="text" name="phone" id="phone" required />
-                                        {/* Captcha: */}
+                    {clientCreationMode && (
+                        <ClientCreation onCancel={cancelClientCreation} />
+                    )}
 
-                                        <button className="clasic-button" type="submit">Sign up client</button>
-                                        <button className="clasic-button" type="button" onClick={cancelCreation}>Cancel</button>
-                                        {errorMessage && <p className="error-message">{errorMessage}</p>}
-                                    </form>
-                                </div>
-                            </div>
-                        </section>
+                    {mascotCreationMode && (
+                        <MascotCreation onCancel={cancelMascotCreation}/>
                     )}
 
                 </div>

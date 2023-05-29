@@ -7,33 +7,23 @@
     justify-content: space-between;
 }
 
-.small-button-color1 {
-    cursor: pointer;
-    padding: 4px;
-    font-size: 14px;
-    border-radius: 9px;
-    background-color: var(--hover-green);
-    border: solid;
-    border-color: var(--hover-green);
-    color:white;
-}
 
-.small-button-color1:hover {
-    background-color: #66d082c0;
-}
-.small-button-color2:hover {
+
+.small-button:hover {
     background-color: #58b872be;
 }
-.small-button-color2 {
+
+.small-button {
     cursor: pointer;
     padding: 4px;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 9px;
     background-color: var(--button-green);
     border: solid;
     border-color: var(--button-green);
     color:white;
 }
+
 
 .management-table {
     border-collapse: collapse;

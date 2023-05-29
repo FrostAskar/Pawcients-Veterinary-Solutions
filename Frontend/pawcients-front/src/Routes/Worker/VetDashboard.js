@@ -5,6 +5,9 @@ import TodayPatient from "Routes/Worker/TodayPatient";
 import { fetchProfile } from "fetches/getProfile";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import Paw from "../../media/paw.png"
+import ClientCreation from "./Base/ClientCreation";
+import React, { useState } from "react";
+
 
 function getProfileData() {
   const token = localStorage.getItem("token");
@@ -44,6 +47,17 @@ const todayPatients = [
 ];
 
 export default function VetDashboard() {
+  const [creationMode, setCreationMode] = useState(false);
+
+  const openModal = () => {
+    setCreationMode(true);
+  }
+
+  const cancelCreation = () => {
+    setCreationMode(false);
+  }
+
+
   return (
     <div className="dashboard">
       <SideNavbarWorker />
@@ -62,7 +76,7 @@ export default function VetDashboard() {
         </div>
         <div className="dashboard-content">
           <div className="add-patient">
-            <button class="add-patient-button">Add patient</button>
+            <button class="add-patient-button" onClick={openModal}>Add patient</button>
           </div>
           <section className="row-dashboard">
             <div className="section">
@@ -128,6 +142,9 @@ export default function VetDashboard() {
               </div>
             </div>
           </section>
+          {creationMode && (
+            <ClientCreation onCancel={cancelCreation} />
+          )}
         </div>
       </div>
     </div>
