@@ -20,10 +20,11 @@ export default function NavbarLanding() {
       "/vetdashboard",
       "/profilesettings",
       "/vet/clients",
-      "/vet/staff", 
+      "/vet/staff",
       "/vet/mascots",
       "/animalprofile",
-      "/calendar"
+      "/calendar",
+      "/confirmationemail",
     ];
 
     setShowNavbar(!locationsWithoutNavbar.includes(location.pathname));

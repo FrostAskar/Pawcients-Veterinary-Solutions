@@ -2,17 +2,9 @@ import "css/global/global.scss";
 import "css/global/variables.css";
 import "css/vet/vetHome.scss";
 import TodayPatient from "Routes/Worker/TodayPatient";
-import { fetchProfile } from "fetches/getProfile";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
-import Paw from "../../media/paw.png"
+import Paw from "../../media/paw.png";
 
-function getProfileData() {
-  const token = localStorage.getItem("token");
-  return fetchProfile(token).json;
-}
-
-//fetch data to display on weby
-console.log(getProfileData());
 const todayPatients = [
   {
     id: 1,
@@ -50,7 +42,7 @@ export default function VetDashboard() {
       <div className="dashboard-page">
         <div className="dashboard-header">
           {/* <h1>Welcome, {profileData.user.name} </h1> */}
-          <h1>Welcome, Andrés Pantoja</h1>
+          <h1>Vet Dashboard</h1>
           <div className="input-wrapper">
             <input
               type="text"
@@ -75,7 +67,9 @@ export default function VetDashboard() {
                       <p className="total-patients-number">214</p>
                     </div>
                   </div>
-                  <p>Today: <span className="today-patients-number"> 32 </span></p>
+                  <p>
+                    Today: <span className="today-patients-number"> 32 </span>
+                  </p>
                 </div>
               </div>
             </div>
