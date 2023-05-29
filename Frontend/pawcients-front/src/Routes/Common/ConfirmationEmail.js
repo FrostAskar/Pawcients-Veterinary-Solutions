@@ -1,7 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "css/common/confirmationEmail.css";
+import { fetchVerifyEmail } from "fetches/FetchVerifyEmail";
+import { fetchProfile } from "fetches/getProfile";
 
 const ConfirmationEmail = () => {
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    const getProfileData = async () => {
+      const profileData = await fetchProfile();
+      setProfileData(profileData);
+    };
+
+    getProfileData();
+  }, []);
+
   const [code, setCode] = useState(Array(6).fill(""));
 
   const handleChange = (event, index) => {
@@ -20,15 +33,19 @@ const ConfirmationEmail = () => {
     const confirmationCode = code.join("");
     // Send confirmationCode to backend
     console.log("Sending confirmation code:", confirmationCode);
-    fetch("http://localhost:8080/verifyemail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        code: confirmationCode,
-      }),
+    const response = fetchVerifyEmail(confirmationCode);
+    response.then((data) => {
+      console.log("Response:", data);
+      if (data.status === "ok") {
+        if (profileData.type === "client") {
+          window.location.href = "/clientdashboard";
+        }
+        if (profileData.type === "vet") {
+          window.location.href = "/vetdashboard";
+        }
+      } else {
+        alert("Wrong code");
+      }
     });
   };
 
