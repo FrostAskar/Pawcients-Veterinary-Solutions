@@ -7,6 +7,8 @@ import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState } from "react";
 
+import { fetchProfile } from "fetches/getProfile";
+
 
 function getProfileData() {
   const token = localStorage.getItem("token");
