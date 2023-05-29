@@ -14,8 +14,9 @@ const SideNavbarClient = () => {
 
     getProfileData();
   }, []);
-  if ((profileData.verificationCodeEmailCheck = false)) {
-    window.location.href = "/emailverification";
+
+  if (profileData && !profileData.verificationCodeEmailCheck) {
+    window.location.href = "/confirmationemail";
   }
   return (
     <div className="side-navbar">
