@@ -18,16 +18,11 @@ function Login() {
     try {
       // Fetch para login de cliente
       const response = await fetchLogin(email, password);
-      if (response.success) {
-        // Lógica de redirección o mensaje de éxito para cliente
-        console.log("Login de cliente exitoso");
-      } else {
-        // Mensaje de error para cliente
-        setErrorMessage(response.message);
+      if (response.status === 401) {
+        // Contraseña incorrecta
       }
     } catch (error) {
-      console.log(error);
-      setErrorMessage("Error en la conexión con el servidor");
+      setErrorMessage("Email o contraseña incorrectos");
     }
   };
 
@@ -46,9 +41,10 @@ function Login() {
 
               <label htmlFor="password">Password</label>
               <input type="password" name="password" id="password" required />
-              {/* Captcha: */}
 
-              <button className="form-button" type="submit">Log in</button>
+              <button className="form-button" type="submit">
+                Log in
+              </button>
               {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
           </div>

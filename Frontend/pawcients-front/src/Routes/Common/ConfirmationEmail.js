@@ -15,6 +15,15 @@ const ConfirmationEmail = () => {
     getProfileData();
   }, []);
 
+  if (profileData && profileData.verificationCodeEmailCheck) {
+    if (profileData.type === "client") {
+      window.location.href = "/clientdashboard";
+    }
+    if (profileData.type === "vet") {
+      window.location.href = "/vetdashboard";
+    }
+  }
+
   const [code, setCode] = useState(Array(6).fill(""));
 
   const handleChange = (event, index) => {
