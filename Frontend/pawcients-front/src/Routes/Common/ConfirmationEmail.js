@@ -20,6 +20,16 @@ const ConfirmationEmail = () => {
     const confirmationCode = code.join("");
     // Send confirmationCode to backend
     console.log("Sending confirmation code:", confirmationCode);
+    fetch("http://localhost:8080/verifyemail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        code: confirmationCode,
+      }),
+    });
   };
 
   const handleClearCode = () => {

@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "media/paw.png";
-import Profile from "media/vet.png";
 import { Link } from "react-router-dom";
 import "css/global/global.scss";
 import "css/global/variables.css";
 import "css/vet/vetHome.scss";
+import { fetchProfile } from "fetches/getProfile";
 
 const SideNavbarWorker = () => {
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    const getProfileData = async () => {
+      const profileData = await fetchProfile();
+      setProfileData(profileData);
+    };
+
+    getProfileData();
+  }, []);
+
+  if (profileData && !profileData.verificationCodeEmailCheck) {
+    window.location.href = "/confirmationemail";
+  }
 
   return (
     <div className="dashboard">
@@ -15,8 +29,12 @@ const SideNavbarWorker = () => {
           <img src={Logo} alt="Logo" />
         </div>
         <div className="user-profile">
-          <img src={Profile} alt="Profile" className="profile-picture" />
-          <span>Andrés Pantoja</span>
+          <img
+            src={profileData?.profilePicture}
+            alt="Profile"
+            className="profile-picture"
+          />
+          <span>{profileData?.name + " " + profileData?.surname}</span>
         </div>
         <ul className="nav-links">
           <li>

@@ -9,20 +9,13 @@ import Euro from "media/euro.png";
 import SideNavbarClient from "./SideNavbarClient";
 
 //TODO FETCH PROFILE DATA
-const profileData = [
-  {
-    id: 1,
-    name: "Andrés Pantoja",
-    image: "/path/to/andres.png",
-  },
-];
 
 export default function ClientDashboard() {
   return (
     <div className="dashboard">
       <SideNavbarClient />
       <div className="showbuttons">
-        <h1 className="titledash">Welcome, {profileData[0].name}</h1>
+        <h1 className="titledash">Client Dashboard</h1>
         <div className="dashboard-container">
           <Link to="/notifications" className="dashboard-button">
             <h2 className="client-dash-card">Notifications Section</h2>

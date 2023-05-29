@@ -1,26 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "media/paw.png";
-import Profile from "media/vet.png";
 import { Link } from "react-router-dom";
-
-// TODO: FETCH PROFILE DATA
-const profileData = [
-  {
-    id: 1,
-    name: "Andrés Pantoja",
-    image: "/path/to/andres.png",
-  },
-];
+import { fetchProfile } from "fetches/getProfile";
 
 const SideNavbarClient = () => {
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    const getProfileData = async () => {
+      const profileData = await fetchProfile();
+      setProfileData(profileData);
+    };
+
+    getProfileData();
+  }, []);
+
+  if (profileData && !profileData.verificationCodeEmailCheck) {
+    window.location.href = "/confirmationemail";
+  }
   return (
     <div className="side-navbar">
       <div className="logo">
         <img src={Logo} alt="Logo" />
       </div>
       <div className="user-profile">
-        <img src={Profile} alt="Profile" className="profile-picture" />
-        <span>{profileData[0].name}</span>
+        <img
+          src={profileData?.profilePicture}
+          alt="Profile"
+          className="profile-picture"
+        />
+        <span>{profileData?.name + " " + profileData?.surname} </span>
       </div>
       <ul className="nav-links">
         <li>
