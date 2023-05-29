@@ -14,6 +14,8 @@ public class RegisterVetAndClinicForm {
     //Clinic Details
     String clinicName;
     String clinicAddress;
+    String clinicPhoneNumber;
+    String clinicZipCode;
 
     public String getName() {
         return name;
@@ -84,5 +86,21 @@ public class RegisterVetAndClinicForm {
 
     public void setClinicAddress(String clinicAddress) {
         this.clinicAddress = clinicAddress;
+    }
+
+    public String getClinicPhoneNumber() {
+        return clinicPhoneNumber;
+    }
+
+    public void setClinicPhoneNumber(String clinicPhoneNumber) {
+        this.clinicPhoneNumber = clinicPhoneNumber;
+    }
+
+    public String getClinicZipCode() {
+        return clinicZipCode;
+    }
+
+    public void setClinicZipCode(String clinicZipCode) {
+        this.clinicZipCode = clinicZipCode;
     }
 }

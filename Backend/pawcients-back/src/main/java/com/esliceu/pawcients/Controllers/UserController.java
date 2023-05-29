@@ -4,10 +4,12 @@ import com.esliceu.pawcients.Exceptions.IncorrectLoginException;
 import com.esliceu.pawcients.Exceptions.IncorrectRegisterException;
 import com.esliceu.pawcients.Exceptions.NotFoundUserException;
 import com.esliceu.pawcients.Forms.*;
+import com.esliceu.pawcients.Models.Clinic;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Services.ClinicService;
 import com.esliceu.pawcients.Services.TokenService;
 import com.esliceu.pawcients.Services.UserService;
+import com.esliceu.pawcients.Utils.Encrypt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -38,17 +40,29 @@ public class UserController {
         Map<String, String> result = new HashMap<>();
         String clinicId = "";
         String adminId = "";
-
+        Clinic clinic = new Clinic(null,
+                registerVetAndClinicForm.getClinicName(),
+                registerVetAndClinicForm.getClinicAddress(),
+                registerVetAndClinicForm.getClinicPhoneNumber(),
+                registerVetAndClinicForm.getClinicZipCode());
+        User user = new User(null,
+                registerVetAndClinicForm.getName(),
+                registerVetAndClinicForm.getSurname(),
+                registerVetAndClinicForm.getLicense(),
+                registerVetAndClinicForm.getEmail(),
+                registerVetAndClinicForm.getPhone(),
+                "admin",
+                Encrypt.sha512(registerVetAndClinicForm.getPassword()),
+                clinicId);
         try {
             clinicId = clinicService.saveClinic(registerVetAndClinicForm);
-        } catch (IncorrectRegisterException e) {
-            result.put("error", e.getMessage());
-            response.setStatus(409);
-            return result;
-        }
-
-        try {
-            adminId = userService.saveAdmin(registerVetAndClinicForm, clinicId);
+            try {
+                adminId = userService.saveAdmin(registerVetAndClinicForm, clinicId);
+            } catch (IncorrectRegisterException e) {
+                result.put("error", e.getMessage());
+                response.setStatus(409);
+                return result;
+            }
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             response.setStatus(409);
