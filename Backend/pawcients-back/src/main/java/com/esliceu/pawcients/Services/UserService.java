@@ -7,6 +7,7 @@ import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.UserRepo;
 import com.esliceu.pawcients.Utils.Encrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,7 +22,17 @@ public class UserService {
     public UserService(UserRepo userRepo, ClinicService clinicService) {
         this.userRepo = userRepo;
         this.clinicService = clinicService;
+
+
+
     }
+
+    //TODO modify this autowired
+    @Autowired
+    EmailSenderService emailSenderService;
+    @Autowired
+    TokenService tokenService;
+
 
     public String saveAdmin(RegisterVetAndClinicForm registerVetAndClinicForm, String clinicId) {
         User user = new User();
@@ -61,9 +72,14 @@ public class UserService {
         String code = String.valueOf((int)(Math.random()*1000000));
         user.setVerificationCodeEmail(code);
 
+
+
+
         if(checkEmailIsInUse(user)) {
             throw new IncorrectRegisterException("This email is already in use");
         }
+        System.out.println("Sending code to client " + user.getEmail());//Send verification email
+        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
 
         return userRepo.save(user).getId();
     }
@@ -86,6 +102,7 @@ public class UserService {
         if(checkEmailIsInUse(user)) {
             throw new IncorrectRegisterException("This email is already in use");
         }
+        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
 
         return userRepo.save(user).getId();
     }
@@ -95,6 +112,9 @@ public class UserService {
     }
 
     public User authenticateUser(String email, String password) {
+        if (userRepo.findByEmail(email).size() == 0) {
+            throw new IncorrectLoginException("Email or password incorrect");
+        }
         User user = userRepo.findByEmail(email).get(0);
         String passtest = Encrypt.sha512(password);
         if (user.getPassword().equals(passtest)) {
@@ -186,5 +206,22 @@ public class UserService {
         for(User user : usersInClinic) {
             userRepo.deleteById(user.getId());
         }
+    }
+
+    public String verifyEmail(String code, String token) {
+        String userId = tokenService.getUser(token.replace("Bearer ", ""));
+        User u = userRepo.findById(userId).get();
+        String email = u.getEmail();
+
+        if(userRepo.findByEmail(email).get(0).getVerificationCodeEmail().equals(code)) {
+            u.setVerificationCodeEmailCheck(true);
+            userRepo.save(u);
+            emailSenderService.sendEmailWithoutAttachment(email, "Email verified", "Your email has been verified successfully!");
+            return "ok";
+
+        } else {
+            return "failed";
+        }
+
     }
 }

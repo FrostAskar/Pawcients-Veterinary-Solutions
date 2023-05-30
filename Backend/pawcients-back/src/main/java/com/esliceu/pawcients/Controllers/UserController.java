@@ -97,6 +97,7 @@ public class UserController {
         return result;
     }
 
+
     @PostMapping("/vet/client")
     @CrossOrigin
     public Map<String, String> registerClient(@RequestBody RegisterClientForm registerClientForm,
@@ -106,6 +107,7 @@ public class UserController {
         try {
             clientId = userService.saveClient(registerClientForm);
             result.put("clientId", clientId);
+
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
@@ -139,5 +141,27 @@ public class UserController {
     @CrossOrigin
     public String deleteUser(@PathVariable String userId) {
         return userService.deleteUser(userId);
+    }
+
+    @PostMapping("/verifyemail")
+    @CrossOrigin
+    public Map<String, String> verifyEmail(@RequestBody VerifyEmailForm verifyEmailForm,
+                                           HttpServletResponse res, @RequestHeader("Authorization") String token) {
+        Map<String, String> result = new HashMap<>();
+        try {
+           String status = userService.verifyEmail(verifyEmailForm.getCode(), token);
+
+            //userService.verifyEmail(verifyEmailForm.getCode(), );
+            result.put("status", status);
+            if (status.equals("ok")) {
+                res.setStatus(200);
+            } else {
+                res.setStatus(409);
+            }
+        } catch (NotFoundUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
     }
 }
