@@ -5,7 +5,6 @@ import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.UserRepo;
 import com.esliceu.pawcients.Utils.Encrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -189,6 +188,10 @@ public class UserService {
         for(User user : usersInClinic) {
             userRepo.deleteById(user.getId());
         }
+    }
+
+    public List<User> getWorkers(String type) {
+        return userRepo.findByType(type);
     }
 
     public String verifyEmail(String code, String token) {

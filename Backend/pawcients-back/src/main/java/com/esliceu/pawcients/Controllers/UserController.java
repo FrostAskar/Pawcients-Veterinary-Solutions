@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,7 +134,6 @@ public class UserController {
         String clientId = "";
         User actualUser = (User) req.getAttribute("user");
         try {
-<<<<<<< HEAD
             User user = new User(null,
                     registerClientForm.getName(),
                     registerClientForm.getSurname(),
@@ -143,10 +143,8 @@ public class UserController {
                     Encrypt.sha512(registerClientForm.getPassword()),
                     actualUser.getClinicId());
             clientId = userService.saveUser(user, actualUser);
-=======
             clientId = userService.saveClient(registerClientForm);
             result.put("clientId", clientId);
->>>>>>> a34c224d7694a7c6bc82fcd916eebeb2de2fbdc3
 
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
@@ -204,5 +202,15 @@ public class UserController {
             res.setStatus(409);
         }
         return result;
+    }
+
+    @GetMapping("/vet/workers")
+    @CrossOrigin
+    public List<User> getWorkers() {
+        List<User> workers = new ArrayList<>();
+        workers.addAll(userService.getWorkers("vet"));
+        workers.addAll(userService.getWorkers("admin"));
+        workers.addAll(userService.getWorkers("aux"));
+        return workers;
     }
 }
