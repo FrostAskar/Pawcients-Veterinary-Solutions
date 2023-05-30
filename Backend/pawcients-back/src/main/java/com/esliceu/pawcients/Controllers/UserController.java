@@ -40,40 +40,42 @@ public class UserController {
         Map<String, String> result = new HashMap<>();
         String clinicId = "";
         String adminId = "";
-        Clinic clinic = new Clinic(null,
-                registerVetAndClinicForm.getClinicName(),
-                registerVetAndClinicForm.getClinicAddress(),
-                registerVetAndClinicForm.getClinicPhoneNumber(),
-                registerVetAndClinicForm.getClinicZipCode());
-        User user = new User(null,
-                registerVetAndClinicForm.getName(),
-                registerVetAndClinicForm.getSurname(),
-                registerVetAndClinicForm.getLicense(),
-                registerVetAndClinicForm.getEmail(),
-                registerVetAndClinicForm.getPhone(),
-                "admin",
-                Encrypt.sha512(registerVetAndClinicForm.getPassword()),
-                clinicId);
         try {
-            clinicId = clinicService.saveClinic(registerVetAndClinicForm);
+            Clinic clinic = new Clinic(null,
+                    registerVetAndClinicForm.getClinicName(),
+                    registerVetAndClinicForm.getClinicAddress(),
+                    registerVetAndClinicForm.getClinicPhoneNumber(),
+                    registerVetAndClinicForm.getClinicZipCode());
+            clinicId = clinicService.saveClinic(clinic);
             try {
-                adminId = userService.saveAdmin(registerVetAndClinicForm, clinicId);
+                User user = new User(null,
+                        registerVetAndClinicForm.getName(),
+                        registerVetAndClinicForm.getSurname(),
+                        registerVetAndClinicForm.getLicense(),
+                        registerVetAndClinicForm.getEmail(),
+                        registerVetAndClinicForm.getPhone(),
+                        "admin",
+                        Encrypt.sha512(registerVetAndClinicForm.getPassword()),
+                        clinicId);
+                adminId = userService.saveAdmin(user);
             } catch (IncorrectRegisterException e) {
+                //Clinic is required to be registered to have an ID for the user. If user can't be registered, delete clinic
+                clinicService.deleteClinic(clinicId);
                 result.put("error", e.getMessage());
                 response.setStatus(409);
                 return result;
             }
+            result.put("clinicId", clinicId);
+            result.put("adminId", adminId);
+            result.put("status", "Ok");
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             response.setStatus(409);
             return result;
         }
 
-        result.put("status", "Ok");
-        result.put("adminId", adminId);
-        result.put("clinicId", clinicId);
         response.setStatus(200);
-
+        
         return result;
 
     }
@@ -101,9 +103,20 @@ public class UserController {
                                               HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
         String workerId;
+        User actualUser = (User) req.getAttribute("user");
         try {
-            workerId = userService.saveWorker(registerWorkerForm);
+            User user = new User(null,
+                    registerWorkerForm.getName(),
+                    registerWorkerForm.getSurname(),
+                    registerWorkerForm.getLicense(),
+                    registerWorkerForm.getEmail(),
+                    registerWorkerForm.getPhone(),
+                    registerWorkerForm.getType(),
+                    Encrypt.sha512(registerWorkerForm.getPassword()),
+                    actualUser.getClinicId());
+            workerId = userService.saveUser(user, actualUser);
             result.put("workerId", workerId);
+
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
@@ -115,17 +128,31 @@ public class UserController {
     @PostMapping("/vet/client")
     @CrossOrigin
     public Map<String, String> registerClient(@RequestBody RegisterClientForm registerClientForm,
-                                              HttpServletResponse res) {
+                                              HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
-        String clientId;
+        String clientId = "";
+        User actualUser = (User) req.getAttribute("user");
         try {
+<<<<<<< HEAD
+            User user = new User(null,
+                    registerClientForm.getName(),
+                    registerClientForm.getSurname(),
+                    registerClientForm.getEmail(),
+                    registerClientForm.getPhone(),
+                    registerClientForm.getType(),
+                    Encrypt.sha512(registerClientForm.getPassword()),
+                    actualUser.getClinicId());
+            clientId = userService.saveUser(user, actualUser);
+=======
             clientId = userService.saveClient(registerClientForm);
             result.put("clientId", clientId);
+>>>>>>> a34c224d7694a7c6bc82fcd916eebeb2de2fbdc3
 
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
         }
+        result.put("clientId", clientId);
         return result;
     }
 
