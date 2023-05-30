@@ -1,5 +1,6 @@
 package com.esliceu.pawcients.Controllers;
 
+import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
 import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Services.AppointmentService;
@@ -50,28 +51,44 @@ public class AppointmentController {
 
     @PostMapping("/client/{clientId}/appointment")
     @CrossOrigin
-    public String clientRequestsAppointment(@PathVariable String clientId,
+    public Map<String, Object> clientRequestsAppointment(@PathVariable String clientId,
                                            @RequestBody AppointmentForm appointmentForm){
-        String result = null;
-
+        Map<String, Object> result = new HashMap<>();
+        String appointmentId;
+        try {
+            appointmentId = appointmentService.createClientAppointment(appointmentForm, clientId);
+            result.put("appointmentId", appointmentId);
+        } catch (Exception e) {
+            result.put("error", e.getMessage());
+        }
         return result;
     }
 
     @DeleteMapping("/vet/{vetId}/appointment/{appointmentId}")
     @CrossOrigin
-    public String vetDeletesAppointment(@PathVariable String vetId,
+    public Map<String, Object> vetDeletesAppointment(@PathVariable String vetId,
                                        @PathVariable String appointmentId) {
-        String result = null;
-
+        Map<String, Object> result = new HashMap<>();
+        try {
+            appointmentId = appointmentService.deleteAppointment(appointmentId, vetId);
+            result.put("deleted appointmentId", appointmentId);
+        } catch (NotFoundAppointmentException e) {
+            result.put("error", e.getMessage());
+        }
         return result;
     }
 
     @DeleteMapping("/client/{clientId}/appointment/{appointmentId}")
     @CrossOrigin
-    public String clientDeletesAppointment(@PathVariable String clientId,
+    public Map<String, Object> clientDeletesAppointment(@PathVariable String clientId,
                                            @PathVariable String appointmentId){
-        String result = null;
-
+        Map<String, Object> result = new HashMap<>();
+        try {
+            appointmentId = appointmentService.deleteAppointment(appointmentId, clientId);
+            result.put("deleted appointmentId", appointmentId);
+        } catch (NotFoundAppointmentException e) {
+            result.put("error", e.getMessage());
+        }
         return result;
     }
 }
