@@ -30,6 +30,8 @@ public class User {
     String verificationCodeEmail;
     boolean verificationCodeEmailCheck;
     public User(){}
+
+    //Constructor for workers
     public User(String id, String name, String surname, String license, String email, String phone,
                 String type, String password, String clinicId) {
         this.id = id;
@@ -45,6 +47,20 @@ public class User {
         this.verificationCodeEmailCheck = false;
     }
 
+    //Constructor for clients
+    public User(String id, String name, String surname, String email, String phone,
+                String type, String password, String clinicId) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.type = type;
+        this.password = password;
+        this.clinicId = clinicId;
+        this.profilePicture = "https://www.w3schools.com/howto/img_avatar.png";
+        this.verificationCodeEmailCheck = false;
+    }
     public String getId() {
         return id;
     }

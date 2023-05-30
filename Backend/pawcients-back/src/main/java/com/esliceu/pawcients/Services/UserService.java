@@ -1,12 +1,11 @@
 package com.esliceu.pawcients.Services;
 
-import com.esliceu.pawcients.Exceptions.IncorrectLoginException;
-import com.esliceu.pawcients.Exceptions.IncorrectRegisterException;
-import com.esliceu.pawcients.Exceptions.NotFoundUserException;
+import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.UserRepo;
 import com.esliceu.pawcients.Utils.Encrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,54 +16,50 @@ import java.util.NoSuchElementException;
 public class UserService {
     UserRepo userRepo;
     ClinicService clinicService;
+    EmailSenderService emailSenderService;
+    TokenService tokenService;
 
-    public UserService(UserRepo userRepo, ClinicService clinicService) {
+    public UserService(UserRepo userRepo, ClinicService clinicService, EmailSenderService emailSenderService, TokenService tokenService) {
         this.userRepo = userRepo;
         this.clinicService = clinicService;
+        this.emailSenderService = emailSenderService;
+        this.tokenService = tokenService;
     }
 
-    public String saveAdmin(RegisterVetAndClinicForm registerVetAndClinicForm, String clinicId) {
-        User user = new User();
-        user.setName(registerVetAndClinicForm.getName());
-        user.setSurname(registerVetAndClinicForm.getSurname());
-        user.setLicense(registerVetAndClinicForm.getLicense());
-        user.setEmail(registerVetAndClinicForm.getEmail());
-        user.setPhone(registerVetAndClinicForm.getPhone());
-        user.setType(registerVetAndClinicForm.getType());
-        user.setPassword(Encrypt.sha512(registerVetAndClinicForm.getPassword()));
-        user.setProfilePicture("https://www.w3schools.com/howto/img_avatar.png");
-        //Generate a random number of 6 characters
-        String code = String.valueOf((int)(Math.random()*1000000));
-        user.setVerificationCodeEmail(code);
-        user.setVerificationCodeEmailCheck(false);
-        user.setClinicId(clinicId);
-
-        if(checkEmailIsInUse(user)){
-            throw new IncorrectRegisterException("This email is already in use");
-        }
-
-        return userRepo.save(user).getId();
-    }
-
-    public String saveWorker(RegisterWorkerForm registerWorkerForm) {
-        User user = new User(
-                null,
-                registerWorkerForm.getName(),
-                registerWorkerForm.getSurname(),
-                registerWorkerForm.getLicense(),
-                registerWorkerForm.getEmail(),
-                registerWorkerForm.getPhone(),
-                registerWorkerForm.getType(),
-                Encrypt.sha512(registerWorkerForm.getPassword()),
-                registerWorkerForm.getClinicId()
-        );
-        String code = String.valueOf((int)(Math.random()*1000000));
-        user.setVerificationCodeEmail(code);
-
+    public String saveAdmin(User user) {
+        if(!checkEmailValidity(user.getEmail())) throw new IncorrectRegisterException("Email is not a valid email");
         if(checkEmailIsInUse(user)) {
             throw new IncorrectRegisterException("This email is already in use");
         }
+        return userRepo.save(user).getId();
+    }
 
+    public String saveUser(User user, User actualUser) {
+        if(!checkEmailValidity(user.getEmail())) throw new IncorrectRegisterException("Email is not a valid email");
+        String verificationCode = String.valueOf((int)(Math.random()*1000000));
+        user.setVerificationCodeEmail(verificationCode);
+        //If the user doing the register is the admin, goes through
+        if(actualUser.getType().equals("admin")) {
+            if (checkEmailIsInUse(user)) {
+                throw new IncorrectRegisterException("This email is already in use");
+            }
+        //If the user doing the register is any worker, can only register other vets, aux and clients
+        } else if (!actualUser.getType().equals("client")) {
+            if(!actualUser.getVerificationCodeEmailCheck()) {
+                throw new UnverifiedUserException("This user is not verified yet");
+            }
+            if(checkEmailIsInUse(user)) {
+                throw new IncorrectRegisterException("This email is already in use");
+            //Only one admin can be allowed
+            } else if(user.getType().equals("admin")) {
+                throw new IncorrectRegisterException("Admin users cannot be registered");
+            }
+        } else {
+            //User is client. Deny creation
+            throw new UnauthorizedUserException("This user is not allowed to register users");
+        }
+        System.out.println("Sending code to client " + user.getEmail());//Send verification email
+        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
         return userRepo.save(user).getId();
     }
 
@@ -86,22 +81,30 @@ public class UserService {
         if(checkEmailIsInUse(user)) {
             throw new IncorrectRegisterException("This email is already in use");
         }
+        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
 
         return userRepo.save(user).getId();
     }
 
-    boolean checkEmailIsInUse(User user) {
+    private boolean checkEmailIsInUse(User user) {
         return userRepo.findByEmail(user.getEmail()).size() > 0;
     }
 
+    private boolean checkEmailValidity(String userEmail) {
+        String emailRegex = "[\\w!#$%&'*+-\\/=?^_`{|}~]*@\\w+.(\\w{2,3})";
+        return userEmail.matches(emailRegex);
+    }
+
     public User authenticateUser(String email, String password) {
-        User user = userRepo.findByEmail(email).get(0);
-        String passtest = Encrypt.sha512(password);
-        if (user.getPassword().equals(passtest)) {
-            return user;
-        } else {
+        if (userRepo.findByEmail(email).isEmpty()) {
             throw new IncorrectLoginException("Email or password incorrect");
         }
+        User user = userRepo.findByEmail(email).get(0);
+        String passtest = Encrypt.sha512(password);
+        if (!user.getPassword().equals(passtest)) {
+            throw new IncorrectLoginException("Email or password incorrect");
+        }
+        return user;
     }
 
     public User generateUser(String userId) {
@@ -186,5 +189,22 @@ public class UserService {
         for(User user : usersInClinic) {
             userRepo.deleteById(user.getId());
         }
+    }
+
+    public String verifyEmail(String code, String token) {
+        String userId = tokenService.getUser(token.replace("Bearer ", ""));
+        User u = userRepo.findById(userId).get();
+        String email = u.getEmail();
+
+        if(userRepo.findByEmail(email).get(0).getVerificationCodeEmail().equals(code)) {
+            u.setVerificationCodeEmailCheck(true);
+            userRepo.save(u);
+            emailSenderService.sendEmailWithoutAttachment(email, "Email verified", "Your email has been verified successfully!");
+            return "ok";
+
+        } else {
+            return "failed";
+        }
+
     }
 }

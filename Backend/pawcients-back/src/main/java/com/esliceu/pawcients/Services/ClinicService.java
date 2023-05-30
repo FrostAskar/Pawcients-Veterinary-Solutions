@@ -18,15 +18,12 @@ public class ClinicService {
         this.clinicRepo = clinicRepo;
     }
 
-    public String saveClinic(RegisterVetAndClinicForm registerVetAndClinicForm) {
-        Clinic clinic = clinicRepo.findByNameAndAddress(registerVetAndClinicForm.getClinicName(),
-                registerVetAndClinicForm.getClinicAddress());
-        if(clinic != null) {
+    public String saveClinic(Clinic clinic) {
+        Clinic c = clinicRepo.findByNameAndAddress(clinic.getName(),
+                clinic.getAddress());
+        if(c != null) {
             throw new IncorrectRegisterException("This clinic is already registered");
         }
-        clinic = new Clinic();
-        clinic.setName(registerVetAndClinicForm.getClinicName());
-        clinic.setAddress(registerVetAndClinicForm.getClinicAddress());
         return clinicRepo.save(clinic).getId();
     }
 
