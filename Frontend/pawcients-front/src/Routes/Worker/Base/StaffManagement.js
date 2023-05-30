@@ -136,7 +136,6 @@ export default function StaffManagement() {
                                 </div>
                             </div>
                         </section>
-
                     )}
                 </div>
             </div>

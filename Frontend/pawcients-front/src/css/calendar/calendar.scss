@@ -1,0 +1,46 @@
+.calendar-title {
+    color: var(--main-green);
+    text-align: center;
+    margin: 20px;
+}
+
+.event-button {
+   display: flex;
+   justify-content: center;
+   margin: 20px;
+   button {
+    padding: 10px;
+    font-size: 20px;
+    border: groove;
+    border-color:var(--light-green);
+   }
+}
+
+// .rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event, .rbc-event {
+//     background-color: var(--dark-green);
+//     border: none;
+//     padding: 6px;
+// }
+
+.event-info {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    p {
+        color: black;
+    }
+    span {
+        font-weight: bold;
+    }
+    .section-content {
+        padding: 15px;
+    }
+}
+
+.buttons {
+    margin: 20px;
+    button {
+        border:none;
+        margin: 0px 10px;
+    }
+}
