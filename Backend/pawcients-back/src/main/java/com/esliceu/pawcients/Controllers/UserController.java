@@ -100,20 +100,20 @@ public class UserController {
 
     @PostMapping("/vet/worker")
     @CrossOrigin
-    public Map<String, String> registerWorker(@RequestBody RegisterWorkerForm registerWorkerForm,
+    public Map<String, String> registerWorker(@RequestBody RegisterUserForm registerUserForm,
                                               HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
         String workerId;
         User actualUser = (User) req.getAttribute("user");
         try {
             User user = new User(null,
-                    registerWorkerForm.getName(),
-                    registerWorkerForm.getSurname(),
-                    registerWorkerForm.getLicense(),
-                    registerWorkerForm.getEmail(),
-                    registerWorkerForm.getPhone(),
-                    registerWorkerForm.getType(),
-                    Encrypt.sha512(registerWorkerForm.getPassword()),
+                    registerUserForm.getName(),
+                    registerUserForm.getSurname(),
+                    registerUserForm.getLicense(),
+                    registerUserForm.getEmail(),
+                    registerUserForm.getPhone(),
+                    registerUserForm.getType(),
+                    Encrypt.sha512(registerUserForm.getPassword()),
                     actualUser.getClinicId());
             workerId = userService.saveUser(user, actualUser);
             result.put("workerId", workerId);
@@ -128,29 +128,28 @@ public class UserController {
 
     @PostMapping("/vet/client")
     @CrossOrigin
-    public Map<String, String> registerClient(@RequestBody RegisterClientForm registerClientForm,
+    public Map<String, String> registerClient(@RequestBody RegisterUserForm registerUserForm,
                                               HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
         String clientId = "";
         User actualUser = (User) req.getAttribute("user");
         try {
             User user = new User(null,
-                    registerClientForm.getName(),
-                    registerClientForm.getSurname(),
-                    registerClientForm.getEmail(),
-                    registerClientForm.getPhone(),
-                    registerClientForm.getType(),
-                    Encrypt.sha512(registerClientForm.getPassword()),
+                    registerUserForm.getName(),
+                    registerUserForm.getSurname(),
+                    registerUserForm.getEmail(),
+                    registerUserForm.getPhone(),
+                    registerUserForm.getType(),
+                    Encrypt.sha512(registerUserForm.getPassword()),
                     actualUser.getClinicId());
             clientId = userService.saveUser(user, actualUser);
-            clientId = userService.saveClient(registerClientForm);
             result.put("clientId", clientId);
+            result.put("status", "ok");
 
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
         }
-        result.put("clientId", clientId);
         return result;
     }
 
@@ -208,9 +207,7 @@ public class UserController {
     @CrossOrigin
     public List<User> getWorkers() {
         List<User> workers = new ArrayList<>();
-        workers.addAll(userService.getWorkers("vet"));
-        workers.addAll(userService.getWorkers("admin"));
-        workers.addAll(userService.getWorkers("aux"));
+        workers.addAll(userService.getWorkers());
         return workers;
     }
 }
