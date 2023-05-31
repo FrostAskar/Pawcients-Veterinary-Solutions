@@ -62,29 +62,6 @@ public class UserService {
         return userRepo.save(user).getId();
     }
 
-    public String saveClient(RegisterClientForm registerClientForm) {
-        User user = new User(
-                null,
-                registerClientForm.getName(),
-                registerClientForm.getSurname(),
-                null,
-                registerClientForm.getEmail(),
-                registerClientForm.getPhone(),
-                registerClientForm.getType(),
-                Encrypt.sha512(registerClientForm.getPassword()),
-                registerClientForm.getClinicId()
-        );
-        String code = String.valueOf((int)(Math.random()*1000000));
-        user.setVerificationCodeEmail(code);
-
-        if(checkEmailIsInUse(user)) {
-            throw new IncorrectRegisterException("This email is already in use");
-        }
-        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
-
-        return userRepo.save(user).getId();
-    }
-
     private boolean checkEmailIsInUse(User user) {
         return userRepo.findByEmail(user.getEmail()).size() > 0;
     }
@@ -190,8 +167,8 @@ public class UserService {
         }
     }
 
-    public List<User> getWorkers(String type) {
-        return userRepo.findByType(type);
+    public List<User> getWorkers() {
+        return userRepo.findByTypeNot("client");
     }
 
     public String verifyEmail(String code, String token) {

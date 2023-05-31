@@ -21,7 +21,7 @@ public interface UserRepo extends MongoRepository<User, String> {
 
     List<User> findByClinicId(String clinicId);
 
-    List<User> findByType(String type);
+    List<User> findByTypeNot(String type);
 }
 
  
