@@ -20,6 +20,8 @@ public interface UserRepo extends MongoRepository<User, String> {
     List<User> findByPhone(String phone);
 
     List<User> findByClinicId(String clinicId);
+
+    List<User> findByType(String type);
 }
 
  

@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,5 +202,15 @@ public class UserController {
             res.setStatus(409);
         }
         return result;
+    }
+
+    @GetMapping("/vet/workers")
+    @CrossOrigin
+    public List<User> getWorkers() {
+        List<User> workers = new ArrayList<>();
+        workers.addAll(userService.getWorkers("vet"));
+        workers.addAll(userService.getWorkers("admin"));
+        workers.addAll(userService.getWorkers("aux"));
+        return workers;
     }
 }
