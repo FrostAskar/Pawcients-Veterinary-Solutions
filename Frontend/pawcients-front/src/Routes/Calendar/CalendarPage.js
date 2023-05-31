@@ -2,9 +2,8 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import SideNavbarWorker from 'Routes/Worker/SideNavbarWorker';
-//import { fetchClientRegister } from "fetches/FetchClientRegister";
 import { useState } from 'react';
-//import 'css/calendar/calendar.scss';
+import 'css/calendar/calendar.scss';
 
 const localizer = momentLocalizer(moment);
 
@@ -56,38 +55,21 @@ const CalendarPage = () => {
     };
 
     const handleAddEvent = async (e) => {
-        debugger;
         e.preventDefault();
         const title = e.target.title.value;
         const description = e.target.description.value;
         const startTime = e.target.startTime.value;
-        const endTime = e.target.endTime.value;
-
-        // try {
-        //     // Fetch para login de cliente
-        //     const response = await fetchClientRegister(title, description, time, selectedDate);
-        //     if (response.success) {
-
-        //     } else {
-        //         // Mensaje de error para cliente
-        //         setErrorMessage(response.message);
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        //     setErrorMessage("Error en la conexión con el servidor");
-        // }
 
         const [startHours, startMinutes] = startTime.split(':');
 
-        const fullDateStart = new Date(selectedDate.start);
+        const fullDateStart = new Date(selectedDate);
         fullDateStart.setHours(startHours);
         fullDateStart.setMinutes(startMinutes);
 
-        const [endHours, endMinutes] = endTime.split(':');
-
-        const fullDateEnd = new Date(selectedDate.start);
+        const fullDateEnd = new Date(selectedDate);
+        const endHours = Number(startHours) + 1 
         fullDateEnd.setHours(endHours);
-        fullDateEnd.setMinutes(endMinutes);
+        fullDateEnd.setMinutes(startMinutes);
 
 
         const event = {
@@ -109,12 +91,9 @@ const CalendarPage = () => {
         setEventModal(false);
     };
 
-    console.log(selectedDate.start);
 
-
-    // const allowedHours = ['08:00', '08:30','09:00', '09:30', '10:00',, '10:30', '11:00', '11:30', '12:00', '12:30','13:00', 
-    // '13:30', '14:00', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
-
+    const allowedHours = ['08:00', '08:30','09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30','13:00', 
+    '13:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
 
 
     return (
@@ -129,7 +108,7 @@ const CalendarPage = () => {
                     endAccessor="end"
                     selectable
                     onSelectEvent={handleEventSelect}
-                    onSelectSlot={handleDateSelect}
+                    onNavigate={handleDateSelect}
                     min={minTime}
                     max={maxTime}
                     onView={handleView}
@@ -153,7 +132,7 @@ const CalendarPage = () => {
                 )}
                 {displayButton && (
                     <div className='event-button'>
-                        <button className="clasic-button" onClick={openModal}>Agregar Evento</button>
+                        <button className="clasic-button" onClick={openModal}>Add appointment</button>
                     </div>
                 )}
             </div>
@@ -169,15 +148,12 @@ const CalendarPage = () => {
                                 <textarea name="description" id="description" required />
                                 <label htmlFor="startTime">Start Time</label>
                                 <input type="time" name="startTime" id="startTime" required />
-                                <label htmlFor="endTime">End Time</label>
-                                <input type="time" name="endTime" id="endTime" required />
-                                {/* <label htmlFor='startTime'>Start Time</label>
-                                <select>
+                                <label htmlFor='startTime'>Start Time</label>
+                                <select className='select-time'>
                                     {allowedHours.map(option => (
                                         <option key={option} value={option} >{option}</option>
                                     ))}
-                                </select> */}
-                                {/* Captcha: */}
+                                </select>
 
                                 <button className="clasic-button" type="submit">Create</button>
                                 <button className="clasic-button" id="cancel-button" type="button" onClick={closeModal}>Cancel</button>
