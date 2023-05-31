@@ -4,7 +4,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import SideNavbarWorker from 'Routes/Worker/SideNavbarWorker';
 //import { fetchClientRegister } from "fetches/FetchClientRegister";
 import { useState } from 'react';
-import 'css/calendar/calendar.scss';
+//import 'css/calendar/calendar.scss';
 
 const localizer = momentLocalizer(moment);
 
@@ -44,6 +44,7 @@ const CalendarPage = () => {
     const handleView = view => {
         if (view === 'day') {
             setDisplayButton(true);
+
         } else {
             setDisplayButton(false);
         }
