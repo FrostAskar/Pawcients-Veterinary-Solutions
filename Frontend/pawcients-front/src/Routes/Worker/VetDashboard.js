@@ -46,6 +46,16 @@ const todayPatients = [
 ];
 
 export default function VetDashboard() {
+  // const [profileData, setProfileData] = useState(null);
+
+  // useEffect(() => {
+  //   const getProfileData = async () => {
+  //     const profileData = await fetchProfile();
+  //     setProfileData(profileData);
+  //   };
+
+  //   getProfileData();
+  // }, []);
   const [creationMode, setCreationMode] = useState(false);
 
   const openModal = () => {
@@ -62,8 +72,8 @@ export default function VetDashboard() {
       <SideNavbarWorker />
       <div className="dashboard-page">
         <div className="dashboard-header">
-          {/* <h1>Welcome, {profileData.user.name} </h1> */}
-          <h1>Vet Dashboard</h1>
+          {/* <h1>Welcome, {profileData?.name} </h1> */}
+          <h1>Welcome, Andrés Pantoja</h1>
           <div className="input-wrapper">
             <input
               type="text"

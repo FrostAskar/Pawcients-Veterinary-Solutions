@@ -133,7 +133,6 @@ public class UserController {
         String clientId = "";
         User actualUser = (User) req.getAttribute("user");
         try {
-<<<<<<< HEAD
             User user = new User(null,
                     registerClientForm.getName(),
                     registerClientForm.getSurname(),
@@ -143,10 +142,8 @@ public class UserController {
                     Encrypt.sha512(registerClientForm.getPassword()),
                     actualUser.getClinicId());
             clientId = userService.saveUser(user, actualUser);
-=======
             clientId = userService.saveClient(registerClientForm);
             result.put("clientId", clientId);
->>>>>>> a34c224d7694a7c6bc82fcd916eebeb2de2fbdc3
 
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());

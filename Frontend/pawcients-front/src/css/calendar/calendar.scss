@@ -16,11 +16,11 @@
    }
 }
 
-// .rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event, .rbc-event {
-//     background-color: var(--dark-green);
-//     border: none;
-//     padding: 6px;
-// }
+.rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event, .rbc-event {
+    background-color: var(--dark-green);
+    border: none;
+    padding: 6px;
+}
 
 .event-info {
     text-align: center;

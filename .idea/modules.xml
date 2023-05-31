@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Pawcients-Veterinary-Solutions.iml" filepath="$PROJECT_DIR$/.idea/Pawcients-Veterinary-Solutions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Backend/pawcients-back/pawcients.iml" filepath="$PROJECT_DIR$/Backend/pawcients-back/pawcients.iml" />
+    </modules>
+  </component>
+</project>
