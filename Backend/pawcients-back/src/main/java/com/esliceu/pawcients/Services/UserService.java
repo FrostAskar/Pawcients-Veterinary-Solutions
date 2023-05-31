@@ -130,30 +130,29 @@ public class UserService {
         return users;
     }
 
-    public String deleteUser(String userId) {
-        List<User> users = findUserById(userId);
+    public String deleteUser(String userId, User actualUser) {
+        if(actualUser.getVerificationCodeEmailCheck()) throw new UnverifiedUserException("User not verified");
+        if(actualUser.getType().equals("client") && !actualUser.getId().equals(userId))
+            throw new UnauthorizedUserException("This user cannot delete users");
+        User toDeleteUser = null;
         //Checks user exists to proceed
-        if(users.size() < 1) {
-            return "User not found";
+        if(userRepo.findById(userId).isEmpty()){
+            throw new NotFoundUserException("User not found");
+        } else {
+            toDeleteUser = userRepo.findById(userId).get();
+            userRepo.deleteById(userId);
         }
-        userRepo.deleteById(userId);
         //Additional check. If no more users for that clinic, delete the clinic
-        List<User> usersOnClinic = checkUsersOnClinic(users.get(0).getClinicId());
+        List<User> usersOnClinic = checkUsersOnClinic(toDeleteUser.getClinicId());
         if(usersOnClinic.size() < 1) {
-            clinicService.deleteClinic(users.get(0).getClinicId());
+            clinicService.deleteClinic(toDeleteUser.getClinicId());
         }
-
         //Verification delete has proceeded without error
-        users = findUserById(userId);
-        if(users.size() < 1) {
+        if(userRepo.findById(userId).isEmpty()) {
             return "User deleted successfully";
         } else {
-            return "Something went kaboom, please check";
+            throw new FailedActionException("Delete Action Failed");
         }
-    }
-
-    public List<User> findUserById(String userId) {
-        return userRepo.findById(userId).stream().toList();
     }
 
     private List<User> checkUsersOnClinic(String clinicId) {
@@ -171,20 +170,15 @@ public class UserService {
         return userRepo.findByTypeNot("client");
     }
 
-    public String verifyEmail(String code, String token) {
-        String userId = tokenService.getUser(token.replace("Bearer ", ""));
-        User u = userRepo.findById(userId).get();
-        String email = u.getEmail();
-
+    public void verifyEmail(String code, User user) {
+        if(user.getVerificationCodeEmailCheck()) throw new IncorrectVerificationCodeException("User is already verified");
+        String email = user.getEmail();
         if(userRepo.findByEmail(email).get(0).getVerificationCodeEmail().equals(code)) {
-            u.setVerificationCodeEmailCheck(true);
-            userRepo.save(u);
+            user.setVerificationCodeEmailCheck(true);
+            userRepo.save(user);
             emailSenderService.sendEmailWithoutAttachment(email, "Email verified", "Your email has been verified successfully!");
-            return "ok";
-
         } else {
-            return "failed";
+            throw new IncorrectVerificationCodeException("Verification code does not match up");
         }
-
     }
 }

@@ -1,17 +1,14 @@
 package com.esliceu.pawcients.Forms;
 
 public class VerifyEmailForm {
-        String code;
+    String code;
 
-        public VerifyEmailForm() {
-        }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-        public VerifyEmailForm( String code) {
-
-            this.code = code;
-        }
-
-        public String getCode() {
+    public String getCode() {
             return code;
         }
+
 }

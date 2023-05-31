@@ -1,8 +1,6 @@
 package com.esliceu.pawcients.Controllers;
 
-import com.esliceu.pawcients.Exceptions.IncorrectLoginException;
-import com.esliceu.pawcients.Exceptions.IncorrectRegisterException;
-import com.esliceu.pawcients.Exceptions.NotFoundUserException;
+import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.Clinic;
 import com.esliceu.pawcients.Models.User;
@@ -58,6 +56,7 @@ public class UserController {
                         "admin",
                         Encrypt.sha512(registerVetAndClinicForm.getPassword()),
                         clinicId);
+                user.setVerificationCodeEmailCheck(true);
                 adminId = userService.saveAdmin(user);
             } catch (IncorrectRegisterException e) {
                 //Clinic is required to be registered to have an ID for the user. If user can't be registered, delete clinic
@@ -175,28 +174,33 @@ public class UserController {
         return (User) req.getAttribute("user");
     }
 
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/vet/client/{clientId}")
     @CrossOrigin
-    public String deleteUser(@PathVariable String userId) {
-        return userService.deleteUser(userId);
+    public Map<String, String> deleteUser(@PathVariable String clientId,
+                             HttpServletRequest req, HttpServletResponse res) {
+        Map<String, String> result = new HashMap<>();
+        User actualUser = (User) req.getAttribute("user");
+        try {
+            String action = userService.deleteUser(clientId, actualUser);
+            result.put("action", action);
+            res.setStatus(200);
+        } catch (UnverifiedUserException | UnauthorizedUserException | FailedActionException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
     }
 
     @PostMapping("/verifyemail")
     @CrossOrigin
     public Map<String, String> verifyEmail(@RequestBody VerifyEmailForm verifyEmailForm,
-                                           HttpServletResponse res, @RequestHeader("Authorization") String token) {
+                                           HttpServletResponse res, HttpServletRequest req) {
         Map<String, String> result = new HashMap<>();
+        User user = (User) req.getAttribute("user");
         try {
-           String status = userService.verifyEmail(verifyEmailForm.getCode(), token);
-
-            //userService.verifyEmail(verifyEmailForm.getCode(), );
-            result.put("status", status);
-            if (status.equals("ok")) {
-                res.setStatus(200);
-            } else {
-                res.setStatus(409);
-            }
-        } catch (NotFoundUserException e) {
+            userService.verifyEmail(verifyEmailForm.getCode(), user);
+            res.setStatus(204);
+        } catch (IncorrectVerificationCodeException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
         }

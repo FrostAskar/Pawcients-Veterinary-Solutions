@@ -2,10 +2,15 @@ package com.esliceu.pawcients.Controllers;
 
 import com.esliceu.pawcients.Exceptions.NotFoundUserException;
 import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
+import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
 import com.esliceu.pawcients.Forms.FindMascotForm;
 import com.esliceu.pawcients.Forms.RegisterMascotForm;
 import com.esliceu.pawcients.Models.Mascot;
+import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Services.MascotService;
+import com.esliceu.pawcients.Services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,9 +23,11 @@ import java.util.Objects;
 public class MascotController {
 
     MascotService mascotService;
+    UserService userService;
 
-    public MascotController(MascotService mascotService) {
+    public MascotController(MascotService mascotService, UserService userService) {
         this.mascotService = mascotService;
+        this.userService = userService;
     }
 
     @GetMapping("/mascot/{mascotId}")
@@ -44,17 +51,17 @@ public class MascotController {
     @PostMapping("/client/{clientId}/mascot")
     @CrossOrigin
     public Map<String, Object> registerMascot (@RequestBody RegisterMascotForm registerMascotForm,
-                                               @PathVariable String clientId) {
+                                               @PathVariable String clientId,
+                                               HttpServletResponse res, HttpServletRequest req) {
         Map<String, Object> result = new HashMap<>();
+        User user = (User) req.getAttribute("user");
         String mascotId;
         try {
-            mascotId =  mascotService.saveMascot(registerMascotForm, clientId);
+            mascotId =  mascotService.saveMascot(registerMascotForm, clientId, user);
             result.put("mascotId", mascotId);
-        } catch (NotFoundUserException e) {
+        } catch (NotFoundUserException | UnverifiedUserException | UnauthorizedUserException e) {
             result.put("error", e.getMessage());
-        //todo for this one to work we need to request user currently logged in case is a client trying to insert animal in other costumer
-        } catch (UnauthorizedUserException e) {
-            result.put("error", e.getMessage());
+            res.setStatus(409);
         }
         return result;
     }

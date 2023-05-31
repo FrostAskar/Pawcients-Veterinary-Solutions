@@ -1,6 +1,9 @@
 package com.esliceu.pawcients.Services;
 
 import com.esliceu.pawcients.Exceptions.NotFoundMascotException;
+import com.esliceu.pawcients.Exceptions.NotFoundUserException;
+import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
+import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
 import com.esliceu.pawcients.Forms.FindMascotForm;
 import com.esliceu.pawcients.Forms.RegisterMascotForm;
 import com.esliceu.pawcients.Models.Mascot;
@@ -54,7 +57,13 @@ public class MascotService {
         return mascotRepo.findByOwnerId(userId);
     }
 
-    public String saveMascot(RegisterMascotForm registerMascotForm, String ownerId){
+    public String saveMascot(RegisterMascotForm registerMascotForm, String ownerId, User actualUser){
+        if(userService.userRepo.findById(ownerId).isEmpty())
+            throw new NotFoundUserException("User not found");
+        if(!actualUser.getVerificationCodeEmailCheck())
+            throw new UnverifiedUserException("This user is not verified");
+        if(actualUser.getType().equals("client") && !actualUser.getId().equals(ownerId))
+            throw new UnauthorizedUserException("User not allowed to create mascots for another client");
         Mascot mascot = new Mascot(
                 null,
                 registerMascotForm.getMascot_name(),
