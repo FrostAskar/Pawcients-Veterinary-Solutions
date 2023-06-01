@@ -218,9 +218,7 @@ public class UserController {
     @GetMapping("/vet/mascots")
     @CrossOrigin
     public List<User> getMascots() {
-        List<User> workers = new ArrayList<>();
-        workers.addAll(userService.getWorkers());
-        return workers;
+        return null;
     }
 
 }
