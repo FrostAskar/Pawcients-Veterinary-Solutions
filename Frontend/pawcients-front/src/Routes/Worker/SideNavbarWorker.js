@@ -14,7 +14,6 @@ const SideNavbarWorker = () => {
       const profileData = await fetchProfile();
       setProfileData(profileData);
     };
-
     getProfileData();
   }, []);
 

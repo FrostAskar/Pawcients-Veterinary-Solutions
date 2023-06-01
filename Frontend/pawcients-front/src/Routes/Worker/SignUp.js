@@ -27,7 +27,7 @@ function SignUp() {
 
     const clinicAddress = streetAddress + " " + streetNumber;
 
-    if (!password.equals(confimartionPassword)) {
+    if (!password === confimartionPassword) {
       setErrorMessage("Passwords do not match");
     } else {
       try {
@@ -46,6 +46,7 @@ function SignUp() {
         if (response.success) {
           // Redirección a Home o Login
           console.log("Signup Successful");
+          window.location.href = "/login";
         } else {
           // Mensaje de error para cliente
           setErrorMessage(response.message);
@@ -67,23 +68,23 @@ function SignUp() {
         <div className="toggle-container">
           <div className="form-container">
             <form className="clasic-form" onSubmit={handleSubmit} method="post">
-              <div class="signup-details">
-                <div class="vet-details">
-                  <h2 class="details-title"> Veterinary details </h2>
+              <div className="signup-details">
+                <div className="vet-details">
+                  <h2 className="details-title"> Veterinary details </h2>
 
-                  <label for="vetName">Name</label>
+                  <label htmlFor="vetName">Name</label>
                   <input type="text" name="vetName" id="vetName" required />
 
-                  <label for="lastname">Last Name</label>
+                  <label htmlFor="lastname">Last Name</label>
                   <input type="text" name="lastname" id="lastname" required />
 
-                  <label for="email">Email</label>
+                  <label htmlFor="email">Email</label>
                   <input type="email" name="email" id="email" required />
 
-                  <label for="vetPhone">Phone</label>
+                  <label htmlFor="vetPhone">Phone</label>
                   <input type="text" name="vetPhone" id="vetPhone" required />
 
-                  <label for="licenseNumber">License Number</label>
+                  <label htmlFor="licenseNumber">License Number</label>
                   <input
                     type="text"
                     name="licenseNumber"
@@ -99,7 +100,7 @@ function SignUp() {
                     required
                   />
 
-                  <label for="confirmPassword">Confirm Password</label>
+                  <label htmlFor="confirmPassword">Confirm Password</label>
                   <input
                     type="password"
                     name="confirmPassword"
@@ -107,10 +108,10 @@ function SignUp() {
                     required
                   />
                 </div>
-                <div class="clinic-details">
-                  <h2 class="details-title">Clinic details</h2>
+                <div className="clinic-details">
+                  <h2 className="details-title">Clinic details</h2>
 
-                  <label for="clinicName">Clinic Name</label>
+                  <label htmlFor="clinicName">Clinic Name</label>
                   <input
                     type="text"
                     name="clinicName"
@@ -118,10 +119,10 @@ function SignUp() {
                     required
                   />
 
-                  <label for="clinicPhone">Clinic Phone</label>
+                  <label htmlFor="clinicPhone">Clinic Phone</label>
                   <input type="country" name="clinicPhone" id="clinicPhone" required />
 
-                  <label for="streetAddress">Street Address</label>
+                  <label htmlFor="streetAddress">Street Address</label>
                   <input
                     type="text"
                     name="streetAddress"
@@ -129,7 +130,7 @@ function SignUp() {
                     required
                   />
 
-                  <label for="streetNumber">Street Number</label>
+                  <label htmlFor="streetNumber">Street Number</label>
                   <input
                     type="number"
                     name="streetNumber"
@@ -137,7 +138,7 @@ function SignUp() {
                     required
                   />
 
-                  <label for="zipCode">Zip Code</label>
+                  <label htmlFor="zipCode">Zip Code</label>
                   <input type="text" name="zipCode" id="zipCode" required />
 
                 </div>

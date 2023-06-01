@@ -18,8 +18,15 @@ function Login() {
     try {
       // Fetch para login de cliente
       const response = await fetchLogin(email, password);
-      if (response.status === 401) {
-        // Contraseña incorrecta
+      if (response.status === 200) {
+        localStorage.setItem("token", response.token);
+        if (response.user.type === "vet") {
+          window.location.href = "/vetdashboard";
+        } else if (response.user.type === "client") {
+          window.location.href = "/clientdashboard";
+        }
+      } else if (response.status === 401) {
+        setErrorMessage("Email o contraseña incorrectos");
       }
     } catch (error) {
       setErrorMessage("Email o contraseña incorrectos");
