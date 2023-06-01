@@ -5,15 +5,10 @@ import TodayPatient from "Routes/Worker/TodayPatient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// import { fetchProfile } from "fetches/getProfile";
+import { fetchProfile } from "fetches/getProfile";
 
-
-// function getProfileData() {
-//   const token = localStorage.getItem("token");
-//   return fetchProfile(token).json;
-// }
 
 const todayPatients = [
   {
@@ -46,16 +41,17 @@ const todayPatients = [
 ];
 
 export default function VetDashboard() {
-  // const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState(null);
 
-  // useEffect(() => {
-  //   const getProfileData = async () => {
-  //     const profileData = await fetchProfile();
-  //     setProfileData(profileData);
-  //   };
+  useEffect(() => {
+    const getProfileData = async () => {
+      const profileData = await fetchProfile();
+      setProfileData(profileData);
+    };
 
-  //   getProfileData();
-  // }, []);
+    getProfileData();
+  }, []);
+
   const [creationMode, setCreationMode] = useState(false);
 
   const openModal = () => {
@@ -72,8 +68,8 @@ export default function VetDashboard() {
       <SideNavbarWorker />
       <div className="dashboard-page">
         <div className="dashboard-header">
-          {/* <h1>Welcome, {profileData?.name} </h1> */}
-          <h1>Welcome, Andrés Pantoja</h1>
+          <h1>Welcome, {profileData?.name} </h1>
+          {/* <h1>Welcome, Andrés Pantoja</h1> */}
           <div className="input-wrapper">
             <input
               type="text"
@@ -85,7 +81,7 @@ export default function VetDashboard() {
         </div>
         <div className="dashboard-content">
           <div className="add-patient">
-            <button class="add-patient-button" onClick={openModal}>Add patient</button>
+            <button className="add-patient-button" onClick={openModal}>Add patient</button>
           </div>
           <section className="row-dashboard">
             <div className="section">
@@ -124,7 +120,7 @@ export default function VetDashboard() {
               </div>
             </div>
           </section>
-          <section class="row-dashboard">
+          <section className="row-dashboard">
             <div className="section">
               <div className="section-content">
                 <div className="today-patients">
