@@ -45,7 +45,7 @@ const SideNavbarWorker = () => {
           </li>
           <li>
             <i className="material-icons"> calendar_month </i>
-            <Link to="/calendar" className="active">
+            <Link to="/vetcalendar" className="active">
               Calendar
             </Link>
           </li>

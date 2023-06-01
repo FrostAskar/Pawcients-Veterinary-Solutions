@@ -11,32 +11,37 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const vetName = e.target.vetName.value;
+    const name = e.target.vetName.value;
+    const surname = e.target.lastname.value;
     const email = e.target.email.value;
-    const licenseNumber = e.target.licenseNumber.value;
+    const phone = e.target.vetPhone.value;
+    const license = e.target.licenseNumber.value;
     const password = e.target.password.value;
     const confimartionPassword = e.target.confirmPassword.value;
 
     const clinicName = e.target.clinicName.value;
     const streetAddress = e.target.streetAddress.value;
     const streetNumber = e.target.streetNumber.value;
-    const city = e.target.city.value;
-    const country = e.target.country.value;
+    const clinicZipCode = e.target.zipCode.value;
+    const clinicPhoneNumber = e.target.clinicPhone.value;
 
-    if(!password.equals(confimartionPassword)) {
+    const clinicAddress = streetAddress + " " + streetNumber;
+
+    if (!password.equals(confimartionPassword)) {
       setErrorMessage("Passwords do not match");
     } else {
       try {
         const response = await fetchSignup(
-          vetName,
+          name,
+          surname,
           email,
-          licenseNumber,
+          phone,
+          license,
           password,
           clinicName,
-          streetAddress,
-          streetNumber,
-          city,
-          country
+          clinicAddress,
+          clinicZipCode,
+          clinicPhoneNumber
         );
         if (response.success) {
           // Redirección a Home o Login
@@ -69,8 +74,14 @@ function SignUp() {
                   <label for="vetName">Name</label>
                   <input type="text" name="vetName" id="vetName" required />
 
+                  <label for="lastname">Last Name</label>
+                  <input type="text" name="lastname" id="lastname" required />
+
                   <label for="email">Email</label>
                   <input type="email" name="email" id="email" required />
+
+                  <label for="vetPhone">Phone</label>
+                  <input type="text" name="vetPhone" id="vetPhone" required />
 
                   <label for="licenseNumber">License Number</label>
                   <input
@@ -107,6 +118,9 @@ function SignUp() {
                     required
                   />
 
+                  <label for="clinicPhone">Clinic Phone</label>
+                  <input type="country" name="clinicPhone" id="clinicPhone" required />
+
                   <label for="streetAddress">Street Address</label>
                   <input
                     type="text"
@@ -123,11 +137,9 @@ function SignUp() {
                     required
                   />
 
-                  <label for="city">City</label>
-                  <input type="text" name="city" id="city" required />
+                  <label for="zipCode">Zip Code</label>
+                  <input type="text" name="zipCode" id="zipCode" required />
 
-                  <label for="country">Country</label>
-                  <input type="country" name="country" id="country" required />
                 </div>
               </div>
               {/* Captcha: */}

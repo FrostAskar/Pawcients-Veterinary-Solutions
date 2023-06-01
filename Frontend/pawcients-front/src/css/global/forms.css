@@ -404,7 +404,8 @@ margin: 0 auto; / centra el contenedor horizontalmente */
 
 .error-message {
   color: red;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  margin: 15px;
 }
 
 /* Add minim width on mobile*/

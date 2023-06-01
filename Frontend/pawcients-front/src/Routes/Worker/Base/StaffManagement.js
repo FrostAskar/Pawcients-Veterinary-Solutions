@@ -41,20 +41,20 @@ export default function StaffManagement() {
         // const email = e.target.email.value;
         // const phone = e.target.phone.value;
         // const license = e.target.license.value;
-        
+
     };
 
     useEffect(() => {
         const getWorkers = async () => {
-          const workersData = await fetchWorker();
-          setWorkers(workersData)
+            const workersData = await fetchWorker();
+            setWorkers(workersData)
         };
-    
+
         getWorkers();
-      }, [])
+    }, [])
 
 
-    const openModal =  () => {
+    const openModal = () => {
         setCreationMode(true);
     }
 
@@ -99,7 +99,15 @@ export default function StaffManagement() {
                                                 <td>{worker.id}</td>
                                                 <td>{worker.name}</td>
                                                 <td>{worker.surname}</td>
-                                                <td>{worker.type}</td>
+                                                <td>
+                                                    {worker.type === "vet"
+                                                        ? "Veterinary"
+                                                        : worker.type === "aux"
+                                                            ? "Auxiliar"
+                                                            : worker.type === "admin"
+                                                                ? "Administrator"
+                                                                : ""}
+                                                </td>
                                                 <td>{worker.phone}</td>
                                                 <td>{worker.email}</td>
                                             </tr>

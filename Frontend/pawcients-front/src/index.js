@@ -47,8 +47,8 @@ const router = createBrowserRouter([
       { path: "/vet/staff", element: <StaffManagement /> },
       { path: "/profilesettings", element: <ProfileSettings /> },
       { path: "/animalprofile", element: <AnimalProfile /> },
-      { path: "/calendar", element: <CalendarPage /> },
-
+      { path: "/vetcalendar", element: <CalendarPage /> },
+      { path: "/clientcalendar", element: <CalendarPage /> },
     ],
   },
 ]);

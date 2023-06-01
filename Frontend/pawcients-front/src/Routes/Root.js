@@ -23,7 +23,8 @@ export default function NavbarLanding() {
       "/vet/staff",
       "/vet/mascots",
       "/animalprofile",
-      "/calendar",
+      "/vetcalendar",
+      "/clientcalendar",
       "/confirmationemail",
     ];
 

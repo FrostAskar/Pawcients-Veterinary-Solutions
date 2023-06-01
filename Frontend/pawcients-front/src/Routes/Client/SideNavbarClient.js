@@ -46,7 +46,7 @@ const SideNavbarClient = () => {
         </li>
         <li>
           <i className="material-icons">calendar_month</i>
-          <Link to="/calendar" className="active">
+          <Link to="/clientcalendar" className="active">
             Calendar
           </Link>
         </li>
