@@ -4,21 +4,17 @@ import java.time.LocalDate;
 
 public class RegisterMascotForm {
 
-    String mascot_name;
-
+    String mascotName;
     String species;
-
     String race;
-
     LocalDate birthDate;
 
-
-    public String getMascot_name() {
-        return mascot_name;
+    public String getMascotName() {
+        return mascotName;
     }
 
-    public void setMascot_name(String mascot_name) {
-        this.mascot_name = mascot_name;
+    public void setMascotName(String mascotName) {
+        this.mascotName = mascotName;
     }
 
     public String getSpecies() {

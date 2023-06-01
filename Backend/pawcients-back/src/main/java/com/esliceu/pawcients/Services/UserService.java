@@ -57,8 +57,8 @@ public class UserService {
             //User is client. Deny creation
             throw new UnauthorizedUserException("This user is not allowed to register users");
         }
-        System.out.println("Sending code to client " + user.getEmail());//Send verification email
-        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
+        System.out.println("Email verification is disabled. --Dámaso");//Send verification email
+//        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
         return userRepo.save(user).getId();
     }
 
@@ -176,7 +176,7 @@ public class UserService {
         if(userRepo.findByEmail(email).get(0).getVerificationCodeEmail().equals(code)) {
             user.setVerificationCodeEmailCheck(true);
             userRepo.save(user);
-            emailSenderService.sendEmailWithoutAttachment(email, "Email verified", "Your email has been verified successfully!");
+//            emailSenderService.sendEmailWithoutAttachment(email, "Email verified", "Your email has been verified successfully!");
         } else {
             throw new IncorrectVerificationCodeException("Verification code does not match up");
         }

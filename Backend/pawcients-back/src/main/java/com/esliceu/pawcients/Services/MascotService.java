@@ -9,7 +9,6 @@ import com.esliceu.pawcients.Forms.RegisterMascotForm;
 import com.esliceu.pawcients.Models.Mascot;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.MascotRepo;
-import com.esliceu.pawcients.Repos.UserRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class MascotService {
             throw new UnauthorizedUserException("User not allowed to create mascots for another client");
         Mascot mascot = new Mascot(
                 null,
-                registerMascotForm.getMascot_name(),
+                registerMascotForm.getMascotName(),
                 registerMascotForm.getSpecies(),
                 registerMascotForm.getRace(),
                 registerMascotForm.getBirthDate(),

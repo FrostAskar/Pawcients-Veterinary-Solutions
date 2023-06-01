@@ -24,6 +24,7 @@ public class PawcientsApplication implements WebMvcConfigurer {
 		registry.addInterceptor(tokenInterceptor)
 				.addPathPatterns("/vetdashboard")
 				.addPathPatterns("/vet/**")
+				.addPathPatterns("/client/**")
 				.addPathPatterns("/verifyemail")
 				.addPathPatterns("/getprofile");
 	}
