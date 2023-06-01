@@ -1,15 +1,20 @@
-export async function FetchWorker() {
+export async function fetchWorker() {
+  try {
     const token = localStorage.getItem('token');
-    const response = await fetch("http://127.0.0.1:8080/vet/client", {
-      method: "POST",
+    const response = await fetch("http://127.0.0.1:8080/vet/workers", {
+      method: "GET",
       headers: {
         Authorization: token
       }
     });
-  
-    if(response.ok) {
-        const data = await response.json();
-        console.log(data);
+
+    if (!response.ok) {
+      throw new Error("Workers request failed");
+    } else if (response.ok) {
+      const data = await response.json();
+      return data;
     }
-    return data;
+  } catch (error) {
+    throw new Error("Workers request failed");
   }
+}

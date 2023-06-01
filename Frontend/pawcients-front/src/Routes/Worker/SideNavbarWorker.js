@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "css/global/global.scss";
 import "css/global/variables.css";
 import "css/vet/vetHome.scss";
-import { fetchProfile } from "fetches/getProfile";
+import { fetchProfile } from "fetches/Global/getProfile";
 
 const SideNavbarWorker = () => {
   const [profileData, setProfileData] = useState(null);

@@ -7,7 +7,7 @@ import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
 
-import { fetchProfile } from "fetches/getProfile";
+import { fetchProfile } from "fetches/Global/getProfile";
 
 
 const todayPatients = [

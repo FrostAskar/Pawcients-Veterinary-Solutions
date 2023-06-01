@@ -1,6 +1,6 @@
 import "css/global/global.scss"
 import "css/vet/dataManagement.scss"
-import { fetchClientRegister } from "fetches/FetchClientRegister";
+import { fetchClientRegister } from "fetches/Worker/FetchClientRegister";
 import React, { useState } from "react";
 
 export default function MascotCreation({ onCancel }) {

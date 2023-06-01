@@ -4,7 +4,7 @@ import Logo from "media/logo.png";
 import "css/global/forms.css";
 import "css/global/global.scss";
 import "css/global/variables.css";
-import { fetchLogin } from "fetches/FetchLogin";
+import { fetchLogin } from "fetches/Global/FetchLogin";
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState("");

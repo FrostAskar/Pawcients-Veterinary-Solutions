@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Logo from "media/paw.png";
 import { Link } from "react-router-dom";
-import { fetchProfile } from "fetches/getProfile";
+import { fetchProfile } from "fetches/Global/getProfile";
 
 const SideNavbarClient = () => {
   const [profileData, setProfileData] = useState(null);

@@ -1,7 +1,7 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
-import { fetchClientRegister } from "fetches/FetchClientRegister";
-import React, { useState } from "react";
+import { fetchWorker } from "fetches/Worker/FetchWorkers";
+import React, { useState, useEffect } from "react";
 
 const staff = [
     {
@@ -30,30 +30,28 @@ const staff = [
     },
 ];
 export default function StaffManagement() {
-    const [errorMessage, setErrorMessage] = useState("");
+    //const [errorMessage, setErrorMessage] = useState("");
+    const [workers, setWorkers] = useState([]);
     const [creationMode, setCreationMode] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const name = e.target.name.value;
-        const lastName = e.target.lastname.value;
-        const email = e.target.email.value;
-        const phone = e.target.phone.value;
-        const license = e.target.license.value;
-        try {
-            // Fetch para login de cliente
-            const response = await fetchClientRegister(name, lastName, email, phone, license);
-            if (response.success) {
-
-            } else {
-                // Mensaje de error para cliente
-                setErrorMessage(response.message);
-            }
-        } catch (error) {
-            console.log(error);
-            setErrorMessage("Error en la conexión con el servidor");
-        }
+        // const name = e.target.name.value;
+        // const lastName = e.target.lastname.value;
+        // const email = e.target.email.value;
+        // const phone = e.target.phone.value;
+        // const license = e.target.license.value;
+        
     };
+
+    useEffect(() => {
+        const getWorkers = async () => {
+          const workersData = await fetchWorker();
+          setWorkers(workersData)
+        };
+    
+        getWorkers();
+      }, [])
 
 
     const openModal =  () => {
@@ -96,11 +94,11 @@ export default function StaffManagement() {
                                             <th>Phone</th>
                                             <th>Email</th>
                                         </tr>
-                                        {staff.map((worker, index) => (
+                                        {workers.map((worker, index) => (
                                             <tr key={index}>
                                                 <td>{worker.id}</td>
                                                 <td>{worker.name}</td>
-                                                <td>{worker.lastName}</td>
+                                                <td>{worker.surname}</td>
                                                 <td>{worker.type}</td>
                                                 <td>{worker.phone}</td>
                                                 <td>{worker.email}</td>
@@ -131,7 +129,7 @@ export default function StaffManagement() {
 
                                         <button className="clasic-button" type="submit">Sign up worker</button>
                                         <button className="clasic-button" type="button" onClick={cancelCreation}>Cancel</button>
-                                        {errorMessage && <p className="error-message">{errorMessage}</p>}
+                                        {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
                                     </form>
                                 </div>
                             </div>

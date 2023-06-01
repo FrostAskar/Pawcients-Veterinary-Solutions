@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Logo from "media/logo.png";
 
-import { fetchSignup } from "fetches/FetchSignUp";
+import { fetchSignup } from "fetches/Worker/FetchSignUp";
 import "css/global/global.scss";
 import "css/global/variables.css";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "css/common/confirmationEmail.css";
-import { fetchVerifyEmail } from "fetches/FetchVerifyEmail";
-import { fetchProfile } from "fetches/getProfile";
+import { fetchVerifyEmail } from "fetches/Global/FetchVerifyEmail";
+import { fetchProfile } from "fetches/Global/getProfile";
 
 const ConfirmationEmail = () => {
   const [profileData, setProfileData] = useState(null);
@@ -19,7 +19,7 @@ const ConfirmationEmail = () => {
     if (profileData.type === "client") {
       window.location.href = "/clientdashboard";
     }
-    if (profileData.type === "vet") {
+    if ((profileData.type === "vet") || (profileData.type === "admin")) {
       window.location.href = "/vetdashboard";
     }
   }
