@@ -7,13 +7,12 @@ export default function ClientCreation({ onCancel }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.name.value;
-        const species = e.target.species.value;
-        const gender = e.target.gender.value;
-        const birthDate = e.target.birthDate.value;
-        const owner = e.target.owner.value;
+        const surname = e.target.surname.value;
+        const email = e.target.email.value;
+        const phone = e.target.phone.value;
         try {
             // Fetch para login de cliente
-            const response = await fetchClientRegister(name, species, gender, birthDate, owner);
+            const response = await fetchClientRegister(name, surname, email, phone);
             if (response.success) {
 
             } else {
@@ -37,8 +36,8 @@ export default function ClientCreation({ onCancel }) {
                     <form className="clasic-form" onSubmit={handleSubmit} method="post">
                         <label htmlFor="name">Name</label>
                         <input type="text" name="name" id="name" required />
-                        <label htmlFor="lastname">Lastname</label>
-                        <input type="text" name="lastname" id="lastname" required />
+                        <label htmlFor="surname">Lastname</label>
+                        <input type="text" name="surname" id="surname" required />
                         <label htmlFor="email">Email</label>
                         <input type="email" name="email" id="email" required />
                         <label htmlFor="phone">Phone</label>

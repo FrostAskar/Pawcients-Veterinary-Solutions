@@ -6,9 +6,7 @@ import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
-
 import { fetchProfile } from "fetches/Global/getProfile";
-
 
 const todayPatients = [
   {
@@ -69,7 +67,6 @@ export default function VetDashboard() {
       <div className="dashboard-page">
         <div className="dashboard-header">
           <h1>Welcome, {profileData?.name} </h1>
-          {/* <h1>Welcome, Andrés Pantoja</h1> */}
           <div className="input-wrapper">
             <input
               type="text"

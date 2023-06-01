@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "css/common/profilesettings.scss";
 import "css/vet/vetHome.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
-const profileData = [
-  {
-    name: "Andrés Pantoja",
-    type: "client",
-  },
-];
+import { fetchProfile } from "fetches/Global/getProfile";
+
 
 const ProfileSettings = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    const getProfileData = async () => {
+      const profileData = await fetchProfile();
+      setProfileData(profileData);
+    };
+
+    getProfileData();
+  }, []);
 
   const handlePasswordChange = () => {
     // Lógica para cambiar la contraseña
@@ -36,7 +42,7 @@ const ProfileSettings = () => {
 
   return (
     <div className="dashboard">
-      {profileData[0].type === "vet" ? (
+      {((profileData?.type === "vet") || (profileData?.type === "aux") || (profileData?.type === "admin")) ? (
         <SideNavbarWorker />
       ) : (
         <SideNavbarClient />
