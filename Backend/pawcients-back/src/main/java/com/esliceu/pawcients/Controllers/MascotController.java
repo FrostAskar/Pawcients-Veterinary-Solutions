@@ -13,10 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 @RestController
@@ -30,6 +27,25 @@ public class MascotController {
         this.userService = userService;
     }
 
+    @GetMapping("/mascots")
+    @CrossOrigin
+    public Map<String, Object> getAllMascotsInClinic(HttpServletRequest req, HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
+        List<Mascot> mascots = new ArrayList<>();
+        User actualUser = (User) req.getAttribute("user");
+        List<User> usersInClinic = userService.getUsersByClinic(actualUser.getClinicId());
+        try {
+            for (User user : usersInClinic) {
+                mascots.addAll(mascotService.findMascotsByUser(user.getId(), actualUser));
+            }
+            result.put("mascots", mascots);
+        } catch (UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(403);
+        }
+        return result;
+    }
+
     @GetMapping("/mascot/{mascotId}")
     @CrossOrigin
     public Mascot getMascot(@PathVariable String mascotId) {
@@ -38,8 +54,18 @@ public class MascotController {
 
     @GetMapping("/client/{clientId}/mascots")
     @CrossOrigin
-    public List<Mascot> getMascotsFromClient(@PathVariable String clientId) {
-        return mascotService.findMascotsByUser(clientId);
+    public Map<String, Object> getMascotsFromClient(@PathVariable String clientId, HttpServletRequest req, HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
+        User actualUser = (User) req.getAttribute("user");
+        try {
+            List<Mascot> mascots = mascotService.findMascotsByUser(clientId, actualUser);
+            result.put("mascots", mascots);
+        } catch (UnauthorizedUserException | UnverifiedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+
+        return result;
     }
 
     @PostMapping("/mascot")

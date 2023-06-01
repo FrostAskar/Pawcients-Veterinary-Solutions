@@ -52,7 +52,13 @@ public class MascotService {
         return mascots.get(0);
     }
 
-    public List<Mascot> findMascotsByUser(String userId) {
+    public List<Mascot> findMascotsByUser(String userId, User actualUser) {
+        if(userService.userRepo.findById(userId).isEmpty())
+            throw new NotFoundUserException("User not found");
+        if(!actualUser.getVerificationCodeEmailCheck())
+            throw new UnverifiedUserException("User is not verified");
+        if(actualUser.getType().equals("client") && actualUser.getId().equals(userId))
+            throw new UnauthorizedUserException("User is not authorized");
         return mascotRepo.findByOwnerId(userId);
     }
 

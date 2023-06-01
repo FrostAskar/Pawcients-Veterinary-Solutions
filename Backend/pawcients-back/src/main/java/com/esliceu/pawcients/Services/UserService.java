@@ -143,7 +143,7 @@ public class UserService {
             userRepo.deleteById(userId);
         }
         //Additional check. If no more users for that clinic, delete the clinic
-        List<User> usersOnClinic = checkUsersOnClinic(toDeleteUser.getClinicId());
+        List<User> usersOnClinic = getUsersByClinic(toDeleteUser.getClinicId());
         if(usersOnClinic.size() < 1) {
             clinicService.deleteClinic(toDeleteUser.getClinicId());
         }
@@ -155,7 +155,7 @@ public class UserService {
         }
     }
 
-    private List<User> checkUsersOnClinic(String clinicId) {
+    public List<User> getUsersByClinic(String clinicId) {
         return userRepo.findByClinicId(clinicId);
     }
 
