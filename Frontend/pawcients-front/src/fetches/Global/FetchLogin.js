@@ -6,8 +6,15 @@ export async function fetchLogin(email, password) {
     },
     body: JSON.stringify({ email, password }),
   });
-
   const data = await response.json();
+
+  localStorage.setItem("token", data.token);
+  if (data.user.type === "vet" || data.user.type === "admin") {
+    window.location.href = "/vetdashboard";
+  } else if (data.user.type === "client") {
+    window.location.href = "/clientdashboard";
+  }
+
 
   return data;
 }
