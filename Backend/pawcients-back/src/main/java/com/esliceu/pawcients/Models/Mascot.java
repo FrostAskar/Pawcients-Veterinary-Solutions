@@ -11,13 +11,18 @@ public class Mascot {
 
     @Id
     String id;
-
     String name;
+    String photo;
     String species;
-    String race;
+    String breed;
+    int age;
+    String gender;
+    int weight;
+    String color;
+    String identificationSerial;
     LocalDate birthDate;
     String ownerId;
-    List<History> history;
+    String historyId;
 
     public Mascot(){}
 
@@ -25,7 +30,7 @@ public class Mascot {
         this.id = id;
         this.name = name;
         this.species = species;
-        this.race = race;
+        this.breed = race;
         this.birthDate = birthDate;
         this.ownerId = ownerId;
     }
@@ -54,12 +59,12 @@ public class Mascot {
         this.species = species;
     }
 
-    public String getRace() {
-        return race;
+    public String getBreed() {
+        return breed;
     }
 
-    public void setRace(String race) {
-        this.race = race;
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
     public LocalDate getBirthDate() {
