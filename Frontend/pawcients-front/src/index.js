@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       { path: "/vet/mascots", element: <MascotsManagement /> },
       { path: "/vet/staff", element: <StaffManagement /> },
       { path: "/profilesettings", element: <ProfileSettings /> },
-      { path: "/animalprofile", element: <AnimalProfile /> },
+      { path: "/mascot/:mascotid", element: <AnimalProfile /> },
       { path: "/vetcalendar", element: <CalendarPage /> },
       { path: "/clientcalendar", element: <CalendarPage /> },
     ],

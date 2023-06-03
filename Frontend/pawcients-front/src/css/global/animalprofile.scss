@@ -1,9 +1,9 @@
-/* animalprofile.css */
-
 .animal-management-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .animal-profile {
@@ -15,9 +15,15 @@
   max-width: 600px;
 }
 
+.profile-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .profile-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
@@ -41,22 +47,24 @@
 
 .profile-details {
   margin-bottom: 20px;
-  p {
-    margin: 10px 0;
-  }
-  ul {
-    list-style-type: none;
-    padding: 0;
-    li {
-      margin-bottom: 5px;
-    }
-  }
+}
+
+.profile-details p {
+  margin: 10px 0;
+}
+
+.profile-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.profile-details ul li {
+  margin-bottom: 5px;
 }
 
 .section-title {
   margin-top: 0;
 }
-
 
 .additional-info {
   background-color: #f5f5f5;
@@ -84,6 +92,7 @@
 .button-container {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .btn-save,
@@ -125,7 +134,10 @@
   background-color: #0c7cd5;
 }
 
-.edit-mode .profile-header,
-.edit-mode .profile-details {
-  display: none;
+.edit-mode {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+ul {
+  list-style-type: none;
 }

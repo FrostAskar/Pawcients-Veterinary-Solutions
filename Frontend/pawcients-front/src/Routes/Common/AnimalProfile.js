@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "css/global/animalprofile.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
+import { useParams } from "react-router-dom";
+import { fetchMascotData } from "fetches/Global/FetchMascotData";
 
 const animalData = {
   name: "Max",
@@ -34,6 +36,21 @@ const animalData = {
 };
 
 const AnimalManagementPage = () => {
+  const { mascotid } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchMascotData(mascotid);
+        setEditedAnimalData(data);
+      } catch (error) {
+        console.error("Error fetching mascot data:", error);
+      }
+    };
+
+    fetchData();
+  }, [mascotid]);
+
   const [isEditing, setIsEditing] = useState(false);
   const [editedAnimalData, setEditedAnimalData] = useState(animalData);
 
@@ -162,12 +179,6 @@ const AnimalManagementPage = () => {
     });
   };
 
-  const handleAddAllergy = () => {
-    setEditedAnimalData((prevData) => ({
-      ...prevData,
-      allergies: "",
-    }));
-  };
   const handleAddHistory = () => {
     setEditedAnimalData((prevData) => {
       const medicalHistory = [
@@ -292,38 +303,51 @@ const AnimalManagementPage = () => {
               <p>
                 <strong>Medical History:</strong>{" "}
                 {isEditing ? (
-                  < ul>
+                  <ul>
                     {medicalHistory.map((history, index) => (
                       <li key={index}>
-                        <input
-                          className="animalprofile-input"
-                          type="text"
-                          name={`history-${index}`}
-                          value={history.description}
-                          onChange={(e) =>
-                            handleChangeHistory(index, e.target.value)
-                          }
-                        />{" "}
-                        <input
-                          className="animalprofile-input"
-                          type="text"
-                          name={`history-date-${index}`}
-                          value={history.date}
-                          onChange={(e) =>
-                            handleChangeHistory(index, e.target.value)
-                          }
-                        />
+                        <span>
+                          History:
+                          <input
+                            className="animalprofile-input"
+                            type="text"
+                            name={`history-${index}`}
+                            value={history.description}
+                            onChange={(e) =>
+                              handleChangeHistory(index, e.target.value)
+                            }
+                          />
+                        </span>{" "}
+                        <span>
+                          Date:{" "}
+                          <input
+                            className="animalprofile-input"
+                            type="text"
+                            name={`history-date-${index}`}
+                            value={history.date}
+                            onChange={(e) =>
+                              handleChangeHistory(index, e.target.value)
+                            }
+                          />
+                        </span>
+                        <hr></hr>
+                        <br></br>
                       </li>
                     ))}
                     <li>
-                      <button className="animalprofile-button" onClick={handleAddHistory}>New</button>
+                      <button
+                        className="animalprofile-button"
+                        onClick={handleAddHistory}
+                      >
+                        New
+                      </button>
                     </li>
                   </ul>
                 ) : (
                   <ul>
                     {medicalHistory.map((history, index) => (
                       <li key={index}>
-                        {history.description} - {history.date}
+                        {history.description} {history.date}
                       </li>
                     ))}
                   </ul>
@@ -339,36 +363,48 @@ const AnimalManagementPage = () => {
                     <ul>
                       {vaccines.map((vaccine, index) => (
                         <li key={index}>
-                          <input
-                            className="animalprofile-input"
-                            type="text"
-                            name={`vaccine-${index}`}
-                            value={vaccine.name}
-                            onChange={(e) =>
-                              handleChangeVaccine(index, e.target.value)
-                            }
-                          />{" "}
-                          -{" "}
-                          <input
-                            className="animalprofile-input"
-                            type="text"
-                            name={`vaccine-date-${index}`}
-                            value={vaccine.date}
-                            onChange={(e) =>
-                              handleChangeVaccineDate(index, e.target.value)
-                            }
-                          />
+                          <span>
+                            Vaccine:
+                            <input
+                              className="animalprofile-input"
+                              type="text"
+                              name={`vaccine-${index}`}
+                              value={vaccine.name}
+                              onChange={(e) =>
+                                handleChangeVaccine(index, e.target.value)
+                              }
+                            />
+                          </span>{" "}
+                          <span>
+                            Date:
+                            <input
+                              className="animalprofile-input"
+                              type="text"
+                              name={`vaccine-date-${index}`}
+                              value={vaccine.date}
+                              onChange={(e) =>
+                                handleChangeVaccineDate(index, e.target.value)
+                              }
+                            />
+                          </span>
+                          <hr></hr>
+                          <br></br>
                         </li>
                       ))}
                       <li>
-                        <button className="animalprofile-button" onClick={handleAddVaccine}>New</button>
+                        <button
+                          className="animalprofile-button"
+                          onClick={handleAddVaccine}
+                        >
+                          New
+                        </button>
                       </li>
                     </ul>
                   ) : (
                     <ul>
                       {vaccines.map((vaccine, index) => (
                         <li key={index}>
-                          {vaccine.name} - {vaccine.date}
+                          {vaccine.name} {vaccine.date}
                         </li>
                       ))}
                     </ul>
@@ -380,36 +416,48 @@ const AnimalManagementPage = () => {
                     <ul>
                       {deworming.map((deworm, index) => (
                         <li key={index}>
-                          <input
-                            className="animalprofile-input"
-                            type="text"
-                            name={`deworm-${index}`}
-                            value={deworm.name}
-                            onChange={(e) =>
-                              handleChangeDeworm(index, e.target.value)
-                            }
-                          />{" "}
-                          -{" "}
-                          <input
-                            className="animalprofile-input"
-                            type="text"
-                            name={`deworm-date-${index}`}
-                            value={deworm.date}
-                            onChange={(e) =>
-                              handleChangeDewormDate(index, e.target.value)
-                            }
-                          />
+                          <span>
+                            Deworm:{" "}
+                            <input
+                              className="animalprofile-input"
+                              type="text"
+                              name={`deworm-${index}`}
+                              value={deworm.name}
+                              onChange={(e) =>
+                                handleChangeDeworm(index, e.target.value)
+                              }
+                            />
+                          </span>{" "}
+                          <span>
+                            Date:{" "}
+                            <input
+                              className="animalprofile-input"
+                              type="text"
+                              name={`deworm-date-${index}`}
+                              value={deworm.date}
+                              onChange={(e) =>
+                                handleChangeDewormDate(index, e.target.value)
+                              }
+                            />
+                          </span>
+                          <hr></hr>
+                          <br></br>
                         </li>
                       ))}
                       <li>
-                        <button className="animalprofile-button" onClick={handleAddDeworm}>New</button>
+                        <button
+                          className="animalprofile-button"
+                          onClick={handleAddDeworm}
+                        >
+                          New
+                        </button>
                       </li>
                     </ul>
                   ) : (
                     <ul>
                       {deworming.map((deworm, index) => (
                         <li key={index}>
-                          {deworm.name} - {deworm.date}
+                          {deworm.name} {deworm.date}
                         </li>
                       ))}
                     </ul>
@@ -456,6 +504,8 @@ const AnimalManagementPage = () => {
                         : "Not sterilized"}
                     </p>
                   )}
+                  <br />
+                  <hr></hr>
                 </div>
                 <div className="info-item">
                   <h4>Allergies</h4>
@@ -470,9 +520,9 @@ const AnimalManagementPage = () => {
                   ) : (
                     <p>{allergies}</p>
                   )}
-                  {isEditing && <button className="animalprofile-button" onClick={handleAddAllergy}>New</button>}
                 </div>
               </div>
+
               <div className="special-notes">
                 <h4>Special Notes</h4>
                 {isEditing ? (
