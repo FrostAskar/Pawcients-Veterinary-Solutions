@@ -46,10 +46,11 @@ public class MascotController {
         return result;
     }
 
-    @GetMapping("/mascot/{mascotId}")
+    @GetMapping("/client/{clientId}/mascot/{mascotId}")
     @CrossOrigin
-    public Mascot getMascot(@PathVariable String mascotId) {
-        return mascotService.findMascotById(mascotId);
+    //TODO check if mascot belongs to user
+    public Mascot getMascot(@PathVariable String mascotId, @PathVariable String clientId) {
+        return mascotService.findMascotByIdAndOwnerId(mascotId, clientId);
     }
 
     @GetMapping("/client/{clientId}/mascots")

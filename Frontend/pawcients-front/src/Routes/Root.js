@@ -22,7 +22,10 @@ export default function NavbarLanding() {
       "/vet/clients",
       "/vet/staff",
       "/vet/mascots",
-      "/animalprofile",
+      "/client/" +
+        location.pathname.split("/")[2] +
+        "/mascot/" +
+        location.pathname.split("/")[4],
       "/vetcalendar",
       "/clientcalendar",
       "/confirmationemail",
