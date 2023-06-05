@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "css/global/animalprofile.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
-import { useParams } from "react-router-dom";
 import { fetchMascotData } from "fetches/Global/FetchMascotData";
 
 const animalData = {
@@ -36,12 +35,15 @@ const animalData = {
 };
 
 const AnimalManagementPage = () => {
-  const { mascotid } = useParams();
-
+  //Get url parameters
+  const url = window.location.pathname;
+  // If path is /client/:clientid/mascot/:mascotid, then:
+  const clientid = url.split("/")[2];
+  const mascotid = url.split("/")[4];
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchMascotData(mascotid);
+        const data = await fetchMascotData(clientid, mascotid);
         setEditedAnimalData(data);
       } catch (error) {
         console.error("Error fetching mascot data:", error);
@@ -49,7 +51,7 @@ const AnimalManagementPage = () => {
     };
 
     fetchData();
-  }, [mascotid]);
+  }, [clientid, mascotid]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedAnimalData, setEditedAnimalData] = useState(animalData);
