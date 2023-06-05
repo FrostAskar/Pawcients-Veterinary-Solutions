@@ -45,9 +45,11 @@ export default function CustomerManagement() {
         setClientCreationMode(false);
     }
 
-    const openMascotModal =  (clientID) => {
+    const openMascotModal =  async (e, id) => {
+        e.preventDefault();
         setMascotCreationMode(true);
-        setClientID(clientID);
+        console.log(id);
+        setClientID(id);
     }
 
     const closeMascotCreation = () => {

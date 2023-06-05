@@ -13,7 +13,7 @@ export default function MascotCreation({ onClose, clientID }) {
         //const gender = e.target.gender.value;
         const race = e.target.race.value;
         const birthDate = e.target.birthDate.value;
-        debugger;
+        console.log(clientID);
         try {
             // Fetch para login de cliente
             const response = await addMascot(name, species, race, birthDate, clientID);
@@ -43,7 +43,11 @@ export default function MascotCreation({ onClose, clientID }) {
                         <label htmlFor="name">Name</label>
                         <input type="text" name="name" id="name" required />
                         <label htmlFor="species">Species</label>
-                        <input type="text" name="species" id="species" required />
+                        <select name="species">
+                            <option value="Dog">Dog</option>
+                            <option value="Cat">Cat</option>
+                            <option value="Others">Others</option>
+                        </select>
                         <label htmlFor="race">Race</label>
                         <input type="text" name="race" id="race" required />
                         {/* <label htmlFor="gender">Gender</label>

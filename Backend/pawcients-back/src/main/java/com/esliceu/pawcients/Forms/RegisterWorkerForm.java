@@ -8,7 +8,6 @@ public class RegisterWorkerForm {
     String email;
     String phone;
     String type;
-    String password;
     String clinicId;
 
     public String getName() {
@@ -57,13 +56,6 @@ public class RegisterWorkerForm {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getClinicId() {

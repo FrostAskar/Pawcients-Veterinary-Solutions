@@ -30,17 +30,17 @@ const staff = [
     },
 ];
 export default function StaffManagement() {
-    //const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [workers, setWorkers] = useState([]);
     const [creationMode, setCreationMode] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // const name = e.target.name.value;
-        // const lastName = e.target.lastname.value;
-        // const email = e.target.email.value;
-        // const phone = e.target.phone.value;
-        // const license = e.target.license.value;
+        const name = e.target.name.value;
+        const lastName = e.target.lastname.value;
+        const email = e.target.email.value;
+        const phone = e.target.phone.value;
+        const license = e.target.license.value;
 
     };
 
@@ -133,11 +133,10 @@ export default function StaffManagement() {
                                         <input type="text" name="phone" id="phone" required />
                                         <label htmlFor="license">License number</label>
                                         <input type="text" name="license" id="license" required />
-                                        {/* Captcha: */}
 
                                         <button className="clasic-button" type="submit">Sign up worker</button>
                                         <button className="clasic-button" type="button" onClick={cancelCreation}>Cancel</button>
-                                        {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
+                                        {errorMessage && <p className="error-message">{errorMessage}</p>}
                                     </form>
                                 </div>
                             </div>
