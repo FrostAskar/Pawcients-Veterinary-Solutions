@@ -1,6 +1,7 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
 import { getWorkers } from "fetches/Worker/FetchGetWorkers";
+import { fetchWorkerRegister } from "fetches/Worker/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
 
 const staff = [
@@ -37,20 +38,34 @@ export default function StaffManagement() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const name = e.target.name.value;
-        const lastName = e.target.lastname.value;
+        const surname = e.target.lastname.value;
         const email = e.target.email.value;
         const phone = e.target.phone.value;
         const license = e.target.license.value;
 
+        try {
+            // Fetch para login de cliente
+            const response = await fetchWorkerRegister(name, surname, email, phone, license);
+            if (response.success) {
+
+            } else {
+                // Mensaje de error para cliente
+                setErrorMessage(response.message);
+            }
+        } catch (error) {
+            console.log(error);
+            setErrorMessage("Error en la conexión con el servidor");
+        }
+
     };
 
     useEffect(() => {
-        const obtainMascots = async () => {
+        const obtainWorkers = async () => {
             const workersData = await getWorkers();
             setWorkers(workersData);
         };
 
-        obtainMascots();
+        obtainWorkers();
     }, [])
 
 
