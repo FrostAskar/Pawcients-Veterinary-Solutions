@@ -44,8 +44,10 @@ public class MascotService {
         return mascots;
     }
 
-    public Mascot findMascotById(String mascotId) {
+    public Mascot findMascotByIdAndOwnerId(String mascotId, String clientId) {
+        // TODO Query it with the parameter clientid too (Same query only one result)
         List<Mascot> mascots = mascotRepo.findById(mascotId).stream().toList();
+        System.out.println(mascotId + " " + clientId);
         if (mascots.size() < 1) {
             throw new NotFoundMascotException("This is not a valid mascot");
         }

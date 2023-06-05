@@ -12,7 +12,7 @@ public class Mascot {
     @Id
     String id;
     String name;
-    String photo;
+    String photo = "https://thecontemporarypet.com/wp-content/themes/contemporarypet/images/default.png";
     String species;
     String breed;
     int age;
