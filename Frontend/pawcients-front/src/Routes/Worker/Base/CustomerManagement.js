@@ -35,6 +35,7 @@ const clients = [
 export default function CustomerManagement() {
     const [clientCreationMode, setClientCreationMode] = useState(false);
     const [mascotCreationMode, setMascotCreationMode] = useState(false);
+    const [clientID, setClientID] = useState("");
 
     const openClientModal =  () => {
         setClientCreationMode(true);
@@ -44,11 +45,12 @@ export default function CustomerManagement() {
         setClientCreationMode(false);
     }
 
-    const openMascotModal =  () => {
+    const openMascotModal =  (clientID) => {
         setMascotCreationMode(true);
+        setClientID(clientID);
     }
 
-    const cancelMascotCreation = () => {
+    const closeMascotCreation = () => {
         setMascotCreationMode(false);
     }
 
@@ -103,7 +105,7 @@ export default function CustomerManagement() {
                                                     )}
                                                 </td>
                                                 <td><button className="small-button">View pets</button></td>
-                                                <td><button className="small-button" onClick={openMascotModal}>Add</button></td>
+                                                <td><button className="small-button" onClick={(e) => openMascotModal(e, client.id)}>Add</button></td>
                                             </tr>
                                         ))}
                                     </table>
@@ -116,7 +118,7 @@ export default function CustomerManagement() {
                     )}
 
                     {mascotCreationMode && (
-                        <MascotCreation onCancel={cancelMascotCreation}/>
+                        <MascotCreation onClose={closeMascotCreation} clientID={clientID} />
                     )}
 
                 </div>

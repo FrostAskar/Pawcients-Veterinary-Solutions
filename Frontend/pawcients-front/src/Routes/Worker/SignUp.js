@@ -45,7 +45,6 @@ function SignUp() {
         );
         if (response.success) {
           // Redirección a Home o Login
-          console.log("Signup Successful");
           window.location.href = "/login";
         } else {
           // Mensaje de error para cliente

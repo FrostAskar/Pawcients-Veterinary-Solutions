@@ -8,7 +8,6 @@ import java.util.List;
 
 @Document(collection = "Mascot")
 public class Mascot {
-
     @Id
     String id;
 

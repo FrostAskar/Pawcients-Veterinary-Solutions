@@ -1,6 +1,6 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
-import { fetchWorker } from "fetches/Worker/FetchWorkers";
+import { getWorkers } from "fetches/Worker/FetchGetWorkers";
 import React, { useState, useEffect } from "react";
 
 const staff = [
@@ -45,12 +45,12 @@ export default function StaffManagement() {
     };
 
     useEffect(() => {
-        const getWorkers = async () => {
-            const workersData = await fetchWorker();
-            setWorkers(workersData)
+        const obtainMascots = async () => {
+            const workersData = await getWorkers();
+            setWorkers(workersData);
         };
 
-        getWorkers();
+        obtainMascots();
     }, [])
 
 

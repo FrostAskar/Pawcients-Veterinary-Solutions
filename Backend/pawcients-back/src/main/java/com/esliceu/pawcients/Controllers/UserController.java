@@ -215,10 +215,4 @@ public class UserController {
         return workers;
     }
 
-    @GetMapping("/vet/mascots")
-    @CrossOrigin
-    public List<User> getMascots() {
-        return null;
-    }
-
 }

@@ -8,6 +8,11 @@ export async function fetchSignup(name, surname, email, phone, license, password
     });
 
     const data = await response.json();
+
+    if(response.status === 200) {
+      window.location.href = "/login";
+    }
+   
     return data;
   }
 

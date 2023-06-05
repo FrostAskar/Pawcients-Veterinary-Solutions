@@ -1,8 +1,9 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/global/global.scss"
 import "css/vet/dataManagement.scss"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
+import { getMascots  } from "fetches/Worker/FetchGetMascots";
 
 const mascots = [
     {
@@ -33,12 +34,23 @@ const mascots = [
 ];
 export default function MascotsManagement() {
     const [creationMode, setCreationMode] = useState(false);
+    //const [mascots, setMascots] = useState([]);
+
+    useEffect(() => {
+        const obtainMascots = async () => {
+            //const mascotsData = await getMascots();
+            await getMascots();
+            //setMascots(mascotsData)
+        };
+
+        obtainMascots();
+    }, [])
 
     const openModal =  () => {
         setCreationMode(true);
     }
 
-    const handleCancel = () => {
+    const handleClose = () => {
         setCreationMode(false);
     }
     return (
@@ -92,7 +104,7 @@ export default function MascotsManagement() {
                         </div>
                     </section>
                     {creationMode && (
-                        <MascotCreation onCancel={handleCancel} />
+                        <MascotCreation onClose={handleClose} />
                     )}
                 </div>
             </div>
