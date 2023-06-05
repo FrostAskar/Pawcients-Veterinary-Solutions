@@ -10,6 +10,7 @@ import java.util.List;
 public class Mascot {
     @Id
     String id;
+    String clinicId;
     String name;
     String photo = "https://thecontemporarypet.com/wp-content/themes/contemporarypet/images/default.png";
     String species;
@@ -25,8 +26,9 @@ public class Mascot {
 
     public Mascot(){}
 
-    public Mascot(String id, String name, String species, String race, LocalDate birthDate, String ownerId) {
+    public Mascot(String id, String clinicId, String name, String species, String race, LocalDate birthDate, String ownerId) {
         this.id = id;
+        this.clinicId = clinicId;
         this.name = name;
         this.species = species;
         this.breed = race;
@@ -80,5 +82,69 @@ public class Mascot {
 
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public String getClinicId() {
+        return clinicId;
+    }
+
+    public void setClinicId(String clinicId) {
+        this.clinicId = clinicId;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getIdentificationSerial() {
+        return identificationSerial;
+    }
+
+    public void setIdentificationSerial(String identificationSerial) {
+        this.identificationSerial = identificationSerial;
+    }
+
+    public String getHistoryId() {
+        return historyId;
+    }
+
+    public void setHistoryId(String historyId) {
+        this.historyId = historyId;
     }
 }

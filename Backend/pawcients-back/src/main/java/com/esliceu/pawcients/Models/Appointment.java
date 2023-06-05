@@ -3,7 +3,7 @@ package com.esliceu.pawcients.Models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /*
     Appointment is a visit that a mascot does to a vet/aux and is requested by the owner
@@ -14,7 +14,7 @@ public class Appointment {
 
     @Id
     String id;
-    LocalDate date;
+    LocalDateTime date;
     String workerId;
     String ownerId;
     String mascotId;
@@ -26,7 +26,7 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String id, LocalDate date, String workerId, String ownerId, String mascotId, String type) {
+    public Appointment(String id, LocalDateTime date, String workerId, String ownerId, String mascotId, String type) {
         this.id = id;
         this.date = date;
         this.workerId = workerId;
@@ -43,11 +43,11 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

@@ -1,5 +1,6 @@
 package com.esliceu.pawcients.Services;
 
+import com.esliceu.pawcients.DTO.MascotDTO;
 import com.esliceu.pawcients.Exceptions.NotFoundMascotException;
 import com.esliceu.pawcients.Exceptions.NotFoundUserException;
 import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
@@ -44,6 +45,10 @@ public class MascotService {
         return mascots;
     }
 
+    public Mascot findMasctorById(String mascotId) {
+        return mascotRepo.findById(mascotId).get();
+    }
+
     public Mascot findMascotByIdAndOwnerId(String mascotId, String clientId) {
         // TODO Query it with the parameter clientid too (Same query only one result)
         List<Mascot> mascots = mascotRepo.findById(mascotId).stream().toList();
@@ -73,6 +78,7 @@ public class MascotService {
             throw new UnauthorizedUserException("User not allowed to create mascots for another client");
         Mascot mascot = new Mascot(
                 null,
+                actualUser.getClinicId(),
                 registerMascotForm.getMascotName(),
                 registerMascotForm.getSpecies(),
                 registerMascotForm.getRace(),
@@ -80,5 +86,9 @@ public class MascotService {
                 ownerId
                 );
         return mascotRepo.save(mascot).getId();
+    }
+
+    public List<Mascot> findMascotsByClinic(String clinicId) {
+        return mascotRepo.findByClinicId(clinicId);
     }
 }

@@ -8,6 +8,9 @@ import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.AppointmentRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -19,6 +22,10 @@ public class AppointmentService {
     public AppointmentService(AppointmentRepo appointmentRepo, UserService userService) {
         this.appointmentRepo = appointmentRepo;
         this.userService = userService;
+    }
+
+    public Appointment findAppointmentById(String appointmentId) {
+        return appointmentRepo.findById(appointmentId).get();
     }
 
     public List<Appointment> getAppointmentsByVet(String vetId) {
@@ -66,5 +73,9 @@ public class AppointmentService {
             throw new UnauthorizedUserException("Current user is not authorized to remove appointment");
         }
         return appointment.getId();
+    }
+
+    public List<Appointment> getTodaysAppointments(User actualUser) {
+        return appointmentRepo.findByWorkerId(actualUser.getId());
     }
 }

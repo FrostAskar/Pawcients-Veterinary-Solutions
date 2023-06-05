@@ -16,4 +16,5 @@ public interface MascotRepo extends MongoRepository<Mascot, String> {
 
     List<Mascot> findByName(String mascot_name);
 
+    List<Mascot> findByClinicId(String clinicId);
 }

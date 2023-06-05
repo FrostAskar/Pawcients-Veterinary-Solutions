@@ -52,4 +52,12 @@ public class MascotDTO {
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
+
+    public String getOwnerSurname() {
+        return ownerSurname;
+    }
+
+    public void setOwnerSurname(String ownerSurname) {
+        this.ownerSurname = ownerSurname;
+    }
 }

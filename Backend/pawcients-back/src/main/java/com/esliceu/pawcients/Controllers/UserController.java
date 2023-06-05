@@ -138,7 +138,7 @@ public class UserController {
                     registerUserForm.getSurname(),
                     registerUserForm.getEmail(),
                     registerUserForm.getPhone(),
-                    registerUserForm.getType(),
+                    "client",
                     Encrypt.sha512(registerUserForm.getPassword()),
                     actualUser.getClinicId());
             clientId = userService.saveUser(user, actualUser);

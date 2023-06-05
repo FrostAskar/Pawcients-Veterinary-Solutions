@@ -1,5 +1,6 @@
 package com.esliceu.pawcients.Controllers;
 
+import com.esliceu.pawcients.DTO.MascotDTO;
 import com.esliceu.pawcients.Exceptions.NotFoundUserException;
 import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
@@ -81,15 +82,35 @@ public class MascotController {
                                                @PathVariable String clientId,
                                                HttpServletResponse res, HttpServletRequest req) {
         Map<String, Object> result = new HashMap<>();
-        User user = (User) req.getAttribute("user");
+        User actualUser = (User) req.getAttribute("user");
         String mascotId;
         try {
-            mascotId =  mascotService.saveMascot(registerMascotForm, clientId, user);
+            mascotId =  mascotService.saveMascot(registerMascotForm, clientId, actualUser);
             result.put("mascotId", mascotId);
         } catch (NotFoundUserException | UnverifiedUserException | UnauthorizedUserException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
         }
         return result;
+    }
+
+    @GetMapping("/vet/mascots")
+    @CrossOrigin
+    public List<MascotDTO> getMascotsByClinic(HttpServletRequest req) {
+        List<MascotDTO> mascotData = new ArrayList<>();
+        User actualUser = (User) req.getAttribute("user");
+        List<Mascot> mascots = mascotService.findMascotsByClinic(actualUser.getClinicId());
+        for(Mascot m : mascots) {
+            MascotDTO mdto = new MascotDTO();
+            User u = userService.generateUser(m.getOwnerId());
+            mdto.setId(m.getId());
+            mdto.setName(m.getName());
+            mdto.setSpecies(m.getSpecies());
+            mdto.setBirthDate(m.getBirthDate());
+            mdto.setOwnerName(u.getName());
+            mdto.setOwnerSurname(u.getSurname());
+            mascotData.add(mdto);
+        }
+        return mascotData;
     }
 }
