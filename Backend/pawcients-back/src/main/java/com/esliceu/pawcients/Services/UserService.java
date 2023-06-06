@@ -166,8 +166,8 @@ public class UserService {
         }
     }
 
-    public List<User> getWorkers() {
-        return userRepo.findByTypeNot("client");
+    public List<User> getWorkersByClinic(String clinicId) {
+        return userRepo.findByTypeNotAndClinicId("client", clinicId);
     }
 
     public void verifyEmail(String code, User user) {
@@ -180,5 +180,9 @@ public class UserService {
         } else {
             throw new IncorrectVerificationCodeException("Verification code does not match up");
         }
+    }
+
+    public List<User> getClientsByClinic(String clinicId) {
+        return userRepo.findByTypeAndClinicId("client", clinicId);
     }
 }

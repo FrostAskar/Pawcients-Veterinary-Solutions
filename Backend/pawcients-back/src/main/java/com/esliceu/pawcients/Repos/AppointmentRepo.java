@@ -13,4 +13,5 @@ public interface AppointmentRepo extends MongoRepository<Appointment, String> {
     List<Appointment> findByWorkerId(String vetId);
     List<Appointment> findByWorkerIdAndOwnerId(String vetId, String clientId);
     List<Appointment> findByWorkerIdAndDateBetweenOrderByDate(String workerId);
+    List<Appointment> findByIdOrderByDate(String clientId);
 }

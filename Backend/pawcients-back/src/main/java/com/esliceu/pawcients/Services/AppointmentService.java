@@ -78,4 +78,12 @@ public class AppointmentService {
     public List<Appointment> getTodaysAppointments(User actualUser) {
         return appointmentRepo.findByWorkerId(actualUser.getId());
     }
+
+    public Appointment getEarliestClientAppointment(String clientId) {
+        if(appointmentRepo.existsById(clientId)){
+            return appointmentRepo.findByIdOrderByDate(clientId).get(0);
+        } else {
+            return null;
+        }
+    }
 }

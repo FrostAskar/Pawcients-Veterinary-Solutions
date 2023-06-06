@@ -1,9 +1,12 @@
 package com.esliceu.pawcients.Controllers;
 
+import com.esliceu.pawcients.DTO.ClientDTO;
 import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.*;
+import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Models.Clinic;
 import com.esliceu.pawcients.Models.User;
+import com.esliceu.pawcients.Services.AppointmentService;
 import com.esliceu.pawcients.Services.ClinicService;
 import com.esliceu.pawcients.Services.TokenService;
 import com.esliceu.pawcients.Services.UserService;
@@ -24,13 +27,16 @@ public class UserController {
     UserService userService;
     ClinicService clinicService;
     TokenService tokenService;
+    AppointmentService appointmentService;
 
     public UserController(UserService userService,
                           ClinicService clinicService,
-                          TokenService tokenService) {
+                          TokenService tokenService,
+                          AppointmentService appointmentService) {
         this.userService = userService;
         this.clinicService = clinicService;
         this.tokenService = tokenService;
+        this.appointmentService = appointmentService;
     }
 
     @PostMapping("/signup/admin")
@@ -112,7 +118,6 @@ public class UserController {
                     registerUserForm.getEmail(),
                     registerUserForm.getPhone(),
                     registerUserForm.getType(),
-                    Encrypt.sha512(registerUserForm.getPassword()),
                     actualUser.getClinicId());
             workerId = userService.saveUser(user, actualUser);
             result.put("workerId", workerId);
@@ -134,12 +139,8 @@ public class UserController {
         User actualUser = (User) req.getAttribute("user");
         try {
             User user = new User(null,
-                    registerUserForm.getName(),
-                    registerUserForm.getSurname(),
                     registerUserForm.getEmail(),
-                    registerUserForm.getPhone(),
                     "client",
-                    Encrypt.sha512(registerUserForm.getPassword()),
                     actualUser.getClinicId());
             clientId = userService.saveUser(user, actualUser);
             result.put("clientId", clientId);
@@ -209,10 +210,24 @@ public class UserController {
 
     @GetMapping("/vet/workers")
     @CrossOrigin
-    public List<User> getWorkers() {
-        List<User> workers = new ArrayList<>();
-        workers.addAll(userService.getWorkers());
-        return workers;
+    public List<User> getWorkers(HttpServletRequest req) {
+        User actualUser = (User) req.getAttribute("user");
+        return userService.getWorkersByClinic(actualUser.getClinicId());
+    }
+
+    @GetMapping("/vet/clients")
+    @CrossOrigin
+    public List<ClientDTO> getClients(HttpServletRequest req) {
+        User actualUser = (User) req.getAttribute("user");
+        List<User> clients = userService.getClientsByClinic(actualUser.getClinicId());
+        List<ClientDTO> clientData = new ArrayList<>();
+        for (User u: clients) {
+            ClientDTO cdto = new ClientDTO();
+            cdto.setAppointment(appointmentService.getEarliestClientAppointment(u.getId()));
+            cdto.setClient(u);
+            clientData.add(cdto);
+        }
+        return clientData;
     }
 
 }

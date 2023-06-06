@@ -102,9 +102,9 @@ public class AppointmentController {
     }
 
 
-    @GetMapping("/vet/clients")
+    @GetMapping("/vet/appointments")
     @CrossOrigin
-    public Map<String, Object> getClientsForVet(HttpServletRequest req) {
+    public Map<String, Object> getTodayAppointmentsForVet(HttpServletRequest req) {
         Map<String, Object> result = new HashMap<>();
         User actualUser = (User) req.getAttribute("user");
         List<Appointment> todayAppointments = appointmentService.getTodaysAppointments(actualUser);

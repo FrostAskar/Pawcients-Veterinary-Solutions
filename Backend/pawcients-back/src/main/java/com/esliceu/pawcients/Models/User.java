@@ -31,9 +31,25 @@ public class User {
     boolean verificationCodeEmailCheck;
     public User(){}
 
-    //Constructor for workers
+    //Constructor for Admins
     public User(String id, String name, String surname, String license, String email, String phone,
                 String type, String password, String clinicId) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.license = license;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.type = type;
+        this.clinicId = clinicId;
+        this.profilePicture = "https://www.w3schools.com/howto/img_avatar.png";
+        this.verificationCodeEmailCheck = false;
+    }
+
+    //Constructor for workers
+    public User(String id, String name, String surname, String license, String email, String phone,
+                String type, String clinicId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -41,22 +57,17 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.type = type;
-        this.password = password;
         this.clinicId = clinicId;
         this.profilePicture = "https://www.w3schools.com/howto/img_avatar.png";
         this.verificationCodeEmailCheck = false;
     }
 
     //Constructor for clients
-    public User(String id, String name, String surname, String email, String phone,
-                String type, String password, String clinicId) {
+    public User(String id, String email,
+                String type, String clinicId) {
         this.id = id;
-        this.name = name;
-        this.surname = surname;
         this.email = email;
-        this.phone = phone;
         this.type = type;
-        this.password = password;
         this.clinicId = clinicId;
         this.profilePicture = "https://www.w3schools.com/howto/img_avatar.png";
         this.verificationCodeEmailCheck = false;
