@@ -26,12 +26,12 @@ public class Mascot {
 
     public Mascot(){}
 
-    public Mascot(String id, String clinicId, String name, String species, String race, LocalDate birthDate, String ownerId) {
+    public Mascot(String id, String clinicId, String name, String species, String breed, LocalDate birthDate, String ownerId) {
         this.id = id;
         this.clinicId = clinicId;
         this.name = name;
         this.species = species;
-        this.breed = race;
+        this.breed = breed;
         this.birthDate = birthDate;
         this.ownerId = ownerId;
     }
