@@ -6,6 +6,7 @@ import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
 import com.esliceu.pawcients.Forms.FindMascotForm;
 import com.esliceu.pawcients.Forms.RegisterMascotForm;
+import com.esliceu.pawcients.Forms.UpdateMascotForm;
 import com.esliceu.pawcients.Models.Mascot;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Services.MascotService;
@@ -112,5 +113,18 @@ public class MascotController {
             mascotData.add(mdto);
         }
         return mascotData;
+    }
+
+    @PutMapping("/client/{clientId}/mascot/{mascotId}")
+    @CrossOrigin
+    public String updateMascotInfo(@PathVariable String clientId,
+                                   @PathVariable String mascotId,
+                                   HttpServletRequest req,
+                                   @RequestBody UpdateMascotForm updateMascotForm) {
+        User actualUser = (User) req.getAttribute("user");
+        Mascot mascotToUpdate = mascotService.findMasctorById(mascotId);
+        mascotToUpdate = mascotService.updateMascotInfo(mascotToUpdate, updateMascotForm);
+        mascotService.updateMascot(mascotToUpdate);
+        return "ok";
     }
 }

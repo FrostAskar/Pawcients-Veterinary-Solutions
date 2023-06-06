@@ -7,6 +7,7 @@ import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
 import com.esliceu.pawcients.Forms.FindMascotForm;
 import com.esliceu.pawcients.Forms.RegisterMascotForm;
+import com.esliceu.pawcients.Forms.UpdateMascotForm;
 import com.esliceu.pawcients.Models.Mascot;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.MascotRepo;
@@ -90,5 +91,18 @@ public class MascotService {
 
     public List<Mascot> findMascotsByClinic(String clinicId) {
         return mascotRepo.findByClinicId(clinicId);
+    }
+
+    public Mascot updateMascotInfo(Mascot mascotToUpdate, UpdateMascotForm updateMascotForm) {
+        mascotToUpdate.setAge(updateMascotForm.getAge());
+        mascotToUpdate.setGender(updateMascotForm.getGender());
+        mascotToUpdate.setWeight(updateMascotForm.getWeight());
+        mascotToUpdate.setColor(updateMascotForm.getColor());
+        mascotToUpdate.setIdentificationSerial(updateMascotForm.getIdentificationNumber());
+        return mascotToUpdate;
+    }
+
+    public void updateMascot(Mascot mascotToUpdate) {
+        mascotRepo.save(mascotToUpdate);
     }
 }
