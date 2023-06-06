@@ -1,7 +1,7 @@
-export async function getMascots() {
+export async function getClients() {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch("http://127.0.0.1:8080/vet/mascots", {
+      const response = await fetch("http://127.0.0.1:8080/vet/clients", {
         method: "GET",
         headers: {
           Authorization: token
@@ -9,12 +9,12 @@ export async function getMascots() {
       });
   
       if (!response.ok) {
-        throw new Error("Mascots request failed");
+        throw new Error("Clients request failed");
       } else if (response.ok) {
         const data = await response.json();
         return data;
       }
     } catch (error) {
-      throw new Error("Mascots request failed");
+      throw new Error("Clients request failed");
     }
   }

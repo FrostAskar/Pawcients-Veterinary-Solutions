@@ -4,32 +4,32 @@ import { getWorkers } from "fetches/Worker/FetchGetWorkers";
 import { fetchWorkerRegister } from "fetches/Worker/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
 
-const staff = [
-    {
-        id: 1,
-        name: "Maru",
-        lastName: "Suarez",
-        type: "Veterinary",
-        email: "maru@gmail.com",
-        phone: "674014708"
-    },
-    {
-        id: 2,
-        name: "Andres",
-        lastName: "Pantoja",
-        type: "Auxiliar",
-        email: "andres@gmail.com",
-        phone: "687961007"
-    },
-    {
-        id: 3,
-        name: "Dámaso",
-        lastName: "Simal",
-        type: "Auxiliar",
-        email: "damaso@gmail.com",
-        phone: "671059885"
-    },
-];
+// const staff = [
+//     {
+//         id: 1,
+//         name: "Maru",
+//         lastName: "Suarez",
+//         type: "Veterinary",
+//         email: "maru@gmail.com",
+//         phone: "674014708"
+//     },
+//     {
+//         id: 2,
+//         name: "Andres",
+//         lastName: "Pantoja",
+//         type: "Auxiliar",
+//         email: "andres@gmail.com",
+//         phone: "687961007"
+//     },
+//     {
+//         id: 3,
+//         name: "Dámaso",
+//         lastName: "Simal",
+//         type: "Auxiliar",
+//         email: "damaso@gmail.com",
+//         phone: "671059885"
+//     },
+// ];
 export default function StaffManagement() {
     const [errorMessage, setErrorMessage] = useState("");
     const [workers, setWorkers] = useState([]);
@@ -42,18 +42,17 @@ export default function StaffManagement() {
         const email = e.target.email.value;
         const phone = e.target.phone.value;
         const license = e.target.license.value;
+        const type = e.target.type.value;
 
         try {
-            // Fetch para login de cliente
-            const response = await fetchWorkerRegister(name, surname, email, phone, license);
-            if (response.success) {
-
+            const response = await fetchWorkerRegister(name, surname, email, phone, license, type);
+            if (response !== null) {
+                setCreationMode(false);
             } else {
                 // Mensaje de error para cliente
                 setErrorMessage(response.message);
             }
         } catch (error) {
-            console.log(error);
             setErrorMessage("Error en la conexión con el servidor");
         }
 
@@ -66,7 +65,7 @@ export default function StaffManagement() {
         };
 
         obtainWorkers();
-    }, [])
+    }, [workers])
 
 
     const openModal = () => {
@@ -97,35 +96,41 @@ export default function StaffManagement() {
                             <div className="section-content">
                                 <div className="management">
                                     <div className="management-header">
-                                        <h1>{staff.length} Total Staff Members</h1>
+                                        <h1>{workers.length} Total Staff Members</h1>
                                         <button className="clasic-button" onClick={openModal}>Add Staff</button>
                                     </div>
                                     <table className="management-table">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>LastName</th>
-                                            <th>Job Title</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                        </tr>
-                                        {workers.map((worker, index) => (
-                                            <tr key={index}>
-                                                <td>{worker.id}</td>
-                                                <td>{worker.name}</td>
-                                                <td>{worker.surname}</td>
-                                                <td>
-                                                    {worker.type === "vet"
-                                                        ? "Veterinary"
-                                                        : worker.type === "aux"
-                                                            ? "Auxiliar"
-                                                            : worker.type === "admin"
-                                                                ? "Administrator"
-                                                                : ""}
-                                                </td>
-                                                <td>{worker.phone}</td>
-                                                <td>{worker.email}</td>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>LastName</th>
+                                                <th>Job Title</th>
+                                                <th>Phone</th>
+                                                <th>Email</th>
                                             </tr>
+                                        </thead>
+
+                                        {workers.map((worker) => (
+                                            <tbody>
+                                                <tr key={worker.id}>
+                                                    <td>{worker.id}</td>
+                                                    <td>{worker.name}</td>
+                                                    <td>{worker.surname}</td>
+                                                    <td>
+                                                        {worker.type === "vet"
+                                                            ? "Veterinary"
+                                                            : worker.type === "aux"
+                                                                ? "Auxiliar"
+                                                                : worker.type === "admin"
+                                                                    ? "Administrator"
+                                                                    : ""}
+                                                    </td>
+                                                    <td>{worker.phone}</td>
+                                                    <td>{worker.email}</td>
+                                                </tr>
+                                            </tbody>
+
                                         ))}
                                     </table>
                                 </div>
@@ -148,6 +153,11 @@ export default function StaffManagement() {
                                         <input type="text" name="phone" id="phone" required />
                                         <label htmlFor="license">License number</label>
                                         <input type="text" name="license" id="license" required />
+                                        <label htmlFor="type">Type</label>
+                                        <select name="type">
+                                            <option value="vet">Veterinary</option>
+                                            <option value="aux">Auxiliar</option>
+                                        </select>
 
                                         <button className="clasic-button" type="submit">Sign up worker</button>
                                         <button className="clasic-button" type="button" onClick={cancelCreation}>Cancel</button>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { fetchClientRegister } from "fetches/Worker/FetchClientRegister";
 
-export default function ClientCreation({ onCancel }) {
+export default function ClientCreation({ onClose }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e) => {
@@ -13,8 +13,8 @@ export default function ClientCreation({ onCancel }) {
         try {
             // Fetch para login de cliente
             const response = await fetchClientRegister(name, surname, email, phone);
-            if (response.success) {
-
+            if (response !== null) {
+                onClose();
             } else {
                 // Mensaje de error para cliente
                 setErrorMessage(response.message);
@@ -26,7 +26,7 @@ export default function ClientCreation({ onCancel }) {
     };
 
     const cancelCreation = () => {
-        onCancel();
+        onClose();
     }
     return (
         <section className="creation-section">

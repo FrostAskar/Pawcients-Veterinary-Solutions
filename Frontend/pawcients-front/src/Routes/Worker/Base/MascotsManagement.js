@@ -3,50 +3,49 @@ import "css/global/global.scss"
 import "css/vet/dataManagement.scss"
 import React, { useState, useEffect } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
-import { getMascots  } from "fetches/Worker/FetchGetMascots";
+import { getMascots } from "fetches/Worker/FetchGetMascots";
 
-const mascots = [
-    {
-        id: 1,
-        name: "Laika",
-        species: "Dog",
-        gender: "Female",
-        age: "13",
-        owner: "Maru Suarez"
-    },
-    {
-        id: 2,
-        name: "Luna",
-        species: "Dog",
-        gender: "Female",
-        age: "14",
-        owner: "Dámaso Simal"
+// const mascots = [
+//     {
+//         id: 1,
+//         name: "Laika",
+//         species: "Dog",
+//         gender: "Female",
+//         age: "13",
+//         owner: "Maru Suarez"
+//     },
+//     {
+//         id: 2,
+//         name: "Luna",
+//         species: "Dog",
+//         gender: "Female",
+//         age: "14",
+//         owner: "Dámaso Simal"
 
-    },
-    {
-        id: 3,
-        name: "Ander",
-        species: "Cat",
-        gender: "Male",
-        age: "5",
-        owner: "Andrés Pantoja"
-    },
-];
+//     },
+//     {
+//         id: 3,
+//         name: "Ander",
+//         species: "Cat",
+//         gender: "Male",
+//         age: "5",
+//         owner: "Andrés Pantoja"
+//     },
+// ];
 export default function MascotsManagement() {
     const [creationMode, setCreationMode] = useState(false);
-    //const [mascots, setMascots] = useState([]);
+    const [mascots, setMascots] = useState([]);
 
     useEffect(() => {
         const obtainMascots = async () => {
-            //const mascotsData = await getMascots();
-            await getMascots();
-            //setMascots(mascotsData)
+            const mascotsData = await getMascots();
+            setMascots(mascotsData);
         };
 
         obtainMascots();
     }, [])
 
-    const openModal =  () => {
+    const openModal = () => {
         setCreationMode(true);
     }
 
@@ -78,25 +77,31 @@ export default function MascotsManagement() {
                                         <button className="clasic-button" onClick={openModal}>Add Mascot</button>
                                     </div>
                                     <table className="management-table">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Species</th>
-                                            <th>Gender</th>
-                                            <th>Age</th>
-                                            <th>Owner</th>
-                                            <th>More details</th>
-                                        </tr>
-                                        {mascots.map((pet, index) => (
-                                            <tr key={index}>
-                                                <td>{pet.id}</td>
-                                                <td>{pet.name}</td>
-                                                <td>{pet.species}</td>
-                                                <td>{pet.gender}</td>
-                                                <td>{pet.age}</td>
-                                                <td>{pet.owner}</td>
-                                                <td><button className="small-button">View</button></td>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Species</th>
+                                                {/* <th>Gender</th> */}
+                                                <th>Birth Date</th>
+                                                <th>Owner</th>
+                                                <th>More details</th>
                                             </tr>
+                                        </thead>
+
+                                        {mascots.map((pet, index) => (
+                                            <tbody>
+                                                <tr key={index}>
+                                                    <td>{pet.id}</td>
+                                                    <td>{pet.name}</td>
+                                                    <td>{pet.species}</td>
+                                                    {/* <td>{pet.gender}</td> */}
+                                                    <td>{pet.birthDate}</td>
+                                                    <td>{pet.ownerName} {pet.ownerSurname}</td>
+                                                    <td><button className="small-button">View</button></td>
+                                                </tr>
+                                            </tbody>
+
                                         ))}
                                     </table>
                                 </div>

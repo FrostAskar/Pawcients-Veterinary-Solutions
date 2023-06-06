@@ -1,15 +1,15 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
-
 import React, { useState } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
 import ClientCreation from "./ClientCreation";
+//import { getClients } from "fetches/Worker/FetchGetClients";
 
 const clients = [
     {
         id: 1,
         name: "Maru",
-        lastName: "Suarez",
+        surname: "Suarez",
         phone: "674014708",
         email: "maru@gmail.com",
         nextAppoint: "05/06/2023"
@@ -17,7 +17,7 @@ const clients = [
     {
         id: 2,
         name: "Dámaso",
-        lastName: "Simal",
+        surname: "Simal",
         phone: "678965122",
         email: "damaso@gmail.com",
         nextAppoint: null
@@ -26,18 +26,21 @@ const clients = [
     {
         id: 3,
         name: "Andrés",
-        lastName: "Pantoja",
+        surname: "Pantoja",
         phone: "676905781",
         email: "andres@gmail.com",
         nextAppoint: "30/05/2023"
     },
 ];
+
 export default function CustomerManagement() {
     const [clientCreationMode, setClientCreationMode] = useState(false);
     const [mascotCreationMode, setMascotCreationMode] = useState(false);
     const [clientID, setClientID] = useState("");
+    //const [clients, setClients] = useState();
 
-    const openClientModal =  () => {
+
+    const openClientModal = () => {
         setClientCreationMode(true);
     }
 
@@ -45,10 +48,9 @@ export default function CustomerManagement() {
         setClientCreationMode(false);
     }
 
-    const openMascotModal =  async (e, id) => {
+    const openMascotModal = async (e, id) => {
         e.preventDefault();
         setMascotCreationMode(true);
-        console.log(id);
         setClientID(id);
     }
 
@@ -82,33 +84,40 @@ export default function CustomerManagement() {
                                         <button className="clasic-button" onClick={openClientModal}>Add Client</button>
                                     </div>
                                     <table className="management-table">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>LastName</th>
-                                            <th>Phone</th>
-                                            <th>Email</th>
-                                            <th>Next Appointment</th>
-                                            <th>Pets</th>
-                                            <th>Add Pet</th>
-                                        </tr>
-                                        {clients.map((client, index) => (
-                                            <tr key={index}>
-                                                <td>{client.id}</td>
-                                                <td>{client.name}</td>
-                                                <td>{client.lastName}</td>
-                                                <td>{client.phone}</td>
-                                                <td>{client.email}</td>
-                                                <td>
-                                                    {client.nextAppoint !== null ? (
-                                                        <p>{client.nextAppoint}</p>
-                                                    ) : (
-                                                        <button className="small-button">Schedule</button>
-                                                    )}
-                                                </td>
-                                                <td><button className="small-button">View pets</button></td>
-                                                <td><button className="small-button" onClick={(e) => openMascotModal(e, client.id)}>Add</button></td>
+                                        <thead>
+
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>LastName</th>
+                                                <th>Phone</th>
+                                                <th>Email</th>
+                                                <th>Next Appointment</th>
+                                                <th>Pets</th>
+                                                <th>Add Pet</th>
                                             </tr>
+                                        </thead>
+
+                                        {clients.map((client, index) => (
+                                            <tbody>
+                                                <tr key={index}>
+                                                    <td>{client.id}</td>
+                                                    <td>{client.name}</td>
+                                                    <td>{client.surname}</td>
+                                                    <td>{client.phone}</td>
+                                                    <td>{client.email}</td>
+                                                    <td>
+                                                        {client.nextAppoint !== null ? (
+                                                            <p>{client.nextAppoint}</p>
+                                                        ) : (
+                                                            <button className="small-button">Schedule</button>
+                                                        )}
+                                                    </td>
+                                                    <td><button className="small-button">View pets</button></td>
+                                                    <td><button className="small-button" onClick={(e) => openMascotModal(e, client.id)}>Add</button></td>
+                                                </tr>
+                                            </tbody>
+
                                         ))}
                                     </table>
                                 </div>
@@ -116,7 +125,7 @@ export default function CustomerManagement() {
                         </div>
                     </section>
                     {clientCreationMode && (
-                        <ClientCreation onCancel={cancelClientCreation} />
+                        <ClientCreation onClose={cancelClientCreation} />
                     )}
 
                     {mascotCreationMode && (
