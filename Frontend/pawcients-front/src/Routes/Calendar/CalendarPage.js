@@ -144,11 +144,9 @@ const CalendarPage = () => {
                                 <label htmlFor="title">Title</label>
                                 <input type="text" name="title" id="title" required />
                                 <label htmlFor="description">Description</label>
-                                <textarea name="description" id="description" required />
-                                <label htmlFor="startTime">Start Time</label>
-                                <input type="time" name="startTime" id="startTime" required />
+                                <input type="text" name="description" id="description" required />
                                 <label htmlFor='startTime'>Start Time</label>
-                                <select className='select-time'>
+                                <select className='select-time' id="startTime" >
                                     {allowedHours.map(option => (
                                         <option key={option} value={option} >{option}</option>
                                     ))}

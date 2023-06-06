@@ -147,7 +147,7 @@ export default function VetDashboard() {
             </div>
           </section>
           {creationMode && (
-            <ClientCreation onCancel={cancelCreation} />
+            <ClientCreation onClose={cancelCreation} />
           )}
         </div>
       </div>
