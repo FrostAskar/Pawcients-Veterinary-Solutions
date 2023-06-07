@@ -16,7 +16,7 @@ public class Appointment {
     String id;
     LocalDateTime date;
     String workerId;
-    String ownerId;
+    String clientId;
     String mascotId;
 
     //todo No se me ocurren ni abreviaciones ni todos los tipos
@@ -30,7 +30,7 @@ public class Appointment {
         this.id = id;
         this.date = date;
         this.workerId = workerId;
-        this.ownerId = ownerId;
+        this.clientId = ownerId;
         this.mascotId = mascotId;
         this.type = type;
     }
@@ -59,12 +59,12 @@ public class Appointment {
         this.workerId = workerId;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getMascotId() {

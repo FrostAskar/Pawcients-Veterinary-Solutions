@@ -8,9 +8,6 @@ import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.AppointmentRepo;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -33,7 +30,7 @@ public class AppointmentService {
     }
 
     public List<Appointment> getAppointmentsByVetAndClient(String vetId, String clientId) {
-        return appointmentRepo.findByWorkerIdAndOwnerId(vetId, clientId);
+        return appointmentRepo.findByWorkerIdAndClientId(vetId, clientId);
     }
 
     //VetId inserted just in case of checks?? Not really sure right now
@@ -80,8 +77,8 @@ public class AppointmentService {
     }
 
     public Appointment getEarliestClientAppointment(String clientId) {
-        if(appointmentRepo.existsById(clientId)){
-            return appointmentRepo.findByIdOrderByDate(clientId).get(0);
+        if(appointmentRepo.existsByClientId(clientId)){
+            return appointmentRepo.findByClientIdOrderByDate(clientId).get(0);
         } else {
             return null;
         }
