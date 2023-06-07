@@ -111,7 +111,7 @@ public class AppointmentController {
         List<TodayAppointmentsDTO> todayData = new ArrayList<>();
         for(Appointment a : todayAppointments) {
             TodayAppointmentsDTO tadto = new TodayAppointmentsDTO();
-            tadto.setUser(userService.generateUser(a.getOwnerId()));
+            tadto.setUser(userService.generateUser(a.getClientId()));
             tadto.setMascot(mascotService.findMasctorById(a.getMascotId()));
             tadto.setAppointment(appointmentService.findAppointmentById(a.getId()));
             todayData.add(tadto);
