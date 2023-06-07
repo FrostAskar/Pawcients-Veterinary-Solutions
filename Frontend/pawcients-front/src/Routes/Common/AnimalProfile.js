@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "css/global/animalprofile.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 import { fetchMascotData } from "fetches/Global/FetchMascotData";
+import { fetchProfile } from "fetches/Global/getProfile";
 
 const animalData = {
   name: "Max",
@@ -40,6 +41,18 @@ const AnimalManagementPage = () => {
   // If path is /client/:clientid/mascot/:mascotid, then:
   const clientid = url.split("/")[2];
   const mascotid = url.split("/")[4];
+
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    const getProfileData = async () => {
+      const profileData = await fetchProfile();
+      setProfileData(profileData);
+    };
+
+    getProfileData();
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -540,17 +553,22 @@ const AnimalManagementPage = () => {
               </div>
             </div>
           </div>
-          <div className="button-container">
-            {isEditing ? (
-              <button className="btn-save" onClick={handleSaveClick}>
-                Save
-              </button>
-            ) : (
-              <button className="btn-edit" onClick={handleEditClick}>
-                Edit
-              </button>
-            )}
-          </div>
+          {/* If profiledata?.type="client" dont edit */}
+          {profileData?.type === "client" ? (
+            <p>You can't edit this animal's profile</p>
+          ) : (
+            <div className="button-container">
+              {isEditing ? (
+                <button className="btn-save" onClick={handleSaveClick}>
+                  Save
+                </button>
+              ) : (
+                <button className="btn-edit" onClick={handleEditClick}>
+                  Edit
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
