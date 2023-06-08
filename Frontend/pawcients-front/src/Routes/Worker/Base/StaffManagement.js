@@ -1,7 +1,7 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
-import { getWorkers } from "fetches/Worker/FetchGetWorkers";
-import { fetchWorkerRegister } from "fetches/Worker/FetchWorkerRegister";
+import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
+import { fetchWorkerRegister } from "fetches/Worker/Staff/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
 
 // const staff = [

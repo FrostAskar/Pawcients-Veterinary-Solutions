@@ -1,9 +1,11 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
+import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
 import ClientCreation from "./ClientCreation";
-import { getClients } from "fetches/Worker/FetchGetClients";
+import { getClients } from "fetches/Worker/Clients/FetchGetClients";
+//import { getMascotsByClient } from "fetches/Worker/Mascots/FetchGetMascotsByClient";
 
 // const clients = [
 //     {
@@ -47,6 +49,7 @@ export default function CustomerManagement() {
 
         obtainClients();
     }, [])
+
 
 
     const openClientModal = () => {
@@ -119,7 +122,10 @@ export default function CustomerManagement() {
                                                         {item.appointment !== null ? (
                                                             <p>{item.appointment.date}</p>
                                                         ) : (
-                                                            <button className="small-button">Schedule</button>
+                                                            <Link to="/vetcalendar">
+                                                                <button className="small-button">Schedule</button>
+                                                            </Link>
+
                                                         )}
                                                     </td>
                                                     <td><button className="small-button">View pets</button></td>

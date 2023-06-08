@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { fetchClientRegister } from "fetches/Worker/FetchClientRegister";
+import { fetchClientRegister } from "fetches/Worker/Clients/FetchClientRegister";
 
 export default function ClientCreation({ onClose }) {
     const [errorMessage, setErrorMessage] = useState("");

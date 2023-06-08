@@ -3,35 +3,8 @@ import "css/global/global.scss"
 import "css/vet/dataManagement.scss"
 import React, { useState, useEffect } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
-import { getMascots } from "fetches/Worker/FetchGetMascots";
+import { getMascots } from "fetches/Worker/Mascots/FetchGetMascots";
 
-// const mascots = [
-//     {
-//         id: 1,
-//         name: "Laika",
-//         species: "Dog",
-//         gender: "Female",
-//         age: "13",
-//         owner: "Maru Suarez"
-//     },
-//     {
-//         id: 2,
-//         name: "Luna",
-//         species: "Dog",
-//         gender: "Female",
-//         age: "14",
-//         owner: "Dámaso Simal"
-
-//     },
-//     {
-//         id: 3,
-//         name: "Ander",
-//         species: "Cat",
-//         gender: "Male",
-//         age: "5",
-//         owner: "Andrés Pantoja"
-//     },
-// ];
 export default function MascotsManagement() {
     const [creationMode, setCreationMode] = useState(false);
     const [mascots, setMascots] = useState([]);

@@ -1,6 +1,6 @@
 import "css/global/global.scss"
 import "css/vet/dataManagement.scss"
-import { addMascot } from "fetches/Worker/FetchAddMascot";
+import { addMascot } from "fetches/Worker/Mascots/FetchAddMascot";
 import React, { useState } from "react";
 
 export default function MascotCreation({ onClose, clientID }) {
