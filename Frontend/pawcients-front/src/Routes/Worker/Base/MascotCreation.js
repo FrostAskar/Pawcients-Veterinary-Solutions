@@ -13,12 +13,11 @@ export default function MascotCreation({ onClose, clientID }) {
         //const gender = e.target.gender.value;
         const race = e.target.race.value;
         const birthDate = e.target.birthDate.value;
-        console.log(clientID);
         try {
             // Fetch para login de cliente
             const response = await addMascot(name, species, race, birthDate, clientID);
             //const data = await response.json();
-            if (response.success) {
+            if (response != null) {
                 onClose();
             } else {
                 // Mensaje de error para cliente

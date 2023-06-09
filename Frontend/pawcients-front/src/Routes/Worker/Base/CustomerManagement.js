@@ -7,34 +7,6 @@ import ClientCreation from "./ClientCreation";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 //import { getMascotsByClient } from "fetches/Worker/Mascots/FetchGetMascotsByClient";
 
-// const clients = [
-//     {
-//         id: 1,
-//         name: "Maru",
-//         surname: "Suarez",
-//         phone: "674014708",
-//         email: "maru@gmail.com",
-//         nextAppoint: "05/06/2023"
-//     },
-//     {
-//         id: 2,
-//         name: "Dámaso",
-//         surname: "Simal",
-//         phone: "678965122",
-//         email: "damaso@gmail.com",
-//         nextAppoint: null
-
-//     },
-//     {
-//         id: 3,
-//         name: "Andrés",
-//         surname: "Pantoja",
-//         phone: "676905781",
-//         email: "andres@gmail.com",
-//         nextAppoint: "30/05/2023"
-//     },
-// ];
-
 export default function CustomerManagement() {
     const [clientCreationMode, setClientCreationMode] = useState(false);
     const [mascotCreationMode, setMascotCreationMode] = useState(false);
@@ -46,10 +18,8 @@ export default function CustomerManagement() {
             const clientsData = await getClients();
             setCustomers(clientsData);
         };
-
         obtainClients();
-    }, [])
-
+    }, [customers])
 
 
     const openClientModal = () => {

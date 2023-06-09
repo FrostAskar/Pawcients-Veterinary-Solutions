@@ -4,32 +4,6 @@ import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
 import { fetchWorkerRegister } from "fetches/Worker/Staff/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
 
-// const staff = [
-//     {
-//         id: 1,
-//         name: "Maru",
-//         lastName: "Suarez",
-//         type: "Veterinary",
-//         email: "maru@gmail.com",
-//         phone: "674014708"
-//     },
-//     {
-//         id: 2,
-//         name: "Andres",
-//         lastName: "Pantoja",
-//         type: "Auxiliar",
-//         email: "andres@gmail.com",
-//         phone: "687961007"
-//     },
-//     {
-//         id: 3,
-//         name: "Dámaso",
-//         lastName: "Simal",
-//         type: "Auxiliar",
-//         email: "damaso@gmail.com",
-//         phone: "671059885"
-//     },
-// ];
 export default function StaffManagement() {
     const [errorMessage, setErrorMessage] = useState("");
     const [workers, setWorkers] = useState([]);

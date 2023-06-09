@@ -7,39 +7,13 @@ import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
-
-const todayPatients = [
-  {
-    id: 1,
-    name: "Laika",
-    kind: "Dog",
-    hour: "9:30",
-    type: "Checkup",
-    owner: "Maru Suarez",
-    active: false,
-  },
-  {
-    id: 2,
-    name: "Luna",
-    kind: "Dog",
-    hour: "10:30",
-    type: "Vaccine",
-    owner: "Dámaso Simal",
-    active: true,
-  },
-  {
-    id: 3,
-    name: "Ander",
-    kind: "Cat",
-    hour: "11:30",
-    type: "Surgery",
-    owner: "Andrés Pantoja",
-    active: true,
-  },
-];
+import { getTodayAppointments } from "fetches/Worker/FetchGetTodayAppointments";
+//import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 
 export default function VetDashboard() {
   const [profileData, setProfileData] = useState(null);
+  const [todayAppointments, setTodayAppointments] = useState([]);
+  //const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -47,9 +21,15 @@ export default function VetDashboard() {
       setProfileData(profileData);
     };
 
-    getProfileData();
-  }, []);
+    const obtainTodayAppointments = async () => {
+      const todayAppointmentsData = await getTodayAppointments();
+      setTodayAppointments(todayAppointmentsData.appointments);
+    };
 
+    getProfileData();
+    obtainTodayAppointments();
+  }, []);
+  
   const [creationMode, setCreationMode] = useState(false);
 
   const openModal = () => {
@@ -92,7 +72,7 @@ export default function VetDashboard() {
                     </div>
                   </div>
                   <p>
-                    Today: <span className="today-patients-number"> 32 </span>
+                    Today: <span className="today-patients-number"> {todayAppointments.length}</span>
                   </p>
                 </div>
               </div>
@@ -128,7 +108,7 @@ export default function VetDashboard() {
                     </select>
                   </div>
                   <div className="today-patients-body">
-                    {todayPatients.map((patient, index) => (
+                    {todayAppointments.map((patient, index) => (
                       <TodayPatient key={index} patient={patient} />
                     ))}
                   </div>
