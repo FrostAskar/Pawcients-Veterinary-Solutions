@@ -36,7 +36,8 @@ public class AppointmentService {
     //VetId inserted just in case of checks?? Not really sure right now
     public String createVetAppointment(AppointmentForm appointmentForm, String vetId) {
         Appointment appointment = new Appointment(null,
-                appointmentForm.getDate(),
+                appointmentForm.getStartDate(),
+                appointmentForm.getEndDate(),
                 appointmentForm.getWorkerId(),
                 appointmentForm.getClientId(),
                 appointmentForm.getMascotId(),
@@ -46,7 +47,8 @@ public class AppointmentService {
 
     public String createClientAppointment(AppointmentForm appointmentForm, String clientId) {
         Appointment appointment = new Appointment(null,
-                appointmentForm.getDate(),
+                appointmentForm.getStartDate(),
+                appointmentForm.getEndDate(),
                 appointmentForm.getWorkerId(),
                 appointmentForm.getClientId(),
                 appointmentForm.getMascotId(),
@@ -78,7 +80,7 @@ public class AppointmentService {
 
     public Appointment getEarliestClientAppointment(String clientId) {
         if(appointmentRepo.existsByClientId(clientId)){
-            return appointmentRepo.findByClientIdOrderByDate(clientId).get(0);
+            return appointmentRepo.findByClientIdOrderByStartDate(clientId).get(0);
         } else {
             return null;
         }

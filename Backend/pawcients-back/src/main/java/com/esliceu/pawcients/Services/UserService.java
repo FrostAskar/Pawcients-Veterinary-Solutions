@@ -183,6 +183,6 @@ public class UserService {
     }
 
     public List<User> getClientsByClinic(String clinicId) {
-        return userRepo.findByTypeAndClinicId("client", clinicId);
+        return userRepo.findByClinicId(clinicId);
     }
 }

@@ -11,8 +11,7 @@ import java.util.List;
 public interface AppointmentRepo extends MongoRepository<Appointment, String> {
     List<Appointment> findByWorkerId(String vetId);
     List<Appointment> findByWorkerIdAndClientId(String vetId, String clientId);
-    List<Appointment> findByWorkerIdAndDateBetweenOrderByDate(String workerId);
-    List<Appointment> findByClientIdOrderByDate(String clientId);
+    List<Appointment> findByClientIdOrderByStartDate(String clientId);
 
     boolean existsByClientId(String clientId);
 }
