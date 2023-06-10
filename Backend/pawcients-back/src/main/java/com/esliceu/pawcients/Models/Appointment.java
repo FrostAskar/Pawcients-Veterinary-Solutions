@@ -14,10 +14,12 @@ public class Appointment {
 
     @Id
     String id;
-    LocalDateTime date;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
     String workerId;
     String clientId;
     String mascotId;
+    boolean isCompleted = false;
 
     //todo No se me ocurren ni abreviaciones ni todos los tipos
     //Nature of the appointment: "" for revision, "" for vaccination and "" for ***
@@ -26,9 +28,10 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String id, LocalDateTime date, String workerId, String ownerId, String mascotId, String type) {
+    public Appointment(String id, LocalDateTime startDate, LocalDateTime endDate, String workerId, String ownerId, String mascotId, String type) {
         this.id = id;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.workerId = workerId;
         this.clientId = ownerId;
         this.mascotId = mascotId;
@@ -43,12 +46,12 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
     public String getWorkerId() {
@@ -81,5 +84,21 @@ public class Appointment {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }

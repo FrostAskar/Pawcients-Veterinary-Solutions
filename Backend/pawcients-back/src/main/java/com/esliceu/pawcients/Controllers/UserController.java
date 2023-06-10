@@ -140,6 +140,8 @@ public class UserController {
         try {
             User user = new User(null,
                     registerUserForm.getEmail(),
+                    registerUserForm.getName(),
+                    registerUserForm.getSurname(),
                     "client",
                     actualUser.getClinicId());
             clientId = userService.saveUser(user, actualUser);

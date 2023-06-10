@@ -1,6 +1,5 @@
 package com.esliceu.pawcients.Forms;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AppointmentForm {
@@ -9,7 +8,8 @@ public class AppointmentForm {
     String mascotId;
     String workerId;
     String typeAppointment;
-    LocalDateTime date;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
 
     public String getClientId() {
         return clientId;
@@ -43,11 +43,19 @@ public class AppointmentForm {
         this.typeAppointment = typeAppointment;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }
