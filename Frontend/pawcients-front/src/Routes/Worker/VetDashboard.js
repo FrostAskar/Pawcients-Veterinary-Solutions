@@ -8,12 +8,12 @@ import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getTodayAppointments } from "fetches/Worker/FetchGetTodayAppointments";
-//import { getClients } from "fetches/Worker/Clients/FetchGetClients";
+import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 
 export default function VetDashboard() {
   const [profileData, setProfileData] = useState(null);
   const [todayAppointments, setTodayAppointments] = useState([]);
-  //const [customers, setCustomers] = useState([]);
+  const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -26,10 +26,16 @@ export default function VetDashboard() {
       setTodayAppointments(todayAppointmentsData.appointments);
     };
 
+    const obtainClients = async () => {
+      const clientsData = await getClients();
+      setCustomers(clientsData);
+    };
+
     getProfileData();
     obtainTodayAppointments();
+    obtainClients();
   }, []);
-  
+
   const [creationMode, setCreationMode] = useState(false);
 
   const openModal = () => {
@@ -68,7 +74,7 @@ export default function VetDashboard() {
                     <img src={Paw} alt="paw" height="50px" width="auto" />
                     <div className="total-patients-text">
                       <p>Total patients: </p>
-                      <p className="total-patients-number">214</p>
+                      <p className="total-patients-number">{customers.length}</p>
                     </div>
                   </div>
                   <p>

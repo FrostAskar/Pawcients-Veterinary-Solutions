@@ -5,18 +5,21 @@
 }
 
 .event-button {
-   display: flex;
-   justify-content: center;
-   margin: 20px;
-   button {
-    padding: 10px;
-    font-size: 20px;
-    border: groove;
-    border-color:var(--light-green);
-   }
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+    button {
+        padding: 10px;
+        font-size: 20px;
+        border: groove;
+        border-color: var(--light-green);
+    }
 }
 
-.rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event, .rbc-event {
+.rbc-event.rbc-selected,
+.rbc-day-slot .rbc-selected.rbc-background-event,
+.rbc-event {
     background-color: var(--dark-green);
     border: none;
     padding: 6px;
@@ -26,25 +29,33 @@
     text-align: center;
     display: flex;
     justify-content: center;
+
     h2 {
         margin-bottom: 7px;
     }
+
     p {
         color: black;
         line-height: 30px;
     }
+
     span {
         font-weight: bold;
     }
+
     .section-content {
         padding: 15px;
     }
-}
 
+    input {
+        width: 10rem;
+    }
+}
 .buttons {
     margin: 20px;
+
     button {
-        border:none;
+        border: none;
         margin: 0px 10px;
     }
 }

@@ -2,26 +2,28 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import SideNavbarWorker from 'Routes/Worker/SideNavbarWorker';
-import { useState } from 'react';
+import SideNavbarClient from 'Routes/Client/SideNavbarClient';
+import { fetchProfile } from "fetches/Global/getProfile";
+import { useState, useEffect } from 'react';
 import 'css/calendar/calendar.scss';
 //import { getAllAppointments } from 'fetches/Worker/FetchGetAllAppointments';
 
 const localizer = momentLocalizer(moment);
 
-const eventsArray = [
-    {
-        title: 'Event 1',
-        description: 'Event 1 Description',
-        start: new Date(2023, 5, 1, 16, 30),
-        end: new Date(2023, 5, 1, 19, 30),
-    },
-    {
-        title: 'Event 2',
-        description: 'Event 2 Description',
-        start: new Date(2023, 5, 15, 18, 30),
-        end: new Date(2023, 5, 15, 19, 30)
-    },
-]
+// const eventsArray = [
+//     {
+//         title: 'Event 1',
+//         description: 'Event 1 Description',
+//         start: new Date(2023, 5, 1, 16, 30),
+//         end: new Date(2023, 5, 1, 19, 30),
+//     },
+//     {
+//         title: 'Event 2',
+//         description: 'Event 2 Description',
+//         start: new Date(2023, 5, 15, 18, 30),
+//         end: new Date(2023, 5, 15, 19, 30)
+//     },
+// ]
 
 const minTime = new Date();
 minTime.setHours(8, 0, 0);
@@ -34,17 +36,25 @@ const CalendarPage = () => {
     const [eventModal, setEventModal] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [displayButton, setDisplayButton] = useState(false)
-    const [events, setEvents] = useState(eventsArray)
+    const [events, setEvents] = useState([])
     const [editMode, setEditMode] = useState(false)
+    const [profileData, setProfileData] = useState(null);
     //const [errorMessage, setErrorMessage] = useState("");
 
-    // useEffect(() => {
-    //     const getEvents = async () => {
-    //         const eventsData = await getAllAppointments();
-    //         setEvents(eventsData);
-    //     };
-    //     getEvents();
-    // }, [])
+    useEffect(() => {
+        
+        const getProfileData = async () => {
+            const profileData = await fetchProfile();
+            setProfileData(profileData);
+          };
+        //   const getEvents = async () => {
+        //     const eventsData = await getAllAppointments(profileData.id);
+        //     setEvents(eventsData);
+        // }; 
+          getProfileData();
+          //getEvents();
+    }, [])
+
 
     const handleDateSelect = date => {
         setSelectedDate(date);
@@ -63,6 +73,8 @@ const CalendarPage = () => {
     const handleEventSelect = event => {
         setSelectedEvent(event);
     };
+
+
 
     const handleAddEvent = async (e) => {
         e.preventDefault();
@@ -116,7 +128,11 @@ const CalendarPage = () => {
 
     return (
         <div className="dashboard">
-            <SideNavbarWorker> </SideNavbarWorker>
+            {((profileData?.type === "vet") || (profileData?.type === "aux") || (profileData?.type === "admin")) ? (
+                <SideNavbarWorker />
+            ) : (
+                <SideNavbarClient />
+            )}
             <div className='dashboard-page'>
                 <h1 className="calendar-title">Calendar</h1>
                 <Calendar
@@ -140,7 +156,7 @@ const CalendarPage = () => {
                                     ?
                                     <h2>{selectedEvent.title}</h2>
                                     :
-                                    <div>
+                                    <div className='clasic-form'>
                                         <label htmlFor="title">Title</label>
                                         <input type="text" name="title" id="title" required />
                                     </div>
@@ -149,7 +165,7 @@ const CalendarPage = () => {
                                     ?
                                     <p>{selectedEvent.description}</p>
                                     :
-                                    <div>
+                                    <div className='clasic-form'>
                                         <label htmlFor="description">Description</label>
                                         <input type="text" name="description" id="description" required />
                                     </div>
@@ -161,7 +177,7 @@ const CalendarPage = () => {
                                         <p><span>End date: </span> {setTime(selectedEvent.end)}</p>
                                     </div>
                                     :
-                                    <div>
+                                    <div className='clasic-form'>
                                         <label htmlFor='startTime'>Start Time: </label>
                                         <select className='select-time' id="startTime" >
                                             {allowedHours.map(option => (
@@ -170,10 +186,20 @@ const CalendarPage = () => {
                                         </select>
                                     </div>
                                 }
-                                <div className='buttons'>
-                                    <button className='clasic-button' onClick={changeEditMode}>Edit</button>
-                                    <button className='clasic-button' id="cancel-button">Delete</button>
-                                </div>
+                                {!editMode
+                                    ?
+                                    <div className='buttons'>
+                                        <button className='clasic-button' onClick={changeEditMode}>Edit</button>
+                                        <button className='clasic-button' id="cancel-button">Delete</button>
+                                    </div>
+                                    :
+                                    <div className='buttons'>
+                                        <button className='clasic-button'>Apply</button>
+                                        <button className='clasic-button' id="cancel-button" onClick={changeEditMode}>Cancel</button>
+                                    </div>
+                                }
+
+
                             </div>
                         </div>
                     </div>

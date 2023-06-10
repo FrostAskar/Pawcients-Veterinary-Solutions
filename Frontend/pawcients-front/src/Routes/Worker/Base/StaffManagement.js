@@ -82,6 +82,7 @@ export default function StaffManagement() {
                                                 <th>Job Title</th>
                                                 <th>Phone</th>
                                                 <th>Email</th>
+                                                <th>Calendar</th>
                                             </tr>
                                         </thead>
 
@@ -102,6 +103,7 @@ export default function StaffManagement() {
                                                     </td>
                                                     <td>{worker.phone}</td>
                                                     <td>{worker.email}</td>
+                                                    <td><button className="small-button">View</button></td>
                                                 </tr>
                                             </tbody>
 
