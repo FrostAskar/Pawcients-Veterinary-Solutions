@@ -52,26 +52,28 @@ export default function MascotsManagement() {
                                     <table className="management-table">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Species</th>
                                                 {/* <th>Gender</th> */}
                                                 <th>Birth Date</th>
                                                 <th>Owner</th>
                                                 <th>More details</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
                                             </tr>
                                         </thead>
 
                                         {mascots.map((pet, index) => (
                                             <tbody>
                                                 <tr key={index}>
-                                                    <td>{pet.id}</td>
                                                     <td>{pet.name}</td>
                                                     <td>{pet.species}</td>
                                                     {/* <td>{pet.gender}</td> */}
                                                     <td>{pet.birthDate}</td>
                                                     <td>{pet.ownerName} {pet.ownerSurname}</td>
                                                     <td><button className="small-button">View</button></td>
+                                                    <td><button className="small-button"><i className="material-icons">edit</i></button></td>
+                                                    <td><button className="small-button"><i className="material-icons">delete</i></button></td>
                                                 </tr>
                                             </tbody>
 

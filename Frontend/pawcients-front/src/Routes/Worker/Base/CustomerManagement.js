@@ -69,7 +69,6 @@ export default function CustomerManagement() {
                                         <thead>
 
                                             <tr>
-                                                <th>ID</th>
                                                 <th>Name</th>
                                                 <th>LastName</th>
                                                 <th>Phone</th>
@@ -77,13 +76,14 @@ export default function CustomerManagement() {
                                                 <th>Next Appointment</th>
                                                 <th>Pets</th>
                                                 <th>Add Pet</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
                                             </tr>
                                         </thead>
 
                                         {customers.map((item, index) => (
                                             <tbody>
                                                 <tr key={index}>
-                                                    <td>{item.client.id}</td>
                                                     <td>{item.client.name}</td>
                                                     <td>{item.client.surname}</td>
                                                     <td>{item.client.phone}</td>
@@ -100,6 +100,9 @@ export default function CustomerManagement() {
                                                     </td>
                                                     <td><button className="small-button">View pets</button></td>
                                                     <td><button className="small-button" onClick={(e) => openMascotModal(e, item.client.id)}>Add</button></td>
+                                                    <td><button className="small-button"><i className="material-icons">edit</i></button></td>
+                                                    <td><button className="small-button"><i className="material-icons">delete</i></button></td>
+                                                    
                                                 </tr>
                                             </tbody>
 

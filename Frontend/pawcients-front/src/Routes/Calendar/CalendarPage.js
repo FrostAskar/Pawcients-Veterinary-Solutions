@@ -6,7 +6,7 @@ import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { fetchProfile } from "fetches/Global/getProfile";
 import { useState, useEffect } from 'react';
 import 'css/calendar/calendar.scss';
-//import { getAllAppointments } from 'fetches/Worker/FetchGetAllAppointments';
+import { getAllAppointments } from 'fetches/Worker/FetchGetAllAppointments';
 
 const localizer = momentLocalizer(moment);
 
@@ -42,19 +42,21 @@ const CalendarPage = () => {
     //const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        
         const getProfileData = async () => {
-            const profileData = await fetchProfile();
-            setProfileData(profileData);
-          };
-        //   const getEvents = async () => {
-        //     const eventsData = await getAllAppointments(profileData.id);
-        //     setEvents(eventsData);
-        // }; 
-          getProfileData();
-          //getEvents();
-    }, [])
+          const profileData = await fetchProfile();
+          setProfileData(profileData);
+        };
 
+        const getEvents = async () => {
+                const eventsData = await getAllAppointments("6485585c8b9b933e74ec4d3e");
+                setEvents(eventsData);
+            };
+
+        getProfileData();
+        getEvents();
+    }, []);
+
+    console.log(events);
 
     const handleDateSelect = date => {
         setSelectedDate(date);

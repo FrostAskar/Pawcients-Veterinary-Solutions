@@ -76,20 +76,20 @@ export default function StaffManagement() {
                                     <table className="management-table">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>Name</th>
                                                 <th>LastName</th>
                                                 <th>Job Title</th>
                                                 <th>Phone</th>
                                                 <th>Email</th>
                                                 <th>Calendar</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
                                             </tr>
                                         </thead>
 
                                         {workers.map((worker) => (
                                             <tbody>
                                                 <tr key={worker.id}>
-                                                    <td>{worker.id}</td>
                                                     <td>{worker.name}</td>
                                                     <td>{worker.surname}</td>
                                                     <td>
@@ -104,6 +104,8 @@ export default function StaffManagement() {
                                                     <td>{worker.phone}</td>
                                                     <td>{worker.email}</td>
                                                     <td><button className="small-button">View</button></td>
+                                                    <td><button className="small-button"><i className="material-icons">edit</i></button></td>
+                                                    <td><button className="small-button"><i className="material-icons">delete</i></button></td>
                                                 </tr>
                                             </tbody>
 
