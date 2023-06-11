@@ -50,6 +50,7 @@ const router = createBrowserRouter([
         path: "/client/:clientId/mascot/:mascotId",
         element: <AnimalProfile />,
       },
+      { path: "/vet/mascot/:mascotId", element: <AnimalProfile /> },
       { path: "/vetcalendar", element: <CalendarPage /> },
       { path: "/clientcalendar", element: <CalendarPage /> },
     ],
