@@ -13,3 +13,15 @@ export async function fetchMascotData(clientID, mascotID) {
   const data = await response.json();
   return data;
 }
+export async function fetchMascotDataVet(mascotID) {
+  const response = await fetch("http://localhost:8080/vet/mascot/" + mascotID, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+
+  const data = await response.json();
+  return data;
+}

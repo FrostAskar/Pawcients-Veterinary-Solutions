@@ -26,6 +26,7 @@ export default function NavbarLanding() {
         location.pathname.split("/")[2] +
         "/mascot/" +
         location.pathname.split("/")[4],
+      "/vet/mascot/" + location.pathname.split("/")[3],
       "/vetcalendar",
       "/clientcalendar",
       "/confirmationemail",
