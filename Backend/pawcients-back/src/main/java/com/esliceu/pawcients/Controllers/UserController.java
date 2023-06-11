@@ -177,14 +177,14 @@ public class UserController {
         return (User) req.getAttribute("user");
     }
 
-    @DeleteMapping("/vet/client/{clientId}")
+    @DeleteMapping("/vet/{userId}")
     @CrossOrigin
-    public Map<String, String> deleteUser(@PathVariable String clientId,
+    public Map<String, String> deleteUser(@PathVariable String userId,
                              HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
         User actualUser = (User) req.getAttribute("user");
         try {
-            String action = userService.deleteUser(clientId, actualUser);
+            String action = userService.deleteUser(userId, actualUser);
             result.put("action", action);
             res.setStatus(200);
         } catch (UnverifiedUserException | UnauthorizedUserException | FailedActionException e) {

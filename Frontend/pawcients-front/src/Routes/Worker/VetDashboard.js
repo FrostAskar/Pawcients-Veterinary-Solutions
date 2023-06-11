@@ -7,7 +7,7 @@ import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
-import { getTodayAppointments } from "fetches/Worker/FetchGetTodayAppointments";
+import { getTodayAppointments } from "fetches/Worker/Appointments/FetchGetTodayAppointments";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 
 export default function VetDashboard() {

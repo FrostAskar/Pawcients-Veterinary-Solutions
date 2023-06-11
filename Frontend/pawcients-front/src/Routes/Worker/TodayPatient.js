@@ -28,9 +28,9 @@ export default function TodayPatient(props) {
                 </div>
                 <div className="patient">
                     <p className="patient-name">{props.patient.mascot.name}</p>
-                    <p className="patient-owner">{props.patient.user.name}</p>
+                    <p className="patient-owner">{props.patient.user.name} {props.patient.user.surname}</p>
                 </div>
-                {/* <button id="status" className={`patient-status ${props.patient.active ? 'active-status' : 'completed-status'}`}>{ props.patient.active ? 'On work' : 'Completed'}</button> */}
+                <button id="status" className={`patient-status ${props.patient.appointment.completed ? 'completed-status' : 'active-status'}`}>{ props.patient.active ? 'Completed' : 'On work'}</button>
             </div>
         
     )

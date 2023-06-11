@@ -6,7 +6,7 @@ import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { fetchProfile } from "fetches/Global/getProfile";
 import { useState, useEffect } from 'react';
 import 'css/calendar/calendar.scss';
-import { getAllAppointments } from 'fetches/Worker/FetchGetAllAppointments';
+import { getAllAppointments } from 'fetches/Worker/Appointments/FetchGetAllAppointments';
 
 const localizer = momentLocalizer(moment);
 
