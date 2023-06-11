@@ -1,5 +1,6 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
+import "css/global/global.scss";
 import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
 import { fetchWorkerRegister } from "fetches/Worker/Staff/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
@@ -39,7 +40,7 @@ export default function StaffManagement() {
         };
 
         obtainWorkers();
-    }, [workers])
+    }, [])
 
 
     const openModal = () => {

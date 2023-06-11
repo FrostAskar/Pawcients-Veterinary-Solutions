@@ -8,13 +8,13 @@ export default function TodayPatient(props) {
             return "medical_services"
         } else if(props.patient.appointment.type === "Surgery") {
             return "monitor_heart";
-        } else if(props.patient.appointment.type === "Healing") {
+        } else if(props.patient.appointment.type === "Cures") {
             return "healing"
         }
     }
 
     function getDate () {
-        const date = new Date(props.patient.appointment.date)
+        const date = new Date(props.patient.appointment.startDate)
         return date.getHours() + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes()) ;
     }
 

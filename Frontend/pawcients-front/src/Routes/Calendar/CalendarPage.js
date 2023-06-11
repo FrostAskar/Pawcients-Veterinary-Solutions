@@ -6,7 +6,9 @@ import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { fetchProfile } from "fetches/Global/getProfile";
 import { useState, useEffect } from 'react';
 import 'css/calendar/calendar.scss';
+import { useLocation } from 'react-router-dom'
 import { getAllAppointments } from 'fetches/Worker/Appointments/FetchGetAllAppointments';
+import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClient'
 
 const localizer = momentLocalizer(moment);
 
@@ -14,14 +16,14 @@ const localizer = momentLocalizer(moment);
 //     {
 //         title: 'Event 1',
 //         description: 'Event 1 Description',
-//         start: new Date(2023, 5, 1, 16, 30),
-//         end: new Date(2023, 5, 1, 19, 30),
+//         startDate: new Date(2023, 5, 1, 16, 30),
+//         endDate: new Date(2023, 5, 1, 19, 30),
 //     },
 //     {
 //         title: 'Event 2',
 //         description: 'Event 2 Description',
-//         start: new Date(2023, 5, 15, 18, 30),
-//         end: new Date(2023, 5, 15, 19, 30)
+//         startDate: new Date(2023, 5, 15, 18, 30),
+//         endDate: new Date(2023, 5, 15, 19, 30)
 //     },
 // ]
 
@@ -36,27 +38,36 @@ const CalendarPage = () => {
     const [eventModal, setEventModal] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [displayButton, setDisplayButton] = useState(false)
-    const [events, setEvents] = useState([])
-    const [editMode, setEditMode] = useState(false)
+    const [events, setEvents] = useState([]);
+    const [editMode, setEditMode] = useState(false);
     const [profileData, setProfileData] = useState(null);
+    //const [clients, setClients] = useState([]);
+    const [mascots, setMascots] = useState([]);
     //const [errorMessage, setErrorMessage] = useState("");
 
+    const location = useLocation();
+
     useEffect(() => {
-        const getProfileData = async () => {
-          const profileData = await fetchProfile();
-          setProfileData(profileData);
+        const getAppointments = async () => {
+            try {
+                const profileData = await fetchProfile();
+                setProfileData(profileData);
+
+                const eventsData = await getAllAppointments(profileData.id);
+                setEvents(formatDate(eventsData));
+            } catch (error) {
+
+            }
         };
 
-        const getEvents = async () => {
-                const eventsData = await getAllAppointments("6485585c8b9b933e74ec4d3e");
-                setEvents(eventsData);
-            };
-
-        getProfileData();
-        getEvents();
+        getAppointments();
     }, []);
 
-    console.log(events);
+
+    const obtainMascots = async () => {
+        const mascotsData = await getMascotsByClient(location.state.userID);
+        setMascots(mascotsData);
+    }
 
     const handleDateSelect = date => {
         setSelectedDate(date);
@@ -76,12 +87,20 @@ const CalendarPage = () => {
         setSelectedEvent(event);
     };
 
+    const formatDate = (eventsData) => {
+        eventsData.forEach((event) => {
+            event.startDate = new Date(event.startDate);
+            event.endDate = new Date(event.endDate);
+        })
+        return eventsData;
+    }
+
 
 
     const handleAddEvent = async (e) => {
         e.preventDefault();
         const title = e.target.title.value;
-        const description = e.target.description.value;
+        const type = e.target.type.value;
         const startTime = e.target.startTime.value;
 
         const [startHours, startMinutes] = startTime.split(':');
@@ -98,7 +117,7 @@ const CalendarPage = () => {
 
         const event = {
             title: title,
-            description: description,
+            type: type,
             start: fullDateStart,
             end: fullDateEnd,
         }
@@ -109,6 +128,7 @@ const CalendarPage = () => {
 
     const openModal = () => {
         setEventModal(true);
+        obtainMascots();
     };
 
     const closeModal = () => {
@@ -121,8 +141,9 @@ const CalendarPage = () => {
 
     function setTime(time) {
         const date = new Date(time);
-        return date.getHours() + ":" + date.getMinutes();
+        return date.getHours() + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
     }
+
 
 
     const allowedHours = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
@@ -140,8 +161,8 @@ const CalendarPage = () => {
                 <Calendar
                     localizer={localizer}
                     events={events}
-                    startAccessor="start"
-                    endAccessor="end"
+                    startAccessor="startDate"
+                    endAccessor="endDate"
                     selectable
                     onSelectEvent={handleEventSelect}
                     onNavigate={handleDateSelect}
@@ -175,8 +196,8 @@ const CalendarPage = () => {
                                 {!editMode
                                     ?
                                     <div>
-                                        <p><span>Start date: </span> {setTime(selectedEvent.start)}</p>
-                                        <p><span>End date: </span> {setTime(selectedEvent.end)}</p>
+                                        <p><span>Start date: </span> {setTime(selectedEvent.startDate)}</p>
+                                        <p><span>End date: </span> {setTime(selectedEvent.endDate)}</p>
                                     </div>
                                     :
                                     <div className='clasic-form'>
@@ -218,10 +239,23 @@ const CalendarPage = () => {
                         <div className="modal-content">
                             <h1>Create appointment</h1>
                             <form className="clasic-form" onSubmit={handleAddEvent} method="post">
-                                <label htmlFor="title">Title</label>
+                                <label htmlFor="client">Client</label>
                                 <input type="text" name="title" id="title" required />
-                                <label htmlFor="description">Description</label>
-                                <input type="text" name="description" id="description" required />
+                                <label htmlFor="mascot">Mascot</label>
+                                <select name="mascots" id="mascots">
+                                    {mascots.map((mascot, index) => (
+                                        <option key={index} value={mascot}>
+                                            {mascot}
+                                        </option>
+                                    ))}
+                                </select>
+                                <label htmlFor="type">Appointment type</label>
+                                <select name="type" id="type">
+                                    <option value="vaccine">Vaccine</option>
+                                    <option value="checkup">Checkup</option>
+                                    <option value="surgery">Surgery</option>
+                                    <option value="cures">Cures</option>
+                                </select>
                                 <label htmlFor='startTime'>Start Time</label>
                                 <select className='select-time' id="startTime" >
                                     {allowedHours.map(option => (

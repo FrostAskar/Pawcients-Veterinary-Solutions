@@ -59,7 +59,6 @@ export default function MascotsManagement() {
                                                 <th>Owner</th>
                                                 <th>More details</th>
                                                 <th>Edit</th>
-                                                <th>Delete</th>
                                             </tr>
                                         </thead>
 
@@ -73,7 +72,6 @@ export default function MascotsManagement() {
                                                     <td>{pet.ownerName} {pet.ownerSurname}</td>
                                                     <td><button className="small-button">View</button></td>
                                                     <td><button className="small-button"><i className="material-icons">edit</i></button></td>
-                                                    <td><button className="small-button"><i className="material-icons">delete</i></button></td>
                                                 </tr>
                                             </tbody>
 

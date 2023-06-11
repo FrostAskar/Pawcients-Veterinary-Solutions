@@ -1,10 +1,12 @@
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
+import "css/global/global.scss";
 import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
 import ClientCreation from "./ClientCreation";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
+import { ConfirmationPopup } from "Routes/Common/PopUp";
 //import { getMascotsByClient } from "fetches/Worker/Mascots/FetchGetMascotsByClient";
 
 export default function CustomerManagement() {
@@ -12,6 +14,7 @@ export default function CustomerManagement() {
     const [mascotCreationMode, setMascotCreationMode] = useState(false);
     const [clientID, setClientID] = useState("");
     const [customers, setCustomers] = useState([]);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
         const obtainClients = async () => {
@@ -19,7 +22,7 @@ export default function CustomerManagement() {
             setCustomers(clientsData);
         };
         obtainClients();
-    }, [customers])
+    }, [])
 
 
     const openClientModal = () => {
@@ -39,6 +42,18 @@ export default function CustomerManagement() {
     const closeMascotCreation = () => {
         setMascotCreationMode(false);
     }
+
+    const handleDeleteClick = () => {
+        setIsPopupOpen(true);
+      };
+
+    const handleCancel = () => {
+        setIsPopupOpen(false);
+    };
+
+    const handleConfirm = () => {
+        setIsPopupOpen(false);
+    };
 
 
     return (
@@ -92,7 +107,9 @@ export default function CustomerManagement() {
                                                         {item.appointment !== null ? (
                                                             <p>{item.appointment.date}</p>
                                                         ) : (
-                                                            <Link to="/vetcalendar">
+                                                            <Link to="/vetcalendar" state={{
+                                                                userID: item.client.id
+                                                            }}>
                                                                 <button className="small-button">Schedule</button>
                                                             </Link>
 
@@ -101,8 +118,15 @@ export default function CustomerManagement() {
                                                     <td><button className="small-button">View pets</button></td>
                                                     <td><button className="small-button" onClick={(e) => openMascotModal(e, item.client.id)}>Add</button></td>
                                                     <td><button className="small-button"><i className="material-icons">edit</i></button></td>
-                                                    <td><button className="small-button"><i className="material-icons">delete</i></button></td>
-                                                    
+                                                    <td><button className="small-button"  onClick={handleDeleteClick}><i className="material-icons">delete</i></button></td>
+                                                    {isPopupOpen && (
+                                                        <div>
+                                                            <ConfirmationPopup
+                                                                onCancel={handleCancel}
+                                                                onConfirm={handleConfirm}
+                                                            />
+                                                        </div>
+                                                    )}
                                                 </tr>
                                             </tbody>
 
