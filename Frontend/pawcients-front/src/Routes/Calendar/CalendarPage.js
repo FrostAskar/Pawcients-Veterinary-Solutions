@@ -47,6 +47,8 @@ const CalendarPage = () => {
 
     const location = useLocation();
 
+    console.log(mascots);
+
     useEffect(() => {
         const getAppointments = async () => {
             try {
@@ -66,7 +68,7 @@ const CalendarPage = () => {
 
     const obtainMascots = async () => {
         const mascotsData = await getMascotsByClient(location.state.userID);
-        setMascots(mascotsData);
+        setMascots(mascotsData.mascots);
     }
 
     const handleDateSelect = date => {
@@ -244,7 +246,7 @@ const CalendarPage = () => {
                                 <select name="mascots" id="mascots">
                                     {mascots.map((mascot, index) => (
                                         <option key={index} value={mascot}>
-                                            {mascot}
+                                            {mascot.name}
                                         </option>
                                     ))}
                                 </select>

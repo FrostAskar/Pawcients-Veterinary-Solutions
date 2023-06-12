@@ -76,9 +76,13 @@ export default function CustomerManagement() {
         } catch (error) {
         }
         setIsPopupOpen(false);
-        
-
     };
+
+
+    const setDate = (startDate) => {
+        const date = new Date(startDate);
+        return date.toDateString();
+    }
 
 
     return (
@@ -130,7 +134,7 @@ export default function CustomerManagement() {
                                                     <td>{item.client.email}</td>
                                                     <td>
                                                         {item.appointment !== null ? (
-                                                            <p>{item.appointment.date}</p>
+                                                            <p>{setDate(item.appointment.startDate)}</p>
                                                         ) : (
                                                             <Link to="/vetcalendar" state={{
                                                                 userID: item.client.id
