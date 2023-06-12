@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "css/global/animalprofile.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
+import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import {
   fetchMascotData,
   fetchMascotDataVet,
@@ -134,7 +135,13 @@ const AnimalManagementPage = () => {
 
   return (
     <div className="dashboard">
-      <SideNavbarClient />
+      {profileData?.type === "vet" ||
+      profileData?.type === "aux" ||
+      profileData?.type === "admin" ? (
+        <SideNavbarWorker />
+      ) : (
+        <SideNavbarClient />
+      )}
       <div className="showbuttons">
         <div className="animal-management-page">
           <div className="animal-profile">
