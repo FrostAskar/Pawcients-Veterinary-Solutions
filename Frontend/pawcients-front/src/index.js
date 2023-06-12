@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/confirmationemail", element: <ConfirmationEmail /> },
       { path: "/sessionexpired", element: <SessionExpired /> },
-      { path: "/mymascots", element: <MyMascots /> },
+      { path: "/client/:clientId/mascots", element: <MyMascots /> },
       { path: "/clientdashboard", element: <ClientDashboard /> },
       { path: "/vetdashboard", element: <VetDashboard /> },
       { path: "/vet/clients", element: <CustomerManagement /> },

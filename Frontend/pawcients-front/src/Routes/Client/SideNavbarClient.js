@@ -14,7 +14,6 @@ const SideNavbarClient = () => {
 
     getProfileData();
   }, []);
-
   if (profileData && !profileData.verificationCodeEmailCheck) {
     window.location.href = "/confirmationemail";
   }
@@ -40,7 +39,12 @@ const SideNavbarClient = () => {
         </li>
         <li>
           <i className="material-icons">pets</i>
-          <Link to="/mymascots" className="active">
+          {/* Reditrect to /client/{clientid}/mascots */}
+
+          <Link
+            to={"/client/" + profileData?.id + "/mascots"}
+            className="active"
+          >
             My Pets
           </Link>
         </li>

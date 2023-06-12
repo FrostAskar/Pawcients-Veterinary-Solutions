@@ -64,6 +64,7 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
         setErrorMessage("Failed to add history");
       }
     });
+    onClose();
   };
 
   return (

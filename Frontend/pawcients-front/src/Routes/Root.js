@@ -13,7 +13,7 @@ export default function NavbarLanding() {
 
     // Ejemplo: Mostrar el navbar en todas las rutas excepto en la página de inicio "/"
     const locationsWithoutNavbar = [
-      "/mymascots",
+      "/client/" + location.pathname.split("/")[2] + "/mascots",
       "/login",
       "/signup",
       "/clientdashboard",

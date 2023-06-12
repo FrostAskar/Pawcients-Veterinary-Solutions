@@ -1,32 +1,36 @@
 import React from "react";
 import "css/client/clientdashboard.css";
+import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
+import { fetchClientMascots } from "fetches/Worker/Clients/fetchClientMascots";
+import { fetchMascotData } from "fetches/Global/FetchMascotData";
 
 const animalsData = [
   {
     id: 1,
-    name: "Max",
+    name: "Luna",
     image:
-      "https://fotografias.lasexta.com/clipping/cmsimages01/2022/08/09/3FFA8546-05CE-4608-9B69-6602D02A4C58/cachorro-pomsky_98.jpg",
-  },
-  {
-    id: 2,
-    name: "Bella",
-    image:
-      "https://s1.ppllstatics.com/lasprovincias/www/multimedia/202112/12/media/cortadas/gatos-kb2-U160232243326NVC-624x385@Las%20Provincias.jpg",
-  },
-  {
-    id: 3,
-    name: "Charlie",
-    image:
-      "https://okdiario.com/img/2021/04/20/curiosidades-sobre-los-gatos-domesticos-635x358.jpg",
+      "https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/purina_7_formas_de_ayudar_a_tu_gato_a_vivir_mas_tiempo.jpg?itok=Z3Z3Z3Z3",
   },
 ];
 
 const MyMascots = () => {
-  // On click on user profile, redirect to profile page
+  const url = window.location.pathname;
+  const clientId = url.split("/")[2];
+
+  const [mascots, setMascots] = useState([]);
+
+  useEffect(() => {
+    fetchClientMascots(clientId).then((response) => {
+      if (response != null) {
+        setMascots(response);
+      } else {
+        console.log("Failed to fetch mascots");
+      }
+    });
+  }, [clientId]);
 
   return (
     <div className="dashboard">

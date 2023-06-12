@@ -4,7 +4,10 @@ import "css/vet/vetHome.scss";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import { fetchProfile } from "fetches/Global/getProfile";
-
+import {
+  putSaveProfileData,
+  putChangePassword,
+} from "fetches/Global/PutSaveProfileData";
 
 const ProfileSettings = () => {
   const [password, setPassword] = useState("");
@@ -25,10 +28,17 @@ const ProfileSettings = () => {
   const handlePasswordChange = () => {
     // Lógica para cambiar la contraseña
     if (newPassword === confirmPassword) {
-      // Realizar la actualización de la contraseña en el backend
-      console.log("Contraseña cambiada con éxito");
+      putChangePassword(profileData?.id, password, newPassword).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("Password changed successfully");
+          } else {
+            console.log("Failed to change password");
+          }
+        }
+      );
     } else {
-      console.log("Las contraseñas no coinciden");
+      console.log("Passwords don't match");
     }
   };
 
@@ -39,10 +49,26 @@ const ProfileSettings = () => {
     console.log("Foto de perfil cambiada con éxito");
     setProfileImage(URL.createObjectURL(imageFile));
   };
+  const saveProfileData = () => {
+    putSaveProfileData(
+      profileData?.id,
+      document.getElementById("name").value,
+      document.getElementById("surname").value,
+      document.getElementById("phone").value
+    ).then((response) => {
+      if (response.status === 200) {
+        window.location.href = "/profilesettings";
+      } else {
+        console.log("Failed to save profile data");
+      }
+    });
+  };
 
   return (
     <div className="dashboard">
-      {((profileData?.type === "vet") || (profileData?.type === "aux") || (profileData?.type === "admin")) ? (
+      {profileData?.type === "vet" ||
+      profileData?.type === "aux" ||
+      profileData?.type === "admin" ? (
         <SideNavbarWorker />
       ) : (
         <SideNavbarClient />
@@ -52,6 +78,40 @@ const ProfileSettings = () => {
           <h3>Change Profile Picture</h3>
           <input type="file" onChange={handleProfileImageChange} />
           {profileImage && <img src={profileImage} alt="Profile" />}
+
+          <h3>Change Profile Settings</h3>
+          <span>Email:</span>
+          <input
+            type="text"
+            placeholder="Email"
+            value={profileData?.email}
+            disabled
+          />
+          <span>Name: </span>
+          <input
+            type="text"
+            placeholder="Name"
+            value={profileData?.name}
+            id="name"
+          />
+          <span>Surname: </span>
+          <input
+            type="text"
+            placeholder="Surname"
+            value={profileData?.surname}
+            id="surname"
+          />
+          <span>Phone: </span>
+          <input
+            type="text"
+            placeholder="Phone"
+            value={profileData?.phone}
+            id="phone"
+          />
+
+          <button className="clasic-button" onClick={saveProfileData}>
+            Save Profile Data
+          </button>
         </div>
         <div className="password-change">
           <h3>Change Password</h3>
@@ -73,7 +133,9 @@ const ProfileSettings = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button className="clasic-button" onClick={handlePasswordChange}>Change Password</button>
+          <button className="clasic-button" onClick={handlePasswordChange}>
+            Change Password
+          </button>
         </div>
       </div>
     </div>
