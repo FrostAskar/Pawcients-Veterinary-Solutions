@@ -120,7 +120,7 @@ public class MascotController {
     @CrossOrigin
     public MascotDTO getMascotById(@PathVariable String mascotId) {
         MascotDTO mdto = new MascotDTO();
-        Mascot m = mascotService.findMasctorById(mascotId);
+        Mascot m = mascotService.findMascotById(mascotId);
         User u = userService.generateUser(m.getOwnerId());
         mdto.setId(m.getId());
         mdto.setName(m.getName());
@@ -144,7 +144,7 @@ public class MascotController {
                                    HttpServletRequest req,
                                    @RequestBody UpdateMascotForm updateMascotForm) {
         User actualUser = (User) req.getAttribute("user");
-        Mascot mascotToUpdate = mascotService.findMasctorById(mascotId);
+        Mascot mascotToUpdate = mascotService.findMascotById(mascotId);
         mascotToUpdate = mascotService.updateMascotInfo(mascotToUpdate, updateMascotForm);
         mascotService.updateMascot(mascotToUpdate);
         return "ok";

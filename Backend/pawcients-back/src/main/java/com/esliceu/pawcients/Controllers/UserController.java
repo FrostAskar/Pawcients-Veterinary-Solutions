@@ -143,7 +143,8 @@ public class UserController {
                     registerUserForm.getName(),
                     registerUserForm.getSurname(),
                     "client",
-                    actualUser.getClinicId());
+                    actualUser.getClinicId(),
+                    registerUserForm.getPhone());
             clientId = userService.saveUser(user, actualUser);
             result.put("clientId", clientId);
             result.put("status", "ok");

@@ -1,5 +1,6 @@
 package com.esliceu.pawcients.Controllers;
 
+import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
 import com.esliceu.pawcients.DTO.TodayAppointmentsDTO;
 import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
@@ -31,8 +32,8 @@ public class AppointmentController {
 
     @GetMapping("/vet/{vetId}/appointment")
     @CrossOrigin
-    public List<Appointment> getAppointments(@PathVariable String vetId) {
-        return appointmentService.getAppointmentsByVet(vetId);
+    public List<CalendarAppointmentDTO> getAppointments(@PathVariable String vetId) {
+        return appointmentService.getCalendarAppointmentsByVet(vetId);
     }
 
     @GetMapping("/vet/{vetId}/appointment/client/{clientId}")
@@ -112,7 +113,7 @@ public class AppointmentController {
         for(Appointment a : todayAppointments) {
             TodayAppointmentsDTO tadto = new TodayAppointmentsDTO();
             tadto.setUser(userService.generateUser(a.getClientId()));
-            tadto.setMascot(mascotService.findMasctorById(a.getMascotId()));
+            tadto.setMascot(mascotService.findMascotById(a.getMascotId()));
             tadto.setAppointment(appointmentService.findAppointmentById(a.getId()));
             todayData.add(tadto);
         }

@@ -1,13 +1,16 @@
 package com.esliceu.pawcients.Services;
 
+import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
 import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
 import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
 import com.esliceu.pawcients.Models.Appointment;
+import com.esliceu.pawcients.Models.Mascot;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.AppointmentRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,18 +18,33 @@ public class AppointmentService {
 
     AppointmentRepo appointmentRepo;
     UserService userService;
+    MascotService mascotService;
 
-    public AppointmentService(AppointmentRepo appointmentRepo, UserService userService) {
+    public AppointmentService(AppointmentRepo appointmentRepo, UserService userService,
+                              MascotService mascotService) {
         this.appointmentRepo = appointmentRepo;
         this.userService = userService;
+        this.mascotService = mascotService;
     }
 
     public Appointment findAppointmentById(String appointmentId) {
         return appointmentRepo.findById(appointmentId).get();
     }
 
-    public List<Appointment> getAppointmentsByVet(String vetId) {
-        return appointmentRepo.findByWorkerId(vetId);
+    public List<CalendarAppointmentDTO> getCalendarAppointmentsByVet(String vetId) {
+        List<Appointment> appointments = appointmentRepo.findByWorkerId(vetId);
+        List<CalendarAppointmentDTO> calendarAppointments = new ArrayList<>();
+        for(Appointment a : appointments) {
+            User u = userService.generateUser(a.getClientId());
+            Mascot m = mascotService.findMascotById(a.getMascotId());
+            CalendarAppointmentDTO cadto = new CalendarAppointmentDTO();
+            cadto.setTitle(m.getName() + "/" + u.getName() + " " + u.getSurname());
+            cadto.setStartDate(a.getStartDate());
+            cadto.setEndDate(a.getEndDate());
+            cadto.setType(a.getType());
+            calendarAppointments.add(cadto);
+        }
+        return calendarAppointments;
     }
 
     public List<Appointment> getAppointmentsByVetAndClient(String vetId, String clientId) {

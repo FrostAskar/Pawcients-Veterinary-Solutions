@@ -65,13 +65,15 @@ public class User {
     //Constructor for clients
     public User(String id, String email,
                 String name, String surname,
-                String type, String clinicId) {
+                String type, String clinicId,
+                String phone) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.type = type;
         this.clinicId = clinicId;
+        this.phone = phone;
         this.profilePicture = "https://www.w3schools.com/howto/img_avatar.png";
         this.verificationCodeEmailCheck = false;
     }

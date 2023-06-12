@@ -1,6 +1,5 @@
 package com.esliceu.pawcients.Services;
 
-import com.esliceu.pawcients.DTO.MascotDTO;
 import com.esliceu.pawcients.Exceptions.NotFoundMascotException;
 import com.esliceu.pawcients.Exceptions.NotFoundUserException;
 import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
@@ -46,7 +45,7 @@ public class MascotService {
         return mascots;
     }
 
-    public Mascot findMasctorById(String mascotId) {
+    public Mascot findMascotById(String mascotId) {
         return mascotRepo.findById(mascotId).get();
     }
 
