@@ -6,7 +6,7 @@ public class UpdateMascotForm {
 
     String gender;
 
-    int weight;
+    String weight;
 
     String color;
 
@@ -28,11 +28,11 @@ public class UpdateMascotForm {
         this.gender = gender;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
