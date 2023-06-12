@@ -5,9 +5,13 @@ import "css/global/forms.css";
 import "css/global/global.scss";
 import "css/global/variables.css";
 import { fetchLogin } from "fetches/Global/FetchLogin";
+import ChangePasswordModal from "Routes/LandingPage/Modals/ChangePasswordModal";
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState("");
+  const openModal = () => {
+    setShowModal(true);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +29,7 @@ function Login() {
       setErrorMessage("Email o contraseña incorrectos");
     }
   };
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="page-container">
@@ -46,10 +51,24 @@ function Login() {
                 Log in
               </button>
               {errorMessage && <p className="error-message">{errorMessage}</p>}
+              {/* Froget pass */}
+              <br></br>
+              <button
+                type="button"
+                onClick={openModal}
+                className="forgot-password-link"
+              >
+                Forgot password?
+              </button>
             </form>
           </div>
         </div>
       </div>
+      {showModal && (
+        <ChangePasswordModal onClose={() => setShowModal(false)}>
+          {/* Contenido del modal */}
+        </ChangePasswordModal>
+      )}
     </div>
   );
 }
