@@ -1,15 +1,10 @@
 package com.esliceu.pawcients.Models.HistoryDetails;
 
-import java.time.LocalDate;
-
-public class Deworming {
-
+public class Surgery {
 
     String name;
 
-    public Deworming(){}
-
-    public Deworming(String name) {
+    public Surgery(String name) {
         this.name = name;
     }
 

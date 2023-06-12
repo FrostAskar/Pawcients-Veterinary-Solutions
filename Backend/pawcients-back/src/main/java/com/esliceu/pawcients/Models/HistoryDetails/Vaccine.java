@@ -4,17 +4,13 @@ import java.time.LocalDate;
 
 public class Vaccine {
 
-    String visitId;
     String name;
-    LocalDate administrationDate;
     LocalDate renewalDate;
     
     public Vaccine(){}
     
-    public Vaccine(String visitId, String name, LocalDate administrationDate, LocalDate renewalDate) {
-        this.visitId = visitId;
+    public Vaccine(String name, LocalDate renewalDate) {
         this.name = name;
-        this.administrationDate = administrationDate;
         this.renewalDate = renewalDate;
     }
 
@@ -26,14 +22,6 @@ public class Vaccine {
         this.name = name;
     }
 
-    public LocalDate getAdministrationDate() {
-        return administrationDate;
-    }
-
-    public void setAdministrationDate(LocalDate administrationDate) {
-        this.administrationDate = administrationDate;
-    }
-
     public LocalDate getRenewalDate() {
         return renewalDate;
     }
@@ -42,11 +30,4 @@ public class Vaccine {
         this.renewalDate = renewalDate;
     }
 
-    public String getVisitId() {
-        return visitId;
-    }
-
-    public void setVisitId(String visitId) {
-        this.visitId = visitId;
-    }
 }

@@ -16,21 +16,34 @@ public class Mascot {
     String breed;
     int age;
     String gender;
-    String weight;
+    int weight;
     String color;
     String identificationSerial;
     LocalDate birthDate;
     String ownerId;
+    String allergies;
+    String notes;
     String historyId;
+    boolean isSterilized = false;
 
     public Mascot(){}
 
-    public Mascot(String id, String clinicId, String name, String species, String breed, LocalDate birthDate, String ownerId) {
+    public Mascot(String id, String clinicId, String name, String species, String breed,
+                  int age, String gender, int weight, String color, String identificationSerial,
+                  String allergies, String notes,
+                  LocalDate birthDate, String ownerId) {
         this.id = id;
         this.clinicId = clinicId;
         this.name = name;
         this.species = species;
         this.breed = breed;
+        this.age = age;
+        this.gender = gender;
+        this.weight = weight;
+        this.color = color;
+        this.identificationSerial = identificationSerial;
+        this.allergies = allergies;
+        this.notes = notes;
         this.birthDate = birthDate;
         this.ownerId = ownerId;
     }
@@ -115,11 +128,11 @@ public class Mascot {
         this.gender = gender;
     }
 
-    public String getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
@@ -145,5 +158,13 @@ public class Mascot {
 
     public void setHistoryId(String historyId) {
         this.historyId = historyId;
+    }
+
+    public boolean isSterilized() {
+        return isSterilized;
+    }
+
+    public void setSterilized(boolean sterilized) {
+        isSterilized = sterilized;
     }
 }

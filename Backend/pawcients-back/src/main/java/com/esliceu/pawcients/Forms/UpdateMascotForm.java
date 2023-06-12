@@ -1,16 +1,18 @@
 package com.esliceu.pawcients.Forms;
 
+import java.time.LocalDate;
+
 public class UpdateMascotForm {
 
     int age;
-
     String gender;
-
-    String weight;
-
+    int weight;
     String color;
-
     String identificationNumber;
+    String allergies;
+    String notes;
+
+    //History Updates
 
     public int getAge() {
         return age;
@@ -28,11 +30,11 @@ public class UpdateMascotForm {
         this.gender = gender;
     }
 
-    public String getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
@@ -51,4 +53,5 @@ public class UpdateMascotForm {
     public void setIdentificationNumber(String identificationNumber) {
         this.identificationNumber = identificationNumber;
     }
+
 }

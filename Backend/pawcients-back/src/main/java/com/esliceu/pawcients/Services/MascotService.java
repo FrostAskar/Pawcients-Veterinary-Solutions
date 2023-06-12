@@ -81,7 +81,14 @@ public class MascotService {
                 actualUser.getClinicId(),
                 registerMascotForm.getMascotName(),
                 registerMascotForm.getSpecies(),
-                registerMascotForm.getRace(),
+                registerMascotForm.getBreed(),
+                registerMascotForm.getAge(),
+                registerMascotForm.getGender(),
+                registerMascotForm.getWeight(),
+                registerMascotForm.getColor(),
+                registerMascotForm.getIdentificationSerial(),
+                registerMascotForm.getAllergies(),
+                registerMascotForm.getNotes(),
                 registerMascotForm.getBirthDate(),
                 ownerId
                 );

@@ -5,11 +5,15 @@ import java.time.LocalDate;
 public class Visit {
 
     LocalDate date;
-    String description;
+    String notes;
 
-    public Visit(LocalDate date, String description) {
+    Vaccine vaccine;
+    Surgery surgery;
+    Deworming deworming;
+
+    public Visit(LocalDate date, String notes) {
         this.date = date;
-        this.description = description;
+        this.notes = notes;
     }
 
     public LocalDate getDate() {
@@ -20,11 +24,35 @@ public class Visit {
         this.date = date;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Vaccine getVaccine() {
+        return vaccine;
+    }
+
+    public void setVaccine(Vaccine vaccine) {
+        this.vaccine = vaccine;
+    }
+
+    public Surgery getSurgery() {
+        return surgery;
+    }
+
+    public void setSurgery(Surgery surgery) {
+        this.surgery = surgery;
+    }
+
+    public Deworming getDeworming() {
+        return deworming;
+    }
+
+    public void setDeworming(Deworming deworming) {
+        this.deworming = deworming;
     }
 }

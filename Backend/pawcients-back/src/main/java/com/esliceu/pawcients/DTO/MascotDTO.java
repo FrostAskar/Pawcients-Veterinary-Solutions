@@ -18,7 +18,7 @@ public class MascotDTO {
     }
 
     private String breed;
-    private String weight;
+    private int weight;
 
 
     private LocalDate birthDate;
@@ -44,11 +44,11 @@ public class MascotDTO {
         this.breed = breed;
     }
 
-    public String getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 

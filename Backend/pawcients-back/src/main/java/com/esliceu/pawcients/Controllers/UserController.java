@@ -100,7 +100,7 @@ public class UserController {
         }
         String token = tokenService.createToken(user);
         result.put("user", user);
-        result.put("iat", tokenService.getIat(token));
+        result.put("iat", tokenService.getIat(token).toInstant().toEpochMilli());
         result.put("token", token);
         return result;
     }
