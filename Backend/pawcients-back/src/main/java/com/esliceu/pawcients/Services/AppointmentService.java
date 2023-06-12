@@ -1,6 +1,7 @@
 package com.esliceu.pawcients.Services;
 
 import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
+import com.esliceu.pawcients.DTO.NextSevenDaysAppointmentsDTO;
 import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
 import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
@@ -10,6 +11,7 @@ import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.AppointmentRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,5 +104,18 @@ public class AppointmentService {
         } else {
             return null;
         }
+    }
+
+    public List<NextSevenDaysAppointmentsDTO> getNextSevenDaysAppointmentsCount(User actualUser) {
+        List<NextSevenDaysAppointmentsDTO> nextSeven = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        for (int i = 1; i < 7; i++) {
+            NextSevenDaysAppointmentsDTO nsdadto = new NextSevenDaysAppointmentsDTO();
+            List<Appointment> dayAppointments = appointmentRepo.findByWorkerIdAndStartDate(actualUser.getId(), today.plusDays(i));
+            nsdadto.setDate(today.plusDays(i));
+            nsdadto.setAppointments(dayAppointments.size());
+            nextSeven.add(nsdadto);
+        }
+        return nextSeven;
     }
 }

@@ -5,6 +5,7 @@ import com.esliceu.pawcients.Models.Appointment;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -14,4 +15,8 @@ public interface AppointmentRepo extends MongoRepository<Appointment, String> {
     List<Appointment> findByClientIdOrderByStartDate(String clientId);
 
     boolean existsByClientId(String clientId);
+
+    List<Appointment> findByStartDate(LocalDate date);
+
+    List<Appointment> findByWorkerIdAndStartDate(String workerId, LocalDate date);
 }

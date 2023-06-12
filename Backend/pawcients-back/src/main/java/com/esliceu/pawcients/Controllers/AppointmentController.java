@@ -1,6 +1,7 @@
 package com.esliceu.pawcients.Controllers;
 
 import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
+import com.esliceu.pawcients.DTO.NextSevenDaysAppointmentsDTO;
 import com.esliceu.pawcients.DTO.TodayAppointmentsDTO;
 import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
@@ -119,5 +120,13 @@ public class AppointmentController {
         }
         result.put("appointments", todayData);
         return result;
+    }
+
+    @GetMapping("/vet/appointmentgraph")
+    @CrossOrigin
+    public List<NextSevenDaysAppointmentsDTO> getAppointmentsForGraphic(HttpServletRequest req) {
+        User actualUser = (User) req.getAttribute("user");
+        List<NextSevenDaysAppointmentsDTO> nextAppointments = appointmentService.getNextSevenDaysAppointmentsCount(actualUser);
+        return nextAppointments;
     }
 }
