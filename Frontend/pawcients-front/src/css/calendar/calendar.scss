@@ -22,7 +22,6 @@
 .rbc-event {
     background-color: var(--dark-green);
     border: none;
-    padding: 6px;
 }
 
 .event-info {
@@ -36,7 +35,8 @@
 
     p {
         color: black;
-        line-height: 30px;
+        line-height: 38px;
+        font-size: 20px;
     }
 
     span {

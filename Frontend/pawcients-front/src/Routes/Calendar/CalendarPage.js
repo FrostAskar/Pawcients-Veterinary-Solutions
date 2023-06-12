@@ -157,7 +157,8 @@ const CalendarPage = () => {
                 <SideNavbarClient />
             )}
             <div className='dashboard-page'>
-                <h1 className="calendar-title">Calendar</h1>
+
+                <h1 className="calendar-title"> My Calendar</h1>
                 <Calendar
                     localizer={localizer}
                     events={events}
@@ -175,22 +176,20 @@ const CalendarPage = () => {
                     <div className="event-info">
                         <div className="section">
                             <div className="section-content">
+                                <h2>{selectedEvent.title}</h2>
+
                                 {!editMode
                                     ?
-                                    <h2>{selectedEvent.title}</h2>
+                                    <p>{selectedEvent.type}</p>
                                     :
                                     <div className='clasic-form'>
-                                        <label htmlFor="title">Title</label>
-                                        <input type="text" name="title" id="title" required />
-                                    </div>
-                                }
-                                {!editMode
-                                    ?
-                                    <p>{selectedEvent.description}</p>
-                                    :
-                                    <div className='clasic-form'>
-                                        <label htmlFor="description">Description</label>
-                                        <input type="text" name="description" id="description" required />
+                                        <label htmlFor="type">Appointment type</label>
+                                        <select name="type" id="type">
+                                            <option value="vaccine">Vaccine</option>
+                                            <option value="checkup">Checkup</option>
+                                            <option value="surgery">Surgery</option>
+                                            <option value="cures">Cures</option>
+                                        </select>
                                     </div>
                                 }
                                 {!editMode

@@ -4,6 +4,7 @@ import "css/global/global.scss";
 import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
 import { fetchWorkerRegister } from "fetches/Worker/Staff/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 
 export default function StaffManagement() {
     const [errorMessage, setErrorMessage] = useState("");
@@ -105,7 +106,15 @@ export default function StaffManagement() {
                                                     </td>
                                                     <td>{worker.phone}</td>
                                                     <td>{worker.email}</td>
-                                                    <td><button className="small-button">View</button></td>
+                                                    <td>
+                                                        <Link to="/vetcalendar" state={{
+                                                            workerID: worker.id,
+                                                            workerName: worker.name
+                                                        }}>
+                                                            <button className="small-button">View</button>
+                                                        </Link>
+
+                                                    </td>
                                                     <td><button className="small-button"><i className="material-icons">edit</i></button></td>
                                                     <td><button className="small-button"><i className="material-icons">delete</i></button></td>
                                                 </tr>
