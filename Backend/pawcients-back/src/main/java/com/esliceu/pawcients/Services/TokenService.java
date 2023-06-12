@@ -49,4 +49,13 @@ public class TokenService {
         return user;
     }
 
+    public String getIat(String token){
+        String iat = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
+                .build()
+                .verify(token)
+                .getClaim("iat")
+                .asString();
+        return iat;
+    }
+
 }

@@ -37,6 +37,7 @@ public class UserService {
         if(!checkEmailValidity(user.getEmail())) throw new IncorrectRegisterException("Email is not a valid email");
         String verificationCode = String.valueOf((int)(Math.random()*1000000));
         user.setVerificationCodeEmail(verificationCode);
+        user.setPassword(Encrypt.sha512(verificationCode));
         //If the user doing the register is the admin, goes through
         if(actualUser.getType().equals("admin")) {
             if (checkEmailIsInUse(user)) {
