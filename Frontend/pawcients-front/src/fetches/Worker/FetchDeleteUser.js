@@ -7,6 +7,5 @@ export async function deleteUser(userID) {
           Authorization: token
         },
       });
-
       return response.json();;
     }

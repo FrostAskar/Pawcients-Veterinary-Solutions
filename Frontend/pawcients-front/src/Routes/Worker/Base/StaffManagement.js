@@ -90,8 +90,8 @@ export default function StaffManagement() {
                                         </thead>
 
                                         {workers.map((worker) => (
-                                            <tbody>
-                                                <tr key={worker.id}>
+                                            <tbody key={worker.id}>
+                                                <tr>
                                                     <td>{worker.name}</td>
                                                     <td>{worker.surname}</td>
                                                     <td>

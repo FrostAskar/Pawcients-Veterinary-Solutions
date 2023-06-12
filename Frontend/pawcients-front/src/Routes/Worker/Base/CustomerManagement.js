@@ -7,6 +7,7 @@ import MascotCreation from "Routes/Worker/Base/MascotCreation";
 import ClientCreation from "./ClientCreation";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 import { ConfirmationPopup } from "Routes/Common/PopUp";
+import { deleteUser } from "fetches/Worker/FetchDeleteUser";
 //import { getMascotsByClient } from "fetches/Worker/Mascots/FetchGetMascotsByClient";
 
 export default function CustomerManagement() {
@@ -62,8 +63,21 @@ export default function CustomerManagement() {
         setIsPopupOpen(false);
     };
 
-    const handleConfirm = () => {
+    const handleConfirm =  async (e, userId) => {
+        e.preventDefault();
+        try {
+            // Fetch para login de cliente
+            const response = await deleteUser(userId);
+            if (response !== null) {
+                console.log(response);
+                setIsPopupOpen(false);
+            } else {
+            }
+        } catch (error) {
+        }
         setIsPopupOpen(false);
+        
+
     };
 
 
@@ -107,9 +121,9 @@ export default function CustomerManagement() {
                                             </tr>
                                         </thead>
 
-                                        {customers.map((item, index) => (
-                                            <tbody>
-                                                <tr key={index}>
+                                        {customers.map((item) => (
+                                            <tbody key={item.client.id}>
+                                                <tr>
                                                     <td>{item.client.name}</td>
                                                     <td>{item.client.surname}</td>
                                                     <td>{item.client.phone}</td>
@@ -134,7 +148,7 @@ export default function CustomerManagement() {
                                                         <div>
                                                             <ConfirmationPopup
                                                                 onCancel={handleCancel}
-                                                                onConfirm={handleConfirm}
+                                                                onConfirm={(e) => handleConfirm(e, item.client.id)}
                                                             />
                                                         </div>
                                                     )}

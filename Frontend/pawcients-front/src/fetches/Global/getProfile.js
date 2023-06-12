@@ -1,7 +1,6 @@
 export async function fetchProfile() {
   try {
     const token = localStorage.getItem("token");
-    console.log("this is token: " + token);
     const response = await fetch("http://localhost:8080/getprofile", {
       method: "GET",
       headers: {

@@ -67,9 +67,9 @@ export default function MascotsManagement() {
                                             </tr>
                                         </thead>
 
-                                        {mascots.map((pet, index) => (
-                                            <tbody>
-                                                <tr key={index}>
+                                        {mascots.map((pet) => (
+                                            <tbody key={pet.id}>
+                                                <tr>
                                                     <td>{pet.name}</td>
                                                     <td>{pet.species}</td>
                                                     {/* <td>{pet.gender}</td> */}
