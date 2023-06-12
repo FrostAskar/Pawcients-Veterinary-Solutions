@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { fetchClientRegister } from "fetches/Worker/Clients/FetchClientRegister";
 
-export default function ClientCreation({ onClose }) {
+export default function ClientCreation({ onClose, onAccept }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e) => {
@@ -14,13 +14,12 @@ export default function ClientCreation({ onClose }) {
             // Fetch para login de cliente
             const response = await fetchClientRegister(name, surname, email, phone);
             if (response !== null) {
-                onClose();
+                onAccept();
             } else {
                 // Mensaje de error para cliente
                 setErrorMessage(response.message);
             }
         } catch (error) {
-            console.log(error);
             setErrorMessage("Error en la conexión con el servidor");
         }
     };

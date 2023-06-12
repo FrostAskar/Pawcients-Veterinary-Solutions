@@ -10,13 +10,13 @@ export default function MascotsManagement() {
     const [mascots, setMascots] = useState([]);
 
     useEffect(() => {
-        const obtainMascots = async () => {
-            const mascotsData = await getMascots();
-            setMascots(mascotsData);
-        };
-
         obtainMascots();
     }, [])
+
+    const obtainMascots = async () => {
+        const mascotsData = await getMascots();
+        setMascots(mascotsData);
+    };
 
     const openModal = () => {
         setCreationMode(true);
@@ -24,6 +24,11 @@ export default function MascotsManagement() {
 
     const handleClose = () => {
         setCreationMode(false);
+    }
+
+    const handleAcceptCreation= () => {
+        setCreationMode(false);
+        obtainMascots();
     }
     return (
         <div className="dashboard">
@@ -82,7 +87,7 @@ export default function MascotsManagement() {
                         </div>
                     </section>
                     {creationMode && (
-                        <MascotCreation onClose={handleClose} />
+                        <MascotCreation onClose={handleClose} onAccept={handleAcceptCreation} />
                     )}
                 </div>
             </div>

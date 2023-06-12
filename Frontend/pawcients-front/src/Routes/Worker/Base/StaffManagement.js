@@ -23,6 +23,7 @@ export default function StaffManagement() {
             const response = await fetchWorkerRegister(name, surname, email, phone, license, type);
             if (response !== null) {
                 setCreationMode(false);
+                obtainWorkers();
             } else {
                 // Mensaje de error para cliente
                 setErrorMessage(response.message);
@@ -34,13 +35,13 @@ export default function StaffManagement() {
     };
 
     useEffect(() => {
-        const obtainWorkers = async () => {
-            const workersData = await getWorkers();
-            setWorkers(workersData);
-        };
-
         obtainWorkers();
     }, [])
+
+    const obtainWorkers = async () => {
+        const workersData = await getWorkers();
+        setWorkers(workersData);
+    };
 
 
     const openModal = () => {

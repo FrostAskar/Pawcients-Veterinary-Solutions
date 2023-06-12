@@ -17,13 +17,15 @@ export default function CustomerManagement() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
-        const obtainClients = async () => {
-            const clientsData = await getClients();
-            setCustomers(clientsData);
-        };
         obtainClients();
     }, [])
 
+    const obtainClients = async () => {
+        const clientsData = await getClients();
+        setCustomers(clientsData);
+    };
+
+    // Client register
 
     const openClientModal = () => {
         setClientCreationMode(true);
@@ -32,6 +34,13 @@ export default function CustomerManagement() {
     const cancelClientCreation = () => {
         setClientCreationMode(false);
     }
+
+    const acceptClientCreation = () => {
+        setClientCreationMode(false);
+        obtainClients();
+    }
+
+    //Mascot register 
 
     const openMascotModal = async (e, id) => {
         e.preventDefault();
@@ -43,6 +52,8 @@ export default function CustomerManagement() {
         setMascotCreationMode(false);
     }
 
+    //Delete Pop up 
+    
     const handleDeleteClick = () => {
         setIsPopupOpen(true);
       };
@@ -137,11 +148,11 @@ export default function CustomerManagement() {
                         </div>
                     </section>
                     {clientCreationMode && (
-                        <ClientCreation onClose={cancelClientCreation} />
+                        <ClientCreation onClose={cancelClientCreation} onAccept={acceptClientCreation}/>
                     )}
 
                     {mascotCreationMode && (
-                        <MascotCreation onClose={closeMascotCreation} clientID={clientID} />
+                        <MascotCreation onClose={closeMascotCreation} clientID={clientID} onAccept={closeMascotCreation} />
                     )}
 
                 </div>

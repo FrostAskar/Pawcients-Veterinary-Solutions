@@ -3,7 +3,7 @@ import "css/vet/dataManagement.scss"
 import { addMascot } from "fetches/Worker/Mascots/FetchAddMascot";
 import React, { useState } from "react";
 
-export default function MascotCreation({ onClose, clientID }) {
+export default function MascotCreation({ onClose, clientID, onAccept }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e) => {
@@ -18,13 +18,12 @@ export default function MascotCreation({ onClose, clientID }) {
             const response = await addMascot(name, species, race, birthDate, clientID);
             //const data = await response.json();
             if (response != null) {
-                onClose();
+                onAccept();
             } else {
                 // Mensaje de error para cliente
                 setErrorMessage(response.message);
             }
         } catch (error) {
-            console.log(error);
             setErrorMessage("Error en la conexión con el servidor");
         }
     };
