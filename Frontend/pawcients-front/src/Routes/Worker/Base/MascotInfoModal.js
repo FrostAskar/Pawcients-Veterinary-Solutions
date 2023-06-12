@@ -57,6 +57,8 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
         date: date,
       };
     }
+    // TEST
+    console.log(history);
 
     fetchAddHistory({ history, mascotID, type }).then((response) => {
       if (response.status === 200) {
