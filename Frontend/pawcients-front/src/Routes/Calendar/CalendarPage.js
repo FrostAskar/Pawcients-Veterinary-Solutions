@@ -6,7 +6,8 @@ import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { fetchProfile } from "fetches/Global/getProfile";
 import { useState, useEffect } from 'react';
 import 'css/calendar/calendar.scss';
-import { useLocation } from 'react-router-dom'
+import { getClients } from "fetches/Worker/Clients/FetchGetClients";
+//import { useLocation } from 'react-router-dom'
 import { getAllAppointments } from 'fetches/Worker/Appointments/FetchGetAllAppointments';
 import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClient'
 
@@ -41,13 +42,13 @@ const CalendarPage = () => {
     const [events, setEvents] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [profileData, setProfileData] = useState(null);
-    //const [clients, setClients] = useState([]);
+    const [clients, setClients] = useState([]);
     const [mascots, setMascots] = useState([]);
+    const [selectedClient, setSelectedClient] = useState("");
+    const [selectedMascot, setSelectedMascot] = useState("");
     //const [errorMessage, setErrorMessage] = useState("");
 
-    const location = useLocation();
-
-    console.log(mascots);
+    //const location = useLocation();
 
     useEffect(() => {
         const getAppointments = async () => {
@@ -58,18 +59,25 @@ const CalendarPage = () => {
                 const eventsData = await getAllAppointments(profileData.id);
                 setEvents(formatDate(eventsData));
             } catch (error) {
-
             }
         };
 
         getAppointments();
+        obtainClients();
     }, []);
 
 
     const obtainMascots = async () => {
-        const mascotsData = await getMascotsByClient(location.state.userID);
+        //const mascotsData = await getMascotsByClient(location.state.userID);
+        const mascotsData = await getMascotsByClient(selectedClient);
         setMascots(mascotsData.mascots);
+        
     }
+
+    const obtainClients = async () => {
+        const clientsData = await getClients();
+        setClients(clientsData);
+    };
 
     const handleDateSelect = date => {
         setSelectedDate(date);
@@ -130,7 +138,6 @@ const CalendarPage = () => {
 
     const openModal = () => {
         setEventModal(true);
-        obtainMascots();
     };
 
     const closeModal = () => {
@@ -141,11 +148,15 @@ const CalendarPage = () => {
         setEditMode(!editMode);
     };
 
+    const setMascotsByClient = (e) => {
+        setSelectedClient(e.target.value);
+        obtainMascots();
+    };
+
     function setTime(time) {
         const date = new Date(time);
         return date.getHours() + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
     }
-
 
 
     const allowedHours = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
@@ -241,15 +252,22 @@ const CalendarPage = () => {
                             <h1>Create appointment</h1>
                             <form className="clasic-form" onSubmit={handleAddEvent} method="post">
                                 <label htmlFor="client">Client</label>
-                                <input type="text" name="title" id="title" required />
+                                <select name="clients" id="clients" value={selectedClient} onChange={(e) => setMascotsByClient(e)}>
+                                    {clients.map((client, index) => (
+                                        <option key={index} value={client.client.id}>
+                                            {client.client.name} {client.client.surname}
+                                        </option>
+                                    ))}
+                                </select>
                                 <label htmlFor="mascot">Mascot</label>
-                                <select name="mascots" id="mascots">
+                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => setSelectedMascot(e.target.value)}>
                                     {mascots.map((mascot, index) => (
-                                        <option key={index} value={mascot}>
+                                        <option key={index} value={mascot.id}>
                                             {mascot.name}
                                         </option>
                                     ))}
                                 </select>
+
                                 <label htmlFor="type">Appointment type</label>
                                 <select name="type" id="type">
                                     <option value="vaccine">Vaccine</option>
