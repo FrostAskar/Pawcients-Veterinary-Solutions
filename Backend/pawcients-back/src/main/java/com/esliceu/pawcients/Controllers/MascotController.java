@@ -115,6 +115,28 @@ public class MascotController {
         return mascotData;
     }
 
+    //TODO CHECK IF IS VETERINARY TO RETRIEVE THE MASCOT (SECURITY)
+    @GetMapping("/vet/mascot/{mascotId}")
+    @CrossOrigin
+    public MascotDTO getMascotById(@PathVariable String mascotId) {
+        MascotDTO mdto = new MascotDTO();
+        Mascot m = mascotService.findMasctorById(mascotId);
+        User u = userService.generateUser(m.getOwnerId());
+        mdto.setId(m.getId());
+        mdto.setName(m.getName());
+        mdto.setSpecies(m.getSpecies());
+        mdto.setBirthDate(m.getBirthDate());
+        mdto.setOwnerName(u.getName());
+        mdto.setOwnerSurname(u.getSurname());
+        mdto.setImage(m.getPhoto());
+        mdto.setWeight(m.getWeight());
+        mdto.setBreed(m.getBreed());
+        mdto.setGender(m.getGender());
+
+
+        return mdto;
+    }
+
     @PutMapping("/client/{clientId}/mascot/{mascotId}")
     @CrossOrigin
     public String updateMascotInfo(@PathVariable String clientId,

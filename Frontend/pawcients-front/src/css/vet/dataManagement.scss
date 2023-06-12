@@ -1,61 +1,57 @@
 .management {
-    margin: 20px;
+  margin: 20px;
 }
 
 .management-header {
-    display:flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
-
-
 .small-button:hover {
-    background-color: #58b872be;
+  background-color: #58b872be;
 }
 
 .small-button {
-    cursor: pointer;
-    padding: 4px;
-    font-size: 16px;
-    border-radius: 9px;
-    background-color: var(--button-green);
-    border: solid;
-    border-color: var(--button-green);
-    color:white;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+  border-radius: 9px;
+  background-color: var(--button-green);
+  border: solid;
+  border-color: var(--button-green);
+  color: white;
 }
-
 
 .management-table {
-    border-collapse: collapse;
-    text-align: center;
-    margin-top: 15px;
-    font-size: 18px;
-    td {
-        border-bottom: 1px solid var(--grey);
-        padding: 15px 15px;
-    }
-    th {
-        border-bottom: 1px solid var(--dark-grey);
-        padding: 15px 15px;
-    }
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 18px;
+  td {
+    border-bottom: 1px solid var(--grey);
+    padding: 15px 15px;
+  }
+  th {
+    border-bottom: 1px solid var(--dark-grey);
+    padding: 15px 15px;
+  }
 }
-
-
 
 /* Creation form */
 
 .creation-section {
-     input, select {
-        width: 200px;
-        margin-bottom: 15px;
-     }
-     button {
-        margin: 10px;
-    }
-    button[type="button"] {
-        background-color: rgb(226, 72, 72);
-    }
-    button[type="button"]:hover {
-        background-color: rgba(226, 72, 72, 0.842);
-    }
+  input,
+  select {
+    width: 200px;
+    margin-bottom: 15px;
+  }
+  button {
+    margin: 10px;
+  }
+  button[type="button"] {
+    background-color: rgb(226, 72, 72);
+  }
+  button[type="button"]:hover {
+    background-color: rgba(226, 72, 72, 0.842);
+  }
 }

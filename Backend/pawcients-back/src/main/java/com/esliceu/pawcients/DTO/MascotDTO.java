@@ -4,13 +4,52 @@ import java.time.LocalDate;
 
 public class MascotDTO {
     private String id;
+    private String image;
     private String name;
     private String species;
+    private String gender;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    private String breed;
+    private String weight;
+
+
     private LocalDate birthDate;
     private String ownerName;
     private String ownerSurname;
 
     public MascotDTO() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     public String getId() {

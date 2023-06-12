@@ -4,7 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Document(collection = "Mascot")
 public class Mascot {
@@ -17,7 +16,7 @@ public class Mascot {
     String breed;
     int age;
     String gender;
-    int weight;
+    String weight;
     String color;
     String identificationSerial;
     LocalDate birthDate;
@@ -116,11 +115,11 @@ public class Mascot {
         this.gender = gender;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
