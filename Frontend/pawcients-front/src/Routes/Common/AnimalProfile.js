@@ -7,38 +7,8 @@ import {
 } from "fetches/Global/FetchMascotData";
 import { fetchProfile } from "fetches/Global/getProfile";
 
-const animalData = {
-  name: "Max",
-  image: "https://placedog.net/500/280?id=5",
-  species: "Dog",
-  breed: "Labrador Retriever",
-  age: "3 years",
-  gender: "Male",
-  weight: "25 kg",
-  color: "Golden",
-  identificationNumber: "ABC123",
-  medicalHistory: [
-    { date: "2021-12-15", description: "Max has a broken leg." },
-    { date: "2021-08-20", description: "Max has a broken tail." },
-  ],
-  vaccines: [
-    { name: "Rabies", date: "2022-12-15" },
-    { name: "Distemper", date: "2022-08-20" },
-  ],
-  deworming: [
-    { name: "Roundworm", date: "2023-01-10" },
-    { name: "Fleas and Ticks", date: "2023-02-28" },
-  ],
-  sterilization: {
-    isSterilized: true,
-    date: "2022-06-05",
-    details: "Max has been neutered.",
-  },
-  allergies: "None",
-  specialNotes: "Max is afraid of thunderstorms.",
-};
-
 const AnimalManagementPage = () => {
+  const [fetchedAnimalData, setFetchedAnimalData] = useState(null);
   // Get url parameters
   const url = window.location.pathname;
   // If path is /client/:clientid/mascot/:mascotid, then:
@@ -57,6 +27,8 @@ const AnimalManagementPage = () => {
   }, []);
 
   useEffect(() => {
+    let isMounted = true; // Variable auxiliar para controlar el estado del componente
+
     if (url.includes("client")) {
       clientidRef.current = url.split("/")[2];
       mascotidRef.current = url.split("/")[4];
@@ -67,6 +39,9 @@ const AnimalManagementPage = () => {
             clientidRef.current,
             mascotidRef.current
           );
+          if (isMounted) {
+            setFetchedAnimalData(data);
+          }
         } catch (error) {
           console.error("Error fetching mascot data:", error);
         }
@@ -78,14 +53,31 @@ const AnimalManagementPage = () => {
       const fetchData = async () => {
         try {
           const data = await fetchMascotDataVet(mascotidRef.current);
+          if (isMounted) {
+            setFetchedAnimalData(data);
+          }
         } catch (error) {
           console.error("Error fetching mascot data:", error);
         }
       };
       fetchData();
     }
+
+    // Cleanup function to cancel fetch requests and prevent state updates on unmounted components
+    return () => {
+      isMounted = false;
+    };
   }, [profileData?.type, url]);
 
+  const animalData = {
+    name: fetchedAnimalData?.name,
+    image: fetchedAnimalData?.photo,
+    species: fetchedAnimalData?.species,
+    breed: fetchedAnimalData?.breed,
+    age: fetchedAnimalData?.age,
+    gender: fetchedAnimalData?.gender,
+    identificationNumber: fetchedAnimalData?.identificationSerial,
+  };
   const [isEditing, setIsEditing] = useState(false);
   const [editedAnimalData, setEditedAnimalData] = useState(animalData);
 
@@ -138,12 +130,6 @@ const AnimalManagementPage = () => {
     weight,
     color,
     identificationNumber,
-    medicalHistory,
-    vaccines,
-    deworming,
-    sterilization,
-    allergies,
-    specialNotes,
   } = isEditing ? editedAnimalData : animalData;
 
   return (
@@ -265,7 +251,7 @@ const AnimalManagementPage = () => {
                 <strong>Identification Number:</strong> {identificationNumber}
               </p>
             </div>
-            <div className="medical-history">
+            {/* <div className="medical-history">
               <h3 className="section-title">Medical History</h3>
               {medicalHistory.map((record, index) => (
                 <div key={index} className="record">
@@ -329,7 +315,7 @@ const AnimalManagementPage = () => {
             <div className="special-notes">
               <h3 className="section-title">Special Notes</h3>
               <p>{specialNotes}</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

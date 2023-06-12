@@ -9,6 +9,14 @@ import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getTodayAppointments } from "fetches/Worker/Appointments/FetchGetTodayAppointments";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
+import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from "recharts";
+
+const citas = [
+  { date: "2023-06-01", citas: 5 },
+  { date: "2023-06-02", citas: 10 },
+  { date: "2023-06-03", citas: 7 },
+  { date: "2023-06-04", citas: 12 },
+];
 
 export default function VetDashboard() {
   const [profileData, setProfileData] = useState(null);
@@ -40,12 +48,11 @@ export default function VetDashboard() {
 
   const openModal = () => {
     setCreationMode(true);
-  }
+  };
 
   const cancelCreation = () => {
     setCreationMode(false);
-  }
-
+  };
 
   return (
     <div className="dashboard">
@@ -64,7 +71,9 @@ export default function VetDashboard() {
         </div>
         <div className="dashboard-content">
           <div className="add-patient">
-            <button className="add-patient-button" onClick={openModal}>Add patient</button>
+            <button className="add-patient-button" onClick={openModal}>
+              Add patient
+            </button>
           </div>
           <section className="row-dashboard">
             <div className="section">
@@ -74,11 +83,17 @@ export default function VetDashboard() {
                     <img src={Paw} alt="paw" height="50px" width="auto" />
                     <div className="total-patients-text">
                       <p>Total patients: </p>
-                      <p className="total-patients-number">{customers.length}</p>
+                      <p className="total-patients-number">
+                        {customers.length}
+                      </p>
                     </div>
                   </div>
                   <p>
-                    Today: <span className="today-patients-number"> {todayAppointments.length}</span>
+                    Today:{" "}
+                    <span className="today-patients-number">
+                      {" "}
+                      {todayAppointments.length}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -126,15 +141,19 @@ export default function VetDashboard() {
             <div className="section">
               <div className="section-content">
                 <div className="clinic-revenue">
-                  <h2>Clinic Revenue</h2>
-                  <h3>Gráfico to guapo</h3>
+                  <h2>Citas</h2>
+                  <BarChart width={700} height={200} data={citas}>
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="citas" fill="#8884d8" />
+                  </BarChart>
                 </div>
               </div>
             </div>
           </section>
-          {creationMode && (
-            <ClientCreation onClose={cancelCreation} />
-          )}
+          {creationMode && <ClientCreation onClose={cancelCreation} />}
         </div>
       </div>
     </div>
