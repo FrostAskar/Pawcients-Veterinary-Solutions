@@ -98,8 +98,10 @@ public class UserController {
             res.setStatus(401);
             return result;
         }
+        String token = tokenService.createToken(user);
         result.put("user", user);
-        result.put("token", tokenService.createToken(user));
+        result.put("iat", tokenService.getIat(token));
+        result.put("token", token);
         return result;
     }
 
