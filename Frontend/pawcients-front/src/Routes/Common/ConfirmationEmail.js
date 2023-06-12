@@ -17,10 +17,10 @@ const ConfirmationEmail = () => {
 
   if (profileData && profileData.verificationCodeEmailCheck) {
     if (profileData.type === "client") {
-      window.location.href = "/clientdashboard";
+      window.location.href = "/profilesettings";
     }
-    if ((profileData.type === "vet") || (profileData.type === "admin")) {
-      window.location.href = "/vetdashboard";
+    if (profileData.type === "vet" || profileData.type === "admin") {
+      window.location.href = "/profilesettings";
     }
   }
 
