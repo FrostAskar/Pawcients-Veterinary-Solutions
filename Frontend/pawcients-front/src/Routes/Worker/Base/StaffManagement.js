@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 export default function StaffManagement() {
     const [errorMessage, setErrorMessage] = useState("");
     const [workers, setWorkers] = useState([]);
+    const [visibleWorkers, setVisibleWorkers] = useState([]);
     const [creationMode, setCreationMode] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -43,6 +44,7 @@ export default function StaffManagement() {
     const obtainWorkers = async () => {
         const workersData = await getWorkers();
         setWorkers(workersData);
+        setVisibleWorkers(workersData);
     };
 
 
@@ -55,7 +57,11 @@ export default function StaffManagement() {
     }
 
     const handleFilter = (e) => {
-
+        e.preventDefault();
+        const searchText = e.target.value;
+        let filtered = [];
+        filtered = [...workers].filter(worker => worker.name.toLowerCase().includes(searchText.toLowerCase()));
+        setVisibleWorkers(filtered);
     }
 
     
@@ -87,7 +93,7 @@ export default function StaffManagement() {
                                             </tr>
                                         </thead>
 
-                                        {workers.map((worker) => (
+                                        {visibleWorkers.map((worker) => (
                                             <tbody key={worker.id}>
                                                 <tr>
                                                     <td>{worker.name}</td>

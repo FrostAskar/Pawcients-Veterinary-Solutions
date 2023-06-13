@@ -20,21 +20,21 @@ const citas = [
 ];
 
 export default function VetDashboard() {
-  const [profileData, setProfileData] = useState(null);
   const [todayAppointments, setTodayAppointments] = useState([]);
+  const [visibleTodayAppointments, setVisibleTodayAppointments] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [title, setTitle] = useState("");
 
   useEffect(() => {
     const getProfileData = async () => {
       const profileData = await fetchProfile();
-      setProfileData(profileData);
       setTitle("Welcome, " + profileData?.name);
     };
 
     const obtainTodayAppointments = async () => {
       const todayAppointmentsData = await getTodayAppointments();
       setTodayAppointments(todayAppointmentsData.appointments);
+      setVisibleTodayAppointments(todayAppointmentsData.appointments);
     };
 
     getProfileData();
@@ -58,7 +58,11 @@ export default function VetDashboard() {
   };
 
   const handleFilter = (e) => {
-
+    e.preventDefault();
+    const searchText = e.target.value;
+    let filtered = [];
+    filtered = [...todayAppointments].filter(todayAppointment => todayAppointment.mascot.name.toLowerCase().includes(searchText.toLowerCase()) || todayAppointment.user.name.toLowerCase().includes(searchText.toLowerCase()));
+    setVisibleTodayAppointments(filtered);
   }
 
 
@@ -127,7 +131,7 @@ export default function VetDashboard() {
                     </select>
                   </div>
                   <div className="today-patients-body">
-                    {todayAppointments.map((patient, index) => (
+                    {visibleTodayAppointments.map((patient, index) => (
                       <TodayPatient key={index} patient={patient} />
                     ))}
                   </div>

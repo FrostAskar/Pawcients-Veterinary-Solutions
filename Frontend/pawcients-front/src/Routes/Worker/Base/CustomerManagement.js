@@ -16,6 +16,7 @@ export default function CustomerManagement() {
     const [mascotCreationMode, setMascotCreationMode] = useState(false);
     const [clientID, setClientID] = useState("");
     const [customers, setCustomers] = useState([]);
+    const [visibleCustomers, setVisibleCustomers] = useState([]);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
@@ -25,6 +26,7 @@ export default function CustomerManagement() {
     const obtainClients = async () => {
         const clientsData = await getClients();
         setCustomers(clientsData);
+        setVisibleCustomers(clientsData);
     };
 
     // Client register
@@ -86,7 +88,11 @@ export default function CustomerManagement() {
     }
 
     const handleFilter = (e) => {
-
+        e.preventDefault();
+        const searchText = e.target.value;
+        let filtered = [];
+        filtered = [...customers].filter(customer => customer.client.name.toLowerCase().includes(searchText.toLowerCase()));
+        setVisibleCustomers(filtered);
     }
 
 
@@ -120,7 +126,7 @@ export default function CustomerManagement() {
                                             </tr>
                                         </thead>
 
-                                        {customers.map((item) => (
+                                        {visibleCustomers.map((item) => (
                                             <tbody key={item.client.id}>
                                                 <tr>
                                                     <td>{item.client.name}</td>
