@@ -20,7 +20,6 @@ public class MascotDTO {
     private String breed;
     private int weight;
 
-
     private LocalDate birthDate;
     private String ownerName;
     private String ownerSurname;

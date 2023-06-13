@@ -107,6 +107,7 @@ public class MascotController {
             mdto.setId(m.getId());
             mdto.setName(m.getName());
             mdto.setSpecies(m.getSpecies());
+            mdto.setGender(m.getGender());
             mdto.setBirthDate(m.getBirthDate());
             mdto.setOwnerName(u.getName());
             mdto.setOwnerSurname(u.getSurname());

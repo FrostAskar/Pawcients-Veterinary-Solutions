@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "css/vet/patientCard.scss";
-import MascotInfoModal from "Routes/Worker/Base/MascotInfoModal.js";
+import MascotInfoModal from "Routes/Worker/MascotInfoModal.js";
 
 export default function TodayPatient(props) {
   function getAppointmentType() {

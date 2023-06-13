@@ -10,12 +10,11 @@ export default function MascotCreation({ onClose, clientID, onAccept }) {
         e.preventDefault();
         const name = e.target.name.value;
         const species = e.target.species.value;
-        //const gender = e.target.gender.value;
+        const gender = e.target.gender.value;
         const race = e.target.race.value;
         const birthDate = e.target.birthDate.value;
         try {
-            // Fetch para login de cliente
-            const response = await addMascot(name, species, race, birthDate, clientID);
+            const response = await addMascot(name, species, race, birthDate, gender, clientID );
             //const data = await response.json();
             if (response != null) {
                 onAccept();
@@ -46,16 +45,15 @@ export default function MascotCreation({ onClose, clientID, onAccept }) {
                             <option value="Cat">Cat</option>
                             <option value="Others">Others</option>
                         </select>
-                        <label htmlFor="race">Race</label>
+                        <label htmlFor="race">Breed</label>
                         <input type="text" name="race" id="race" required />
-                        {/* <label htmlFor="gender">Gender</label>
-                        <select name="gender">
-                            <option value="F">Female</option>
-                            <option value="F">Male</option>
-                        </select> */}
+                        <label htmlFor="gender">Gender</label>
+                        <select name="gender" id="gender">
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
                         <label htmlFor="birthDate">Birth Date</label>
                         <input type="date" name="birthDate" id="birthDate" required />
-                        {/* Captcha: */}
 
                         <button className="clasic-button" type="submit">Sign up mascot</button>
                         <button className="clasic-button" type="button" onClick={cancelCreation}>Cancel</button>

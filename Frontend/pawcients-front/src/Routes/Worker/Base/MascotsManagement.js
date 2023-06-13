@@ -12,6 +12,8 @@ export default function MascotsManagement() {
     const [mascots, setMascots] = useState([]);
     const [visibleMascots, setVisibleMascots] = useState([]);
 
+    console.log(mascots);
+
     useEffect(() => {
         obtainMascots();
     }, []);
@@ -65,7 +67,7 @@ export default function MascotsManagement() {
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Species</th>
-                                                {/* <th>Gender</th> */}
+                                                <th>Gender</th>
                                                 <th>Birth Date</th>
                                                 <th>Owner</th>
                                                 <th>More details</th>
@@ -78,7 +80,7 @@ export default function MascotsManagement() {
                                                 <tr>
                                                     <td>{pet.name}</td>
                                                     <td>{pet.species}</td>
-                                                    {/* <td>{pet.gender}</td> */}
+                                                    <td>{pet.gender}</td>
                                                     <td>{pet.birthDate}</td>
                                                     <td>
                                                         {pet.ownerName} {pet.ownerSurname}
