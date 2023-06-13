@@ -132,7 +132,7 @@ public class UserService {
     }
 
     public String deleteUser(String userId, User actualUser) {
-        if(actualUser.getVerificationCodeEmailCheck()) throw new UnverifiedUserException("User not verified");
+        if(!actualUser.getVerificationCodeEmailCheck()) throw new UnverifiedUserException("User not verified");
         if(actualUser.getType().equals("client") && !actualUser.getId().equals(userId))
             throw new UnauthorizedUserException("This user cannot delete users");
         User toDeleteUser = null;

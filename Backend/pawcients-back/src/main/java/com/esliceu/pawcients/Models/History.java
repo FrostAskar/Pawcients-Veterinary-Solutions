@@ -6,6 +6,7 @@ import com.esliceu.pawcients.Models.HistoryDetails.Visit;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ public class History {
 
     @Id
     String id;
-    List<Visit> visits;
+    List<Visit> visits = new ArrayList<>();
 
     public History(){}
 

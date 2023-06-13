@@ -84,9 +84,25 @@ public class MascotController {
                                                HttpServletResponse res, HttpServletRequest req) {
         Map<String, Object> result = new HashMap<>();
         User actualUser = (User) req.getAttribute("user");
+        Mascot mascot = new Mascot(
+                null,
+                actualUser.getClinicId(),
+                registerMascotForm.getMascotName(),
+                registerMascotForm.getSpecies(),
+                registerMascotForm.getBreed(),
+                registerMascotForm.getAge(),
+                registerMascotForm.getGender(),
+                registerMascotForm.getWeight(),
+                registerMascotForm.getColor(),
+                registerMascotForm.getIdentificationSerial(),
+                registerMascotForm.getAllergies(),
+                registerMascotForm.getNotes(),
+                registerMascotForm.getBirthDate(),
+                clientId
+        );
         String mascotId;
         try {
-            mascotId =  mascotService.saveMascot(registerMascotForm, clientId, actualUser);
+            mascotId =  mascotService.saveMascot(mascot, actualUser);
             result.put("mascotId", mascotId);
         } catch (NotFoundUserException | UnverifiedUserException | UnauthorizedUserException e) {
             result.put("error", e.getMessage());

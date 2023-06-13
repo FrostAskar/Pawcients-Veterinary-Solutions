@@ -26,9 +26,10 @@ public class HistoryController {
 
     public HistoryController(HistoryService historyService, MascotService mascotService) {
         this.historyService = historyService;
+        this.mascotService = mascotService;
     }
 
-    @GetMapping("/mascot/{mascotId}")
+    @GetMapping("/mascot/{mascotId}/history")
     @CrossOrigin
     public History getHistoryForMascot(@PathVariable String mascotId,
                                              HttpServletRequest req) {
@@ -37,7 +38,7 @@ public class HistoryController {
         return historyService.getHistoryFromMascot(m);
     }
 
-    @PostMapping("/mascot/{mascotId}")
+    @PostMapping("/mascot/{mascotId}/history")
     @CrossOrigin
     public Map<String, Object> createHistory(@PathVariable String mascotId,
                                              HttpServletRequest req,
@@ -54,10 +55,13 @@ public class HistoryController {
             Surgery surgery = new Surgery(updateHistoryForm.getSurgeryName());
             visit.setSurgery(surgery);
         } else if (updateHistoryForm.getVaccineName() != null) {
-            Vaccine vaccine = new Vaccine(updateHistoryForm.getVaccineName(), updateHistoryForm.getVaccineRenewal());
+            LocalDate renewalDate = LocalDate.parse(updateHistoryForm.getVaccineRenewal());
+            Vaccine vaccine = new Vaccine(updateHistoryForm.getVaccineName(), renewalDate);
             visit.setVaccine(vaccine);
         }
         String historyId = historyService.registerVisit(mascot, visit);
+        mascot.setHistoryId(historyId);
+        mascotService.saveMascot(mascot, actualUser);
         result.put("historyId", historyId);
         return result;
     }

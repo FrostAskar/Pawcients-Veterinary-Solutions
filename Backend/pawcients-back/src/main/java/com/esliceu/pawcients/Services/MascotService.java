@@ -69,29 +69,13 @@ public class MascotService {
         return mascotRepo.findByOwnerId(userId);
     }
 
-    public String saveMascot(RegisterMascotForm registerMascotForm, String ownerId, User actualUser){
-        if(userService.userRepo.findById(ownerId).isEmpty())
+    public String saveMascot(Mascot mascot, User actualUser){
+        if(userService.userRepo.findById(mascot.getOwnerId()).isEmpty())
             throw new NotFoundUserException("User not found");
         if(!actualUser.getVerificationCodeEmailCheck())
             throw new UnverifiedUserException("This user is not verified");
-        if(actualUser.getType().equals("client") && !actualUser.getId().equals(ownerId))
+        if(actualUser.getType().equals("client") && !actualUser.getId().equals(mascot.getOwnerId()))
             throw new UnauthorizedUserException("User not allowed to create mascots for another client");
-        Mascot mascot = new Mascot(
-                null,
-                actualUser.getClinicId(),
-                registerMascotForm.getMascotName(),
-                registerMascotForm.getSpecies(),
-                registerMascotForm.getBreed(),
-                registerMascotForm.getAge(),
-                registerMascotForm.getGender(),
-                registerMascotForm.getWeight(),
-                registerMascotForm.getColor(),
-                registerMascotForm.getIdentificationSerial(),
-                registerMascotForm.getAllergies(),
-                registerMascotForm.getNotes(),
-                registerMascotForm.getBirthDate(),
-                ownerId
-                );
         return mascotRepo.save(mascot).getId();
     }
 

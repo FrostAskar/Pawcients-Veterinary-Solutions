@@ -7,7 +7,7 @@ public class UpdateHistoryForm {
     String dewormingName;
     String surgeryName;
     String vaccineName;
-    LocalDate vaccineRenewal;
+    String vaccineRenewal;
 
     public String getVisitNotes() {
         return visitNotes;
@@ -41,11 +41,11 @@ public class UpdateHistoryForm {
         this.vaccineName = vaccineName;
     }
 
-    public LocalDate getVaccineRenewal() {
+    public String getVaccineRenewal() {
         return vaccineRenewal;
     }
 
-    public void setVaccineRenewal(LocalDate vaccineRenewal) {
+    public void setVaccineRenewal(String vaccineRenewal) {
         this.vaccineRenewal = vaccineRenewal;
     }
 }

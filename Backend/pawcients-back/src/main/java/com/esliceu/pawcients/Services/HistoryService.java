@@ -17,7 +17,7 @@ public class HistoryService {
 
     //TODO Create exception for this
     public History getHistoryFromMascot(Mascot mascot) {
-        if(historyRepo.existsById(mascot.getHistoryId())) {
+        if(mascot.getHistoryId() != null) {
             return historyRepo.findById(mascot.getHistoryId()).get();
         } else {
             return null;
@@ -26,7 +26,7 @@ public class HistoryService {
 
     public String registerVisit(Mascot mascot, Visit visit) {
         History history;
-        if(historyRepo.existsById(mascot.getHistoryId())){
+        if(mascot.getHistoryId() != null){
             history = historyRepo.findById(mascot.getHistoryId()).get();
         } else {
             history = new History();

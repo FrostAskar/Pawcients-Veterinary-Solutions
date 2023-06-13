@@ -25,6 +25,7 @@ public class PawcientsApplication implements WebMvcConfigurer {
 				.addPathPatterns("/vetdashboard")
 				.addPathPatterns("/vet/**")
 				.addPathPatterns("/client/**")
+				.addPathPatterns("/mascot/**")
 				.addPathPatterns("/verifyemail")
 				.addPathPatterns("/vetcalendar")
 				.addPathPatterns("/getprofile");
