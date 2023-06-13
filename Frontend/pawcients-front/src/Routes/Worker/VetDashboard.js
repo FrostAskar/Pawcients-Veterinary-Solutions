@@ -34,15 +34,15 @@ export default function VetDashboard() {
       setTodayAppointments(todayAppointmentsData.appointments);
     };
 
-    const obtainClients = async () => {
-      const clientsData = await getClients();
-      setCustomers(clientsData);
-    };
-
     getProfileData();
     obtainTodayAppointments();
     obtainClients();
   }, []);
+
+  const obtainClients = async () => {
+    const clientsData = await getClients();
+    setCustomers(clientsData);
+  };
 
   const [creationMode, setCreationMode] = useState(false);
 
@@ -140,7 +140,7 @@ export default function VetDashboard() {
           <section className="row-dashboard">
             <div className="section">
               <div className="section-content">
-                <div className="clinic-revenue">
+                <div className="appointments-graphic">
                   <h2>Citas</h2>
                   <BarChart width={700} height={200} data={citas}>
                     <XAxis dataKey="date" />

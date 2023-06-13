@@ -7,9 +7,10 @@ import { fetchProfile } from "fetches/Global/getProfile";
 import { useState, useEffect } from 'react';
 import 'css/calendar/calendar.scss';
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
-//import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { getAllAppointments } from 'fetches/Worker/Appointments/FetchGetAllAppointments';
 import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClient'
+import { addAppointment } from 'fetches/Worker/Appointments/FetchAddAppointment';
 
 const localizer = momentLocalizer(moment);
 
@@ -36,7 +37,7 @@ maxTime.setHours(20, 0, 0);
 
 const CalendarPage = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [eventModal, setEventModal] = useState(false);
+    const [addEvent, setAddEvent] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [displayButton, setDisplayButton] = useState(false)
     const [events, setEvents] = useState([]);
@@ -46,9 +47,10 @@ const CalendarPage = () => {
     const [mascots, setMascots] = useState([]);
     const [selectedClient, setSelectedClient] = useState("");
     const [selectedMascot, setSelectedMascot] = useState("");
-    //const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
-    //const location = useLocation();
+    const location = useLocation();
+
 
     useEffect(() => {
         const getAppointments = async () => {
@@ -61,18 +63,28 @@ const CalendarPage = () => {
             } catch (error) {
             }
         };
-
         getAppointments();
         obtainClients();
+
     }, []);
 
 
-    const obtainMascots = async () => {
-        //const mascotsData = await getMascotsByClient(location.state.userID);
-        const mascotsData = await getMascotsByClient(selectedClient);
-        setMascots(mascotsData.mascots);
-        
-    }
+
+    useEffect(() => {
+        if (location.state != null) {
+            setSelectedClient(location.state.userID)
+        }
+        if (selectedClient) {
+            const getMascots = async () => {
+                const mascotsData = await getMascotsByClient(selectedClient);
+                setMascots(mascotsData.mascots);
+            };
+            getMascots();
+        } else {
+            setMascots([]);
+        }
+    }, [selectedClient, location]);
+
 
     const obtainClients = async () => {
         const clientsData = await getClients();
@@ -109,7 +121,6 @@ const CalendarPage = () => {
 
     const handleAddEvent = async (e) => {
         e.preventDefault();
-        const title = e.target.title.value;
         const type = e.target.type.value;
         const startTime = e.target.startTime.value;
 
@@ -124,33 +135,27 @@ const CalendarPage = () => {
         fullDateEnd.setHours(endHours);
         fullDateEnd.setMinutes(startMinutes);
 
-
-        const event = {
-            title: title,
-            type: type,
-            start: fullDateStart,
-            end: fullDateEnd,
+        try {
+            const response = await addAppointment(selectedClient, selectedMascot, profileData.id, type, fullDateStart, fullDateEnd, profileData.id)
+            if (response != null) {
+                setAddEvent(false);
+            }
+        } catch (e) {
+            setErrorMessage("Error en la conexión con el servidor");
         }
-        setEvents([...events, event]);
-        setEventModal(false);
-
     };
 
+
     const openModal = () => {
-        setEventModal(true);
+        setAddEvent(true);
     };
 
     const closeModal = () => {
-        setEventModal(false);
+        setAddEvent(false);
     };
 
     const changeEditMode = () => {
         setEditMode(!editMode);
-    };
-
-    const setMascotsByClient = (e) => {
-        setSelectedClient(e.target.value);
-        obtainMascots();
     };
 
     function setTime(time) {
@@ -245,14 +250,14 @@ const CalendarPage = () => {
                     </div>
                 )}
             </div>
-            {eventModal && (
+            {addEvent && (
                 <section className="creation-section">
                     <div className="modal">
                         <div className="modal-content">
                             <h1>Create appointment</h1>
                             <form className="clasic-form" onSubmit={handleAddEvent} method="post">
                                 <label htmlFor="client">Client</label>
-                                <select name="clients" id="clients" value={selectedClient} onChange={(e) => setMascotsByClient(e)}>
+                                <select name="clients" id="clients" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
                                     {clients.map((client, index) => (
                                         <option key={index} value={client.client.id}>
                                             {client.client.name} {client.client.surname}
@@ -270,10 +275,10 @@ const CalendarPage = () => {
 
                                 <label htmlFor="type">Appointment type</label>
                                 <select name="type" id="type">
-                                    <option value="vaccine">Vaccine</option>
-                                    <option value="checkup">Checkup</option>
-                                    <option value="surgery">Surgery</option>
-                                    <option value="cures">Cures</option>
+                                    <option value="Vaccine">Vaccine</option>
+                                    <option value="Checkup">Checkup</option>
+                                    <option value="Surgery">Surgery</option>
+                                    <option value="Cures">Cures</option>
                                 </select>
                                 <label htmlFor='startTime'>Start Time</label>
                                 <select className='select-time' id="startTime" >
@@ -283,6 +288,7 @@ const CalendarPage = () => {
                                 </select>
                                 <button className="clasic-button" type="submit">Create</button>
                                 <button className="clasic-button" id="cancel-button" type="button" onClick={closeModal}>Cancel</button>
+                                {errorMessage && <p className="error-message">{errorMessage}</p>}
                             </form>
                         </div>
                     </div>
