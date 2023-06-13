@@ -12,8 +12,6 @@ export default function MascotsManagement() {
     const [mascots, setMascots] = useState([]);
     const [visibleMascots, setVisibleMascots] = useState([]);
 
-    console.log(mascots);
-
     useEffect(() => {
         obtainMascots();
     }, []);

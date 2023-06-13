@@ -14,21 +14,6 @@ import { addAppointment } from 'fetches/Worker/Appointments/FetchAddAppointment'
 
 const localizer = momentLocalizer(moment);
 
-// const eventsArray = [
-//     {
-//         title: 'Event 1',
-//         description: 'Event 1 Description',
-//         startDate: new Date(2023, 5, 1, 16, 30),
-//         endDate: new Date(2023, 5, 1, 19, 30),
-//     },
-//     {
-//         title: 'Event 2',
-//         description: 'Event 2 Description',
-//         startDate: new Date(2023, 5, 15, 18, 30),
-//         endDate: new Date(2023, 5, 15, 19, 30)
-//     },
-// ]
-
 const minTime = new Date();
 minTime.setHours(8, 0, 0);
 
@@ -62,12 +47,13 @@ const CalendarPage = () => {
                 const eventsData = await getAllAppointments(profileData.id);
                 setEvents(formatDate(eventsData));
             } catch (error) {
+                setErrorMessage("Error en la conexión con el servidor");
             }
         };
         getAppointments();
         obtainClients();
 
-    }, []);
+    }, [events]);
 
 
 

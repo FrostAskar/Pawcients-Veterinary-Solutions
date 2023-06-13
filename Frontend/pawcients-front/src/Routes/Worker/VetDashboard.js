@@ -65,6 +65,8 @@ export default function VetDashboard() {
     setVisibleTodayAppointments(filtered);
   }
 
+  console.log(todayAppointments);
+
 
   return (
     <div className="dashboard">
@@ -95,6 +97,8 @@ export default function VetDashboard() {
                     <span className="today-patients-number">
                       {" "}
                       {todayAppointments.length}
+                      {" "}
+                      appointments
                     </span>
                   </p>
                 </div>
