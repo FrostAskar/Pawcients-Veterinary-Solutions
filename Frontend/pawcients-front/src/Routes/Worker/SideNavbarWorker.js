@@ -17,6 +17,18 @@ const SideNavbarWorker = () => {
     getProfileData();
   }, []);
 
+  useEffect(() => {
+    const iat = localStorage.getItem("IAT");
+    if (iat > Date.now()) {
+      localStorage.removeItem("IAT");
+      localStorage.removeItem("token");
+      window.location.href = "/sessionexpired";
+    }
+    if (localStorage.getItem("token") == null) {
+      window.location.href = "/login";
+    }
+  }, []);
+
   if (profileData && !profileData.verificationCodeEmailCheck) {
     window.location.href = "/confirmationemail";
   }

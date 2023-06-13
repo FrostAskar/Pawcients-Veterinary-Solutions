@@ -25,6 +25,7 @@ import CustomerManagement from "Routes/Worker/Base/CustomerManagement";
 import MascotsManagement from "Routes/Worker/Base/MascotsManagement";
 import StaffManagement from "Routes/Worker/Base/StaffManagement";
 import CalendarPage from "Routes/Calendar/CalendarPage";
+import Logout from "Routes/Common/logout";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
       { path: "/vet/mascot/:mascotId", element: <AnimalProfile /> },
       { path: "/vetcalendar", element: <CalendarPage /> },
       { path: "/clientcalendar", element: <CalendarPage /> },
+      { path: "/logout", element: <Logout /> },
     ],
   },
 ]);

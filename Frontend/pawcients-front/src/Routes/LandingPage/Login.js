@@ -21,7 +21,9 @@ function Login() {
 
     try {
       // Fetch para login de cliente
-      const response = await fetchLogin(email, password);
+      const response = await fetchLogin(email, password).then((response) => {
+        localStorage.setItem("IAT", response.iat);
+      });
       if (response.status === 401) {
         setErrorMessage("Email o contraseña incorrectos");
       }
