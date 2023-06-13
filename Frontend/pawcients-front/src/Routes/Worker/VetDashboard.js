@@ -3,6 +3,7 @@ import "css/global/variables.css";
 import "css/vet/vetHome.scss";
 import TodayPatient from "Routes/Worker/TodayPatient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
+import FilterComponent from "Routes/Common/FilterComponent"
 import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
@@ -22,11 +23,13 @@ export default function VetDashboard() {
   const [profileData, setProfileData] = useState(null);
   const [todayAppointments, setTodayAppointments] = useState([]);
   const [customers, setCustomers] = useState([]);
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     const getProfileData = async () => {
       const profileData = await fetchProfile();
       setProfileData(profileData);
+      setTitle("Welcome, " + profileData?.name);
     };
 
     const obtainTodayAppointments = async () => {
@@ -54,21 +57,16 @@ export default function VetDashboard() {
     setCreationMode(false);
   };
 
+  const handleFilter = (e) => {
+
+  }
+
+
   return (
     <div className="dashboard">
       <SideNavbarWorker />
       <div className="dashboard-page">
-        <div className="dashboard-header">
-          <h1>Welcome, {profileData?.name} </h1>
-          <div className="input-wrapper">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search"
-            ></input>
-            <i className="material-icons">search</i>
-          </div>
-        </div>
+        <FilterComponent title={title} onFilter={handleFilter} />
         <div className="dashboard-content">
           <div className="add-patient">
             <button className="add-patient-button" onClick={openModal}>

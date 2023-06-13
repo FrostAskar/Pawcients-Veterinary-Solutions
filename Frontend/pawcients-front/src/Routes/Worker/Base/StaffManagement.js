@@ -2,6 +2,7 @@ import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import "css/vet/dataManagement.scss"
 import "css/global/global.scss";
 import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
+import FilterComponent from "Routes/Common/FilterComponent"
 import { fetchWorkerRegister } from "fetches/Worker/Staff/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
@@ -52,21 +53,17 @@ export default function StaffManagement() {
     const cancelCreation = () => {
         setCreationMode(false);
     }
+
+    const handleFilter = (e) => {
+
+    }
+
+    
     return (
         <div className="dashboard">
             <SideNavbarWorker />
             <div className="dashboard-page">
-                <div className="dashboard-header">
-                    <h1>Staff</h1>
-                    <div className="input-wrapper">
-                        <input
-                            type="text"
-                            className="search-input"
-                            placeholder="Search"
-                        ></input>
-                        <i className="material-icons">search</i>
-                    </div>
-                </div>
+            <FilterComponent title="Staff" onFilter={handleFilter} />
                 <div className="dashboard-content">
                     <section className="row-dashboard">
                         <div className="section">

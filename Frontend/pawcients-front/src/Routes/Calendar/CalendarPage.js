@@ -47,6 +47,7 @@ const CalendarPage = () => {
     const [mascots, setMascots] = useState([]);
     const [selectedClient, setSelectedClient] = useState("");
     const [selectedMascot, setSelectedMascot] = useState("");
+    //const [worker, setWorker] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const location = useLocation();
@@ -257,7 +258,7 @@ const CalendarPage = () => {
                             <h1>Create appointment</h1>
                             <form className="clasic-form" onSubmit={handleAddEvent} method="post">
                                 <label htmlFor="client">Client</label>
-                                <select name="clients" id="clients" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
+                                <select name="clients" id="clients" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)} required>
                                     {clients.map((client, index) => (
                                         <option key={index} value={client.client.id}>
                                             {client.client.name} {client.client.surname}
@@ -265,7 +266,7 @@ const CalendarPage = () => {
                                     ))}
                                 </select>
                                 <label htmlFor="mascot">Mascot</label>
-                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => setSelectedMascot(e.target.value)}>
+                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => setSelectedMascot(e.target.value)} required>
                                     {mascots.map((mascot, index) => (
                                         <option key={index} value={mascot.id}>
                                             {mascot.name}

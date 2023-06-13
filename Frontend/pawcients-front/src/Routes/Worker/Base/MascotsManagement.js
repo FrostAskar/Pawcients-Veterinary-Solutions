@@ -3,6 +3,7 @@ import "css/global/global.scss";
 import "css/vet/dataManagement.scss";
 import React, { useState, useEffect } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
+import FilterComponent from "Routes/Common/FilterComponent"
 import { getMascots } from "fetches/Worker/Mascots/FetchGetMascots";
 import { Link } from "react-router-dom";
 
@@ -31,21 +32,16 @@ export default function MascotsManagement() {
     setCreationMode(false);
     obtainMascots();
   };
+
+  const handleFilter = (e) => {
+
+  }
+
   return (
     <div className="dashboard">
       <SideNavbarWorker />
       <div className="dashboard-page">
-        <div className="dashboard-header">
-          <h1>Mascots</h1>
-          <div className="input-wrapper">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search"
-            ></input>
-            <i className="material-icons">search</i>
-          </div>
-        </div>
+      <FilterComponent title="Mascots" onFilter={handleFilter} />
         <div className="dashboard-content">
           <section className="row-dashboard">
             <div className="section">

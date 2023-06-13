@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import React, { useState, useEffect } from "react";
 import MascotCreation from "Routes/Worker/Base/MascotCreation";
 import ClientCreation from "./ClientCreation";
+import FilterComponent from "Routes/Common/FilterComponent"
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 import { ConfirmationPopup } from "Routes/Common/PopUp";
 import { deleteUser } from "fetches/Worker/FetchDeleteUser";
@@ -54,16 +55,16 @@ export default function CustomerManagement() {
     }
 
     //Delete Pop up 
-    
+
     const handleDeleteClick = () => {
         setIsPopupOpen(true);
-      };
+    };
 
     const handleCancel = () => {
         setIsPopupOpen(false);
     };
 
-    const handleConfirm =  async (e, userId) => {
+    const handleConfirm = async (e, userId) => {
         e.preventDefault();
         try {
             // Fetch para login de cliente
@@ -84,22 +85,16 @@ export default function CustomerManagement() {
         return date.toDateString();
     }
 
+    const handleFilter = (e) => {
+
+    }
+
 
     return (
         <div className="dashboard">
             <SideNavbarWorker />
             <div className="dashboard-page">
-                <div className="dashboard-header">
-                    <h1>Patients</h1>
-                    <div className="input-wrapper">
-                        <input
-                            type="text"
-                            className="search-input"
-                            placeholder="Search"
-                        ></input>
-                        <i className="material-icons">search</i>
-                    </div>
-                </div>
+                <FilterComponent title="Clients" onFilter={handleFilter} />
                 <div className="dashboard-content">
                     <section className="row-dashboard">
                         <div className="section">
@@ -147,7 +142,7 @@ export default function CustomerManagement() {
                                                     <td><button className="small-button">View pets</button></td>
                                                     <td><button className="small-button" onClick={(e) => openMascotModal(e, item.client.id)}>Add</button></td>
                                                     <td><button className="small-button"><i className="material-icons">edit</i></button></td>
-                                                    <td><button className="small-button"  onClick={handleDeleteClick}><i className="material-icons">delete</i></button></td>
+                                                    <td><button className="small-button" onClick={handleDeleteClick}><i className="material-icons">delete</i></button></td>
                                                     {isPopupOpen && (
                                                         <div>
                                                             <ConfirmationPopup
@@ -166,7 +161,7 @@ export default function CustomerManagement() {
                         </div>
                     </section>
                     {clientCreationMode && (
-                        <ClientCreation onClose={cancelClientCreation} onAccept={acceptClientCreation}/>
+                        <ClientCreation onClose={cancelClientCreation} onAccept={acceptClientCreation} />
                     )}
 
                     {mascotCreationMode && (
