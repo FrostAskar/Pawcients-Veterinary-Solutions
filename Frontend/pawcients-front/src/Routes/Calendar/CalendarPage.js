@@ -39,11 +39,16 @@ const CalendarPage = () => {
 
 
     useEffect(() => {
+        obtainClients();
+    }, []);
+
+
+    useEffect(() => {
         const getAppointments = async () => {
             try {
                 const profileData = await fetchProfile();
                 setProfileData(profileData);
-
+    
                 const eventsData = await getAllAppointments(profileData.id);
                 setEvents(formatDate(eventsData));
             } catch (error) {
@@ -51,9 +56,9 @@ const CalendarPage = () => {
             }
         };
         getAppointments();
-        obtainClients();
 
-    }, [events]);
+    }, [events])
+
 
 
 
@@ -123,12 +128,17 @@ const CalendarPage = () => {
         fullDateEnd.setMinutes(startMinutes);
 
         try {
+            if (selectedMascot === "") {
+                console.log(selectedClient, profileData.id, type, fullDateStart, fullDateEnd);
+                throw new Error("Mascot empty");
+            }
             const response = await addAppointment(selectedClient, selectedMascot, profileData.id, type, fullDateStart, fullDateEnd, profileData.id)
             if (response != null) {
+                
                 setAddEvent(false);
             }
         } catch (e) {
-            setErrorMessage("Error en la conexión con el servidor");
+            //setErrorMessage("Error en la conexión con el servidor");
         }
     };
 
@@ -252,7 +262,10 @@ const CalendarPage = () => {
                                     ))}
                                 </select>
                                 <label htmlFor="mascot">Mascot</label>
-                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => setSelectedMascot(e.target.value)} required>
+                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => {
+                                    setSelectedMascot(e.target.value);
+                                    console.log(e.target.value);
+                                }} required>
                                     {mascots.map((mascot, index) => (
                                         <option key={index} value={mascot.id}>
                                             {mascot.name}

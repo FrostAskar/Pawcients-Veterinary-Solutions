@@ -88,7 +88,6 @@ export default function StaffManagement() {
                                                 <th>Phone</th>
                                                 <th>Email</th>
                                                 <th>Calendar</th>
-                                                <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
@@ -118,7 +117,6 @@ export default function StaffManagement() {
                                                         </Link>
 
                                                     </td>
-                                                    <td><button className="small-button"><i className="material-icons">edit</i></button></td>
                                                     <td><button className="small-button"><i className="material-icons">delete</i></button></td>
                                                 </tr>
                                             </tbody>

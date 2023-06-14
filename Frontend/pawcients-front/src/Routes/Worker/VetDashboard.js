@@ -130,9 +130,6 @@ export default function VetDashboard() {
                 <div className="today-patients">
                   <div className="today-patients-header">
                     <h2> Today Patients </h2>
-                    <select>
-                      <option value="All Vets"> All vets </option>
-                    </select>
                   </div>
                   <div className="today-patients-body">
                     {visibleTodayAppointments.map((patient, index) => (

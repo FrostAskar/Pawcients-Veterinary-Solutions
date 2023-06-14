@@ -56,9 +56,6 @@ export default function MascotsManagement() {
                                 <div className="management">
                                     <div className="management-header">
                                         <h1>{mascots.length} Total Mascots</h1>
-                                        <button className="clasic-button" onClick={openModal}>
-                                            Add Mascot
-                                        </button>
                                     </div>
                                     <table className="management-table">
                                         <thead>
@@ -69,7 +66,6 @@ export default function MascotsManagement() {
                                                 <th>Birth Date</th>
                                                 <th>Owner</th>
                                                 <th>More details</th>
-                                                <th>Edit</th>
                                             </tr>
                                         </thead>
 
@@ -90,11 +86,6 @@ export default function MascotsManagement() {
                                                         >
                                                             View
                                                         </Link>
-                                                    </td>
-                                                    <td>
-                                                        <button className="small-button">
-                                                            <i className="material-icons">edit</i>
-                                                        </button>
                                                     </td>
                                                 </tr>
                                             </tbody>

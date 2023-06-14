@@ -21,6 +21,7 @@ export default function CustomerManagement() {
 
     useEffect(() => {
         obtainClients();
+        
     }, [])
 
     const obtainClients = async () => {
@@ -121,7 +122,6 @@ export default function CustomerManagement() {
                                                 <th>Next Appointment</th>
                                                 <th>Pets</th>
                                                 <th>Add Pet</th>
-                                                <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
@@ -147,7 +147,6 @@ export default function CustomerManagement() {
                                                     </td>
                                                     <td><button className="small-button">View pets</button></td>
                                                     <td><button className="small-button" onClick={(e) => openMascotModal(e, item.client.id)}>Add</button></td>
-                                                    <td><button className="small-button"><i className="material-icons">edit</i></button></td>
                                                     <td><button className="small-button" onClick={handleDeleteClick}><i className="material-icons">delete</i></button></td>
                                                     {isPopupOpen && (
                                                         <div>
