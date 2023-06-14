@@ -1,6 +1,8 @@
 package com.esliceu.pawcients.Services;
 
+import com.esliceu.pawcients.Exceptions.FailedActionException;
 import com.esliceu.pawcients.Exceptions.IncorrectRegisterException;
+import com.esliceu.pawcients.Exceptions.NotFoundClinicException;
 import com.esliceu.pawcients.Forms.RegisterVetAndClinicForm;
 import com.esliceu.pawcients.Models.Clinic;
 import com.esliceu.pawcients.Models.User;
@@ -28,28 +30,21 @@ public class ClinicService {
     }
 
     public Clinic recoverClinicById(String clinicId) {
+        if(clinicRepo.findById(clinicId).isEmpty())
+            throw new NotFoundClinicException("Clinic does not exist");
         return clinicRepo.findById(clinicId).get();
     }
 
-    public List<Clinic> findClinicById(String clinicId){
-        return clinicRepo.findById(clinicId).stream().toList();
-    }
-
     public String deleteClinic(String clinicId) {
-        List<Clinic> clinics = findClinicById(clinicId);
-        //Checks user exists to proceed
-        if(clinics.size() < 1) {
-            return "Clinic not found";
-        }
+        if(clinicRepo.findById(clinicId).isEmpty())
+            throw new NotFoundClinicException("Clinic does not exist");
         clinicRepo.deleteById(clinicId);
 
-        //Verification delete has proceeded without error
-        clinics = findClinicById(clinicId);
-        if(clinics.size() < 1) {
+        if(clinicRepo.findById(clinicId).isEmpty()) {
             //If deletes a clinic, deletes all users with that clinicId
             return "Clinic deleted successfully";
         } else {
-            return "Something went kaboom, please check";
+            throw new FailedActionException("Clinic deletion error");
         }
     }
     

@@ -1,15 +1,14 @@
 package com.esliceu.pawcients.Controllers;
 
 import com.esliceu.pawcients.DTO.MascotDTO;
-import com.esliceu.pawcients.Exceptions.NotFoundUserException;
-import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
-import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
+import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.FindMascotForm;
 import com.esliceu.pawcients.Forms.RegisterMascotForm;
 import com.esliceu.pawcients.Forms.UpdateMascotForm;
 import com.esliceu.pawcients.Models.Mascot;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Services.MascotService;
+import com.esliceu.pawcients.Services.PermissionService;
 import com.esliceu.pawcients.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,10 +22,12 @@ public class MascotController {
 
     MascotService mascotService;
     UserService userService;
+    PermissionService permissionService;
 
-    public MascotController(MascotService mascotService, UserService userService) {
+    public MascotController(MascotService mascotService, UserService userService, PermissionService permissionService) {
         this.mascotService = mascotService;
         this.userService = userService;
+        this.permissionService = permissionService;
     }
 
     @GetMapping("/mascots")
@@ -34,16 +35,18 @@ public class MascotController {
     public Map<String, Object> getAllMascotsInClinic(HttpServletRequest req, HttpServletResponse res) {
         Map<String, Object> result = new HashMap<>();
         List<Mascot> mascots = new ArrayList<>();
-        User actualUser = (User) req.getAttribute("user");
-        List<User> usersInClinic = userService.getUsersByClinic(actualUser.getClinicId());
         try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            List<User> usersInClinic = userService.getUsersByClinic(actualUser.getClinicId());
             for (User user : usersInClinic) {
-                mascots.addAll(mascotService.findMascotsByUser(user.getId(), actualUser));
+                mascots = mascotService.findMascotsByUser(user.getId());
             }
             result.put("mascots", mascots);
-        } catch (UnauthorizedUserException e) {
+            res.setStatus(200);
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
             result.put("error", e.getMessage());
-            res.setStatus(403);
+            res.setStatus(401);
         }
         return result;
     }
@@ -51,26 +54,50 @@ public class MascotController {
     @GetMapping("/client/{clientId}/mascot/{mascotId}")
     @CrossOrigin
     //TODO check if mascot belongs to user
-    public Mascot getMascot(@PathVariable String mascotId, @PathVariable String clientId) {
-        return mascotService.findMascotByIdAndOwnerId(mascotId, clientId);
+    public Map<String, Object> getMascot(@PathVariable String mascotId, @PathVariable String clientId,
+                                         HttpServletResponse res, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, clientId);
+            Mascot mascot = mascotService.findMascotById(mascotId);
+            result.put("mascot", mascot);
+            res.setStatus(200);
+        } catch (UnauthorizedUserException | ExpiredUserException | UnverifiedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (NotFoundMascotException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
     }
 
     @GetMapping("/client/{clientId}/mascots")
     @CrossOrigin
     public Map<String, Object> getMascotsFromClient(@PathVariable String clientId, HttpServletRequest req, HttpServletResponse res) {
         Map<String, Object> result = new HashMap<>();
-        User actualUser = (User) req.getAttribute("user");
         try {
-            List<Mascot> mascots = mascotService.findMascotsByUser(clientId, actualUser);
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, clientId);
+            List<Mascot> mascots = mascotService.findMascotsByUser(clientId);
             result.put("mascots", mascots);
-        } catch (UnauthorizedUserException | UnverifiedUserException e) {
+            res.setStatus(200);
+        } catch (UnauthorizedUserException | ExpiredUserException | UnverifiedUserException e) {
             result.put("error", e.getMessage());
-            res.setStatus(409);
+            res.setStatus(401);
         }
-
         return result;
     }
 
+    /*
+     * TODO
+     *  #####################################
+     *  ESTO PROBABLEMENTE SOBRE
+     *  #####################################
+     */
     @PostMapping("/mascot")
     @CrossOrigin
     public List<Mascot> searchMascot(@RequestBody FindMascotForm findMascotForm) {
@@ -83,22 +110,24 @@ public class MascotController {
                                                @PathVariable String clientId,
                                                HttpServletResponse res, HttpServletRequest req) {
         Map<String, Object> result = new HashMap<>();
-        User actualUser = (User) req.getAttribute("user");
-        Mascot mascot = new Mascot(
-                null,
-                actualUser.getClinicId(),
-                registerMascotForm.getMascotName(),
-                registerMascotForm.getSpecies(),
-                registerMascotForm.getBreed(),
-                registerMascotForm.getGender(),
-                registerMascotForm.getBirthDate(),
-                clientId
-        );
-        String mascotId;
         try {
-            mascotId =  mascotService.saveMascot(mascot, actualUser);
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            Mascot mascot = new Mascot(
+                    null,
+                    actualUser.getClinicId(),
+                    registerMascotForm.getMascotName(),
+                    registerMascotForm.getSpecies(),
+                    registerMascotForm.getBreed(),
+                    registerMascotForm.getGender(),
+                    registerMascotForm.getBirthDate(),
+                    clientId);
+            String mascotId =  mascotService.saveMascot(mascot);
             result.put("mascotId", mascotId);
-        } catch (NotFoundUserException | UnverifiedUserException | UnauthorizedUserException e) {
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (NotFoundUserException e){
             result.put("error", e.getMessage());
             res.setStatus(409);
         }
@@ -107,45 +136,53 @@ public class MascotController {
 
     @GetMapping("/vet/mascots")
     @CrossOrigin
-    public List<MascotDTO> getMascotsByClinic(HttpServletRequest req) {
+    public Map<String, Object> getMascotsByClinic(HttpServletRequest req, HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
         List<MascotDTO> mascotData = new ArrayList<>();
-        User actualUser = (User) req.getAttribute("user");
-        List<Mascot> mascots = mascotService.findMascotsByClinic(actualUser.getClinicId());
-        for(Mascot m : mascots) {
-            MascotDTO mdto = new MascotDTO();
-            User u = userService.generateUser(m.getOwnerId());
-            mdto.setId(m.getId());
-            mdto.setName(m.getName());
-            mdto.setSpecies(m.getSpecies());
-            mdto.setGender(m.getGender());
-            mdto.setBirthDate(m.getBirthDate());
-            mdto.setOwnerName(u.getName());
-            mdto.setOwnerSurname(u.getSurname());
-            mascotData.add(mdto);
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            List<Mascot> mascots = mascotService.findMascotsByClinic(actualUser.getClinicId());
+            for(Mascot m : mascots) {
+                MascotDTO mdto = new MascotDTO();
+                User u = userService.generateUser(m.getOwnerId());
+                mdto.setId(m.getId());
+                mdto.setName(m.getName());
+                mdto.setSpecies(m.getSpecies());
+                mdto.setGender(m.getGender());
+                mdto.setBirthDate(m.getBirthDate());
+                mdto.setOwnerName(u.getName());
+                mdto.setOwnerSurname(u.getSurname());
+                mascotData.add(mdto);
+            }
+            result.put("mascotData", mascotData);
+            res.setStatus(200);
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
         }
-        return mascotData;
+        return result;
     }
 
     //TODO CHECK IF IS VETERINARY TO RETRIEVE THE MASCOT (SECURITY)
     @GetMapping("/vet/mascot/{mascotId}")
     @CrossOrigin
-    public MascotDTO getMascotById(@PathVariable String mascotId) {
-        MascotDTO mdto = new MascotDTO();
-        Mascot m = mascotService.findMascotById(mascotId);
-        User u = userService.generateUser(m.getOwnerId());
-        mdto.setId(m.getId());
-        mdto.setName(m.getName());
-        mdto.setSpecies(m.getSpecies());
-        mdto.setBirthDate(m.getBirthDate());
-        mdto.setOwnerName(u.getName());
-        mdto.setOwnerSurname(u.getSurname());
-        mdto.setImage(m.getPhoto());
-        mdto.setWeight(m.getWeight());
-        mdto.setBreed(m.getBreed());
-        mdto.setGender(m.getGender());
-
-
-        return mdto;
+    public Map<String, Object> getMascotById(@PathVariable String mascotId, HttpServletRequest req, HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            Mascot m = mascotService.findMascotById(mascotId);
+            result.put("mascot", m);
+            res.setStatus(200);
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (NotFoundUserException | NotFoundMascotException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
     }
 
     @GetMapping("/mascot/{mascotId}")

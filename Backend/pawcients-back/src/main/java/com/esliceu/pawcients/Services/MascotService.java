@@ -46,36 +46,19 @@ public class MascotService {
     }
 
     public Mascot findMascotById(String mascotId) {
+        if (mascotRepo.findById(mascotId).isEmpty()) {
+            throw new NotFoundMascotException("This mascot does not exist");
+        }
         return mascotRepo.findById(mascotId).get();
     }
 
-    public Mascot findMascotByIdAndOwnerId(String mascotId, String clientId) {
-        // TODO Query it with the parameter clientid too (Same query only one result)
-        List<Mascot> mascots = mascotRepo.findById(mascotId).stream().toList();
-        System.out.println(mascotId + " " + clientId);
-        if (mascots.size() < 1) {
-            throw new NotFoundMascotException("This is not a valid mascot");
-        }
-        return mascots.get(0);
-    }
-
-    public List<Mascot> findMascotsByUser(String userId, User actualUser) {
-        if(userService.userRepo.findById(userId).isEmpty())
-            throw new NotFoundUserException("User not found");
-        if(!actualUser.getVerificationCodeEmailCheck())
-            throw new UnverifiedUserException("User is not verified");
-        if(actualUser.getType().equals("client") && !actualUser.getId().equals(userId))
-            throw new UnauthorizedUserException("User is not authorized");
+    public List<Mascot> findMascotsByUser(String userId) {
         return mascotRepo.findByOwnerId(userId);
     }
 
-    public String saveMascot(Mascot mascot, User actualUser){
+    public String saveMascot(Mascot mascot){
         if(userService.userRepo.findById(mascot.getOwnerId()).isEmpty())
             throw new NotFoundUserException("User not found");
-        if(!actualUser.getVerificationCodeEmailCheck())
-            throw new UnverifiedUserException("This user is not verified");
-        if(actualUser.getType().equals("client") && !actualUser.getId().equals(mascot.getOwnerId()))
-            throw new UnauthorizedUserException("User not allowed to create mascots for another client");
         return mascotRepo.save(mascot).getId();
     }
 

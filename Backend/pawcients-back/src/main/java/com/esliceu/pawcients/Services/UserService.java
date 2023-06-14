@@ -161,6 +161,17 @@ public class UserService {
     }
 
     public List<User> getClientsByClinic(String clinicId) {
-        return userRepo.findByTypeAndClinicId("client", clinicId);
+        List<User> clientsInClinic = userRepo.findByTypeAndClinicId("client", clinicId);
+        if(clientsInClinic.size() < 1) {
+            throw new NotFoundUserException("No clients were found in this clinic");
+        }
+        return clientsInClinic;
+    }
+
+    public User getActualUser(User actualUser) {
+        if (actualUser == null) {
+            throw new ExpiredUserException("User has expired. Please, log back in");
+        }
+        return actualUser;
     }
 }

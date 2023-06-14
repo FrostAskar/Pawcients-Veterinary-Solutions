@@ -40,8 +40,7 @@ public class AppointmentController {
 
     @GetMapping("/client/{clientId}/appointment")
     @CrossOrigin
-    public List<CalendarAppointmentDTO> getAppointmentsByClient(@PathVariable String clientId,
-                                                     HttpServletRequest req) {
+    public List<CalendarAppointmentDTO> getAppointmentsByClient(@PathVariable String clientId) {
         return appointmentService.getCalendarAppointmentsByClient(clientId);
     }
 

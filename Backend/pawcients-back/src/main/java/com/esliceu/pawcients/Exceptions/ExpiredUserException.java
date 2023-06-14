@@ -1,4 +1,4 @@
-package com.esliceu.pawcients.Forms;
+package com.esliceu.pawcients.Exceptions;
 
 public class ExpiredUserException extends RuntimeException{
 

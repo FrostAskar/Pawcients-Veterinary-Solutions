@@ -3,7 +3,6 @@ package com.esliceu.pawcients.Controllers;
 import com.esliceu.pawcients.DTO.ClientDTO;
 import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.*;
-import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Models.Clinic;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Services.*;
@@ -114,16 +113,16 @@ public class UserController {
                                               HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
         String workerId;
-        User actualUser = (User) req.getAttribute("user");
-        User user = new User(null,
-                registerUserForm.getName(),
-                registerUserForm.getSurname(),
-                registerUserForm.getLicense(),
-                registerUserForm.getEmail(),
-                registerUserForm.getPhone(),
-                registerUserForm.getType(),
-                actualUser.getClinicId());
         try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            User user = new User(null,
+                    registerUserForm.getName(),
+                    registerUserForm.getSurname(),
+                    registerUserForm.getLicense(),
+                    registerUserForm.getEmail(),
+                    registerUserForm.getPhone(),
+                    registerUserForm.getType(),
+                    actualUser.getClinicId());
             permissionService.isActualUserWorker(actualUser);
             workerId = userService.saveUser(user, actualUser);
             result.put("workerId", workerId);
@@ -146,16 +145,16 @@ public class UserController {
                                               HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
         String clientId = "";
-        User actualUser = (User) req.getAttribute("user");
-        User user = new User(null,
-                registerUserForm.getEmail(),
-                registerUserForm.getName(),
-                registerUserForm.getSurname(),
-                "client",
-                actualUser.getClinicId(),
-                registerUserForm.getPhone());
         try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
             permissionService.isActualUserWorker(actualUser);
+            User user = new User(null,
+                    registerUserForm.getEmail(),
+                    registerUserForm.getName(),
+                    registerUserForm.getSurname(),
+                    "client",
+                    actualUser.getClinicId(),
+                    registerUserForm.getPhone());
             clientId = userService.saveUser(user, actualUser);
             result.put("clientId", clientId);
             result.put("status", "ok");
@@ -163,7 +162,7 @@ public class UserController {
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
-        } catch (UnauthorizedUserException e) {
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
             result.put("error", e.getMessage());
             res.setStatus(401);
         }
@@ -202,8 +201,8 @@ public class UserController {
     public Map<String, String> deleteUser(@PathVariable String userId,
                              HttpServletRequest req, HttpServletResponse res) {
         Map<String, String> result = new HashMap<>();
-        User actualUser = (User) req.getAttribute("user");
         try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
             permissionService.isActualUserVerified(actualUser);
             permissionService.isActualUserAuthorized(actualUser, userId);
             User target = userService.generateUser(userId);
@@ -212,7 +211,7 @@ public class UserController {
             appointmentService.deleteAppointmentByClientId(userId);
             result.put("action", action);
             res.setStatus(200);
-        } catch (UnauthorizedUserException e) {
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
             result.put("error", e.getMessage());
             res.setStatus(401);
         } catch (UnverifiedUserException | NotFoundUserException | FailedActionException e) {
@@ -227,9 +226,9 @@ public class UserController {
     public Map<String, String> verifyEmail(@RequestBody VerifyEmailForm verifyEmailForm,
                                            HttpServletResponse res, HttpServletRequest req) {
         Map<String, String> result = new HashMap<>();
-        User user = (User) req.getAttribute("user");
         try {
-            userService.verifyEmail(verifyEmailForm.getCode(), user);
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            userService.verifyEmail(verifyEmailForm.getCode(), actualUser);
             res.setStatus(204);
         } catch (IncorrectVerificationCodeException e) {
             result.put("error", e.getMessage());
@@ -247,10 +246,17 @@ public class UserController {
 
     @GetMapping("/vet/clients")
     @CrossOrigin
-    public List<ClientDTO> getClients(HttpServletRequest req) {
-        User actualUser = (User) req.getAttribute("user");
-        List<User> clients = userService.getClientsByClinic(actualUser.getClinicId());
+    public List<ClientDTO> getClients(HttpServletRequest req, HttpServletResponse res) {
         List<ClientDTO> clientData = new ArrayList<>();
+        List<User> clients = new ArrayList<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            clients = userService.getClientsByClinic(actualUser.getClinicId());
+            res.setStatus(200);
+        } catch (ExpiredUserException e) {
+            res.setStatus(409);
+            return null;
+        }
         for (User u: clients) {
             ClientDTO cdto = new ClientDTO();
             cdto.setAppointment(appointmentService.getEarliestClientAppointment(u.getId()));

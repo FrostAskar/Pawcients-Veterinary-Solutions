@@ -61,7 +61,7 @@ public class HistoryController {
         }
         String historyId = historyService.registerVisit(mascot, visit);
         mascot.setHistoryId(historyId);
-        mascotService.saveMascot(mascot, actualUser);
+        mascotService.saveMascot(mascot);
         result.put("historyId", historyId);
         return result;
     }
