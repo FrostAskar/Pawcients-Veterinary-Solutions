@@ -2,7 +2,6 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import SideNavbarWorker from 'Routes/Worker/SideNavbarWorker';
-import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { fetchProfile } from "fetches/Global/getProfile";
 import { useState, useEffect, useCallback } from 'react';
 import 'css/calendar/calendar.scss';
@@ -14,19 +13,11 @@ import { addAppointment } from 'fetches/Worker/Appointments/FetchAddAppointment'
 import { ConfirmationPopup } from "Routes/Common/PopUp";
 import { deleteAppointment } from 'fetches/Worker/Appointments/FetchDeleteAppointment';
 
-const localizer = momentLocalizer(moment);
-
-const minTime = new Date();
-minTime.setHours(8, 0, 0);
-
-const maxTime = new Date();
-maxTime.setHours(20, 0, 0);
-
-const CalendarPage = () => {
+const VetCalendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [addEvent, setAddEvent] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [displayButton, setDisplayButton] = useState(false)
+    const [addEvent, setAddEvent] = useState(false);
+    const [addEventButton, setAddEventButton] = useState(false);
     const [events, setEvents] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [profileData, setProfileData] = useState(null);
@@ -37,20 +28,15 @@ const CalendarPage = () => {
     //const [worker, setWorker] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isPopupOpen, setIsPopupOpen] = useState({});
-    const allowedHours = ['08:00', '09:00', '10:00', '11:00','12:00', '13:00', '16:00', '17:00', '18:00', '19:00'];
+    const allowedHours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00', '19:00'];
     const [availableHours, setAvailableHours] = useState(allowedHours);
     const location = useLocation();
+    const localizer = momentLocalizer(moment);
+    const minTime = new Date();
+    minTime.setHours(8, 0, 0);
 
-
-    // function getAppointmentsHours() {
-    //     for (var i = 0; i < events.length; i++) {
-    //         const date = new Date(events[i].startDate)
-    //         const formattedDate = date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
-    //         setScheduleHours([...scheduledHours, formattedDate])
-    //     }
-    //     setAvailableHours(allowedHours.filter(event => !scheduledHours.includes(event)));
-    // }
-
+    const maxTime = new Date();
+    maxTime.setHours(20, 0, 0);
 
     const getAppointments = useCallback(async () => {
 
@@ -101,7 +87,6 @@ const CalendarPage = () => {
     const handleDateSelect = date => {
         setSelectedDate(date);
         setAvailableAppointments();
-
     };
 
     function setAvailableAppointments() {
@@ -122,14 +107,12 @@ const CalendarPage = () => {
         }
     }
 
-
-
     const handleView = view => {
         if (view === 'day') {
-            setDisplayButton(true);
+            setAddEventButton(true);
 
         } else {
-            setDisplayButton(false);
+            setAddEventButton(false);
         }
         setSelectedEvent(null);
     }
@@ -181,8 +164,6 @@ const CalendarPage = () => {
             //setErrorMessage("Error en la conexión con el servidor");
         }
     };
-
-
 
 
     const openModal = () => {
@@ -237,15 +218,9 @@ const CalendarPage = () => {
         }
     };
 
-
-
     return (
         <div className="dashboard">
-            {((profileData?.type === "vet") || (profileData?.type === "aux") || (profileData?.type === "admin")) ? (
-                <SideNavbarWorker />
-            ) : (
-                <SideNavbarClient />
-            )}
+            <SideNavbarWorker />
             <div className='dashboard-page'>
                 <div className='dashboard-content'>
                     <h1 className="calendar-title"> My Calendar</h1>
@@ -267,7 +242,6 @@ const CalendarPage = () => {
                             <div className="section">
                                 <div className="section-content">
                                     <h2>{selectedEvent.title}</h2>
-
                                     {!editMode
                                         ?
                                         <p>{selectedEvent.type}</p>
@@ -324,14 +298,14 @@ const CalendarPage = () => {
                             </div>
                         </div>
                     )}
-                    {displayButton && (
+                    {addEventButton && (
                         <div className='event-button'>
                             <button className="clasic-button" onClick={openModal}>Add appointment</button>
                         </div>
                     )}
                     {addEvent && (
                         <section className="creation-section">
-                            <div className="modal">
+                            <div className="modal" id="event-modal">
                                 <div className="modal-content">
                                     <h1>Create appointment</h1>
                                     <form className="clasic-form" onSubmit={handleAddEvent} method="post">
@@ -385,4 +359,4 @@ const CalendarPage = () => {
     )
 }
 
-export default CalendarPage;
+export default VetCalendar;

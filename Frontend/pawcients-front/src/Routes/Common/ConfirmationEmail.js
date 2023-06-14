@@ -65,7 +65,7 @@ const ConfirmationEmail = () => {
 
   return (
     <div className="confirmation-code-container">
-      <p>Please enter the 6-digit code we sent to your email:</p>
+      <h2 class="confirmation-code-title">Please enter the 6-digit code we sent to your email:</h2>
       <div className="code-inputs-container">
         {code.map((value, index) => (
           <input

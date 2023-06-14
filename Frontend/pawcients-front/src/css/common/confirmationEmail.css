@@ -10,6 +10,10 @@
   justify-content: center;
 }
 
+.confirmation-code-title {
+  margin: 20px;
+}
+
 .code-input {
   width: 1.5rem;
   height: 1.5rem;

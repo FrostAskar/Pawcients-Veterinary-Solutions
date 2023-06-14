@@ -24,7 +24,8 @@ import AnimalProfile from "Routes/Common/AnimalProfile";
 import CustomerManagement from "Routes/Worker/Base/CustomerManagement";
 import MascotsManagement from "Routes/Worker/Base/MascotsManagement";
 import StaffManagement from "Routes/Worker/Base/StaffManagement";
-import CalendarPage from "Routes/Calendar/CalendarPage";
+import VetCalendar from "Routes/Calendar/VetCalendar";
+import ClientCalendar from "Routes/Calendar/ClientCalendar";
 import Logout from "Routes/Common/logout";
 
 const router = createBrowserRouter([
@@ -52,8 +53,8 @@ const router = createBrowserRouter([
         element: <AnimalProfile />,
       },
       { path: "/vet/mascot/:mascotId", element: <AnimalProfile /> },
-      { path: "/vetcalendar", element: <CalendarPage /> },
-      { path: "/clientcalendar", element: <CalendarPage /> },
+      { path: "/vetcalendar", element: <VetCalendar /> },
+      { path: "/clientcalendar", element: <ClientCalendar /> },
       { path: "/logout", element: <Logout /> },
     ],
   },
