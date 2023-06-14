@@ -5,6 +5,8 @@ import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import {
   fetchMascotData,
   fetchMascotDataVet,
+  fetchMascotDataVetHistory,
+  fetchMascotDataChangeProfileInfo,
 } from "fetches/Global/FetchMascotData";
 import { fetchProfile } from "fetches/Global/getProfile";
 
@@ -17,6 +19,7 @@ const AnimalManagementPage = () => {
   const mascotidRef = useRef("");
 
   const [profileData, setProfileData] = useState(null);
+  const [visits, setVisits] = useState(null);
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -29,6 +32,19 @@ const AnimalManagementPage = () => {
 
   useEffect(() => {
     let isMounted = true; // Variable auxiliar para controlar el estado del componente
+    const fetchHistoryData = async () => {
+      try {
+        const historyData = await fetchMascotDataVetHistory(
+          mascotidRef.current
+        );
+        if (isMounted) {
+          setVisits(historyData?.visits || []); // Almacena el historial de visitas en el estado "visits"
+        }
+      } catch (error) {
+        console.error("Error fetching mascot history:", error);
+      }
+    };
+    fetchHistoryData();
 
     if (url.includes("client")) {
       clientidRef.current = url.split("/")[2];
@@ -49,6 +65,7 @@ const AnimalManagementPage = () => {
       };
       fetchData();
     }
+
     if (url.includes("vet")) {
       mascotidRef.current = url.split("/")[3];
       const fetchData = async () => {
@@ -98,7 +115,10 @@ const AnimalManagementPage = () => {
       weight: editedAnimalData.weight,
       color: editedAnimalData.color,
     };
-    console.log("Sending edited animal data:", editedAnimalDataToSend);
+    fetchMascotDataChangeProfileInfo(
+      mascotidRef.current,
+      editedAnimalDataToSend
+    );
 
     setIsEditing(false);
   };
@@ -258,71 +278,39 @@ const AnimalManagementPage = () => {
                 <strong>Identification Number:</strong> {identificationNumber}
               </p>
             </div>
-            {/* <div className="medical-history">
-              <h3 className="section-title">Medical History</h3>
-              {medicalHistory.map((record, index) => (
-                <div key={index} className="record">
-                  <p>
-                    <strong>Date:</strong> {record.date}
-                  </p>
-                  <p>
-                    <strong>Description:</strong> {record.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="vaccines">
-              <h3 className="section-title">Vaccines</h3>
-              {vaccines.map((vaccine, index) => (
-                <div key={index} className="vaccine">
-                  <p>
-                    <strong>Name:</strong> {vaccine.name}
-                  </p>
-                  <p>
-                    <strong>Date:</strong> {vaccine.date}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="deworming">
-              <h3 className="section-title">Deworming</h3>
-              {deworming.map((deworm, index) => (
-                <div key={index} className="deworm">
-                  <p>
-                    <strong>Name:</strong> {deworm.name}
-                  </p>
-                  <p>
-                    <strong>Date:</strong> {deworm.date}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="sterilization">
-              <h3 className="section-title">Sterilization</h3>
-              <p>
-                <strong>Status:</strong>{" "}
-                {sterilization.isSterilized ? "Sterilized" : "Not sterilized"}
-              </p>
-              <p>
-                <strong>Date:</strong> {sterilization.date}
-              </p>
-              <p>
-                <strong>Details:</strong> {sterilization.details}
-              </p>
-            </div>
-
-            <div className="allergies">
-              <h3 className="section-title">Allergies</h3>
-              <p>{allergies}</p>
-            </div>
-
-            <div className="special-notes">
-              <h3 className="section-title">Special Notes</h3>
-              <p>{specialNotes}</p>
-            </div> */}
+            {visits && visits.length > 0 ? (
+              <div>
+                <h3 className="section-title">Visits History</h3>
+                <ul>
+                  {visits.map((visit, index) => (
+                    <li key={index}>
+                      <p>Date: {visit.date}</p>
+                      <p>Notes: {visit.notes}</p>
+                      {visit.vaccine && (
+                        <>
+                          <hr />
+                          <p>Vaccine: {visit.vaccine.name}</p>
+                        </>
+                      )}
+                      {visit.surgery && (
+                        <>
+                          <hr />
+                          <p>Surgery: {visit.surgery.name}</p>
+                        </>
+                      )}
+                      {visit.deworming && (
+                        <>
+                          <hr />
+                          <p>Deworming: {visit.deworming.name}</p>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p>No visit history available.</p>
+            )}
           </div>
         </div>
       </div>
