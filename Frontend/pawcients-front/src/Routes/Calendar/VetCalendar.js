@@ -7,7 +7,7 @@ import { useState, useEffect, useCallback } from 'react';
 import 'css/calendar/calendar.scss';
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 import { useLocation } from 'react-router-dom'
-import { getAllAppointments } from 'fetches/Worker/Appointments/FetchGetAllAppointments';
+import { getVetAppointments } from 'fetches/Worker/Appointments/FetchGetVetAppointments';
 import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClient'
 import { addAppointment } from 'fetches/Worker/Appointments/FetchAddAppointment';
 import { ConfirmationPopup } from "Routes/Common/PopUp";
@@ -34,16 +34,14 @@ const VetCalendar = () => {
     const localizer = momentLocalizer(moment);
     const minTime = new Date();
     minTime.setHours(8, 0, 0);
-
     const maxTime = new Date();
     maxTime.setHours(20, 0, 0);
 
     const getAppointments = useCallback(async () => {
-
         try {
             const data = await fetchProfile();
             setProfileData(data);
-            const eventsData = await getAllAppointments(data.id);
+            const eventsData = await getVetAppointments(data.id);
             setEvents(formatDate(eventsData));
 
         } catch (error) {
@@ -51,12 +49,10 @@ const VetCalendar = () => {
         }
     }, []);
 
-
     useEffect(() => {
         getAppointments();
         obtainClients();
     }, [getAppointments])
-
 
 
     useEffect(() => {
@@ -259,8 +255,8 @@ const VetCalendar = () => {
                                     {!editMode
                                         ?
                                         <div>
-                                            <p><span>Start date: </span> {setTime(selectedEvent.startDate)}</p>
-                                            <p><span>End date: </span> {setTime(selectedEvent.endDate)}</p>
+                                            <p><span>Start time: </span> {setTime(selectedEvent.startDate)}</p>
+                                            <p><span>End time: </span> {setTime(selectedEvent.endDate)}</p>
                                         </div>
                                         :
                                         <div className='clasic-form'>
@@ -333,7 +329,7 @@ const VetCalendar = () => {
                                             <option value="Surgery">Surgery</option>
                                             <option value="Cures">Cures</option>
                                         </select>
-                                        <label htmlFor='startTime'>Start Time</label>
+                                        <label htmlFor='startTime'>Time</label>
                                         <select className='select-time' id="startTime" >
                                             {availableHours.map(option => (
                                                 <option key={option} value={option} >{option}</option>

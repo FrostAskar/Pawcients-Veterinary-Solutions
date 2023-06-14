@@ -18,8 +18,8 @@ export default function MascotsManagement() {
 
   const obtainMascots = async () => {
     const mascotsData = await getMascots();
-    setMascots(mascotsData);
-    setVisibleMascots(mascotsData);
+    setMascots(mascotsData.mascotData);
+    setVisibleMascots(mascotsData.mascotData);
   };
 
   // const openModal = () => {
