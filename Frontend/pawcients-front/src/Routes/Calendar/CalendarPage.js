@@ -145,7 +145,6 @@ const CalendarPage = () => {
         }
     };
 
-
     const openModal = () => {
         setAddEvent(true);
     };
@@ -160,7 +159,7 @@ const CalendarPage = () => {
 
     function setTime(time) {
         const date = new Date(time);
-        return date.getHours() + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
+        return date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
     }
 
     //Delete Pop up 
@@ -184,7 +183,6 @@ const CalendarPage = () => {
     const handleConfirm = async (e) => {
         e.preventDefault();
         try {
-            console.log(selectedEvent.id)
             const response = await deleteAppointment(profileData.id, selectedEvent.appointmentId);
             setSelectedEvent(null)
             if (response !== null) {
@@ -211,134 +209,137 @@ const CalendarPage = () => {
                 <SideNavbarClient />
             )}
             <div className='dashboard-page'>
+                <div className='dashboard-content'>
+                    <h1 className="calendar-title"> My Calendar</h1>
+                    <Calendar
+                        localizer={localizer}
+                        events={events}
+                        selectable
+                        startAccessor="startDate"
+                        endAccessor="endDate"
+                        onSelectEvent={handleEventSelect}
+                        onNavigate={handleDateSelect}
+                        min={minTime}
+                        max={maxTime}
+                        onView={handleView}
+                        style={{ height: 600 }}
+                    />
+                    {selectedEvent && (
+                        <div className="event-info">
+                            <div className="section">
+                                <div className="section-content">
+                                    <h2>{selectedEvent.title}</h2>
 
-                <h1 className="calendar-title"> My Calendar</h1>
-                <Calendar
-                    localizer={localizer}
-                    events={events}
-                    selectable
-                    startAccessor="startDate"
-                    endAccessor="endDate"
-                    onSelectEvent={handleEventSelect}
-                    onNavigate={handleDateSelect}
-                    min={minTime}
-                    max={maxTime}
-                    onView={handleView}
-                    style={{ height: 600 }}
-                />
-                {selectedEvent && (
-                    <div className="event-info">
-                        <div className="section">
-                            <div className="section-content">
-                                <h2>{selectedEvent.title}</h2>
+                                    {!editMode
+                                        ?
+                                        <p>{selectedEvent.type}</p>
+                                        :
+                                        <div className='clasic-form'>
+                                            <label htmlFor="type">Appointment type</label>
+                                            <select name="type" id="type">
+                                                <option value="vaccine">Vaccine</option>
+                                                <option value="checkup">Checkup</option>
+                                                <option value="surgery">Surgery</option>
+                                                <option value="cures">Cures</option>
+                                            </select>
+                                        </div>
+                                    }
+                                    {!editMode
+                                        ?
+                                        <div>
+                                            <p><span>Start date: </span> {setTime(selectedEvent.startDate)}</p>
+                                            <p><span>End date: </span> {setTime(selectedEvent.endDate)}</p>
+                                        </div>
+                                        :
+                                        <div className='clasic-form'>
+                                            <label htmlFor='startTime'>Start Time: </label>
+                                            <select className='select-time' id="startTime" >
+                                                {allowedHours.map(option => (
+                                                    <option key={option} value={option} >{option}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    }
+                                    {!editMode
+                                        ?
+                                        <div className='buttons'>
+                                            <button className='clasic-button' onClick={changeEditMode}>Edit</button>
+                                            <button className='clasic-button' id="cancel-button" onClick={(e) => handleDeleteClick(e)}>Delete</button>
+                                            {isPopupOpen[selectedEvent.appointmentId] && (
+                                                <div>
+                                                    <ConfirmationPopup
+                                                        onCancel={(e) => handleCancel(e)}
+                                                        onConfirm={(e) => handleConfirm(e)}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                        :
+                                        <div className='buttons'>
+                                            <button className='clasic-button'>Apply</button>
+                                            <button className='clasic-button' id="cancel-button" onClick={changeEditMode}>Cancel</button>
+                                        </div>
+                                    }
 
-                                {!editMode
-                                    ?
-                                    <p>{selectedEvent.type}</p>
-                                    :
-                                    <div className='clasic-form'>
+
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {displayButton && (
+                        <div className='event-button'>
+                            <button className="clasic-button" onClick={openModal}>Add appointment</button>
+                        </div>
+                    )}
+                    {addEvent && (
+                        <section className="creation-section">
+                            <div className="modal">
+                                <div className="modal-content">
+                                    <h1>Create appointment</h1>
+                                    <form className="clasic-form" onSubmit={handleAddEvent} method="post">
+                                        <label htmlFor="client">Client</label>
+                                        <select name="clients" id="clients" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)} required>
+                                            {clients.map((client, index) => (
+                                                <option key={index} value={client.client.id}>
+                                                    {client.client.name} {client.client.surname}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <label htmlFor="mascot">Mascot</label>
+                                        <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => setSelectedMascot(e.target.value)} required>
+                                            {mascots.map((mascot, index) => (
+                                                <option key={index} value={mascot.id}>
+                                                    {mascot.name}
+                                                </option>
+                                            ))}
+                                        </select>
+
                                         <label htmlFor="type">Appointment type</label>
                                         <select name="type" id="type">
-                                            <option value="vaccine">Vaccine</option>
-                                            <option value="checkup">Checkup</option>
-                                            <option value="surgery">Surgery</option>
-                                            <option value="cures">Cures</option>
+                                            <option value="Vaccine">Vaccine</option>
+                                            <option value="Checkup">Checkup</option>
+                                            <option value="Surgery">Surgery</option>
+                                            <option value="Cures">Cures</option>
                                         </select>
-                                    </div>
-                                }
-                                {!editMode
-                                    ?
-                                    <div>
-                                        <p><span>Start date: </span> {setTime(selectedEvent.startDate)}</p>
-                                        <p><span>End date: </span> {setTime(selectedEvent.endDate)}</p>
-                                    </div>
-                                    :
-                                    <div className='clasic-form'>
-                                        <label htmlFor='startTime'>Start Time: </label>
+                                        <label htmlFor='startTime'>Start Time</label>
                                         <select className='select-time' id="startTime" >
                                             {allowedHours.map(option => (
                                                 <option key={option} value={option} >{option}</option>
                                             ))}
                                         </select>
-                                    </div>
-                                }
-                                {!editMode
-                                    ?
-                                    <div className='buttons'>
-                                        <button className='clasic-button' onClick={changeEditMode}>Edit</button>
-                                        <button className='clasic-button' id="cancel-button" onClick={(e) => handleDeleteClick(e)}>Delete</button>
-                                        {isPopupOpen[selectedEvent.appointmentId] && (
-                                            <div>
-                                                <ConfirmationPopup
-                                                    onCancel={(e) => handleCancel(e)}
-                                                    onConfirm={(e) => handleConfirm(e)}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                    :
-                                    <div className='buttons'>
-                                        <button className='clasic-button'>Apply</button>
-                                        <button className='clasic-button' id="cancel-button" onClick={changeEditMode}>Cancel</button>
-                                    </div>
-                                }
-
-
+                                        <button className="clasic-button" type="submit">Create</button>
+                                        <button className="clasic-button" id="cancel-button" type="button" onClick={closeModal}>Cancel</button>
+                                        {errorMessage && <p className="error-message">{errorMessage}</p>}
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                )}
-                {displayButton && (
-                    <div className='event-button'>
-                        <button className="clasic-button" onClick={openModal}>Add appointment</button>
-                    </div>
-                )}
+                        </section>
+
+                    )}
+                </div>
+
             </div>
-            {addEvent && (
-                <section className="creation-section">
-                    <div className="modal">
-                        <div className="modal-content">
-                            <h1>Create appointment</h1>
-                            <form className="clasic-form" onSubmit={handleAddEvent} method="post">
-                                <label htmlFor="client">Client</label>
-                                <select name="clients" id="clients" value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)} required>
-                                    {clients.map((client, index) => (
-                                        <option key={index} value={client.client.id}>
-                                            {client.client.name} {client.client.surname}
-                                        </option>
-                                    ))}
-                                </select>
-                                <label htmlFor="mascot">Mascot</label>
-                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => setSelectedMascot(e.target.value)} required>
-                                    {mascots.map((mascot, index) => (
-                                        <option key={index} value={mascot.id}>
-                                            {mascot.name}
-                                        </option>
-                                    ))}
-                                </select>
 
-                                <label htmlFor="type">Appointment type</label>
-                                <select name="type" id="type">
-                                    <option value="Vaccine">Vaccine</option>
-                                    <option value="Checkup">Checkup</option>
-                                    <option value="Surgery">Surgery</option>
-                                    <option value="Cures">Cures</option>
-                                </select>
-                                <label htmlFor='startTime'>Start Time</label>
-                                <select className='select-time' id="startTime" >
-                                    {allowedHours.map(option => (
-                                        <option key={option} value={option} >{option}</option>
-                                    ))}
-                                </select>
-                                <button className="clasic-button" type="submit">Create</button>
-                                <button className="clasic-button" id="cancel-button" type="button" onClick={closeModal}>Cancel</button>
-                                {errorMessage && <p className="error-message">{errorMessage}</p>}
-                            </form>
-                        </div>
-                    </div>
-                </section>
-
-            )}
 
         </div>
 

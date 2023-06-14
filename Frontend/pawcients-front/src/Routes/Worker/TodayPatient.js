@@ -18,7 +18,7 @@ export default function TodayPatient(props) {
   function getDate() {
     const date = new Date(props.patient.appointment.startDate);
     return (
-      date.getHours() +
+        date.getHours().toString().padStart(2, '0') +
       ":" +
       (date.getMinutes() === 0 ? "00" : date.getMinutes())
     );

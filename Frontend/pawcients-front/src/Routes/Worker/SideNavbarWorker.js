@@ -34,7 +34,6 @@ const SideNavbarWorker = () => {
   }
 
   return (
-    <div className="dashboard">
       <div className="side-navbar">
         <div className="logo">
           <img src={Logo} alt="Logo" />
@@ -94,7 +93,6 @@ const SideNavbarWorker = () => {
           </li>
         </ul>
       </div>
-    </div>
   );
 };
 
