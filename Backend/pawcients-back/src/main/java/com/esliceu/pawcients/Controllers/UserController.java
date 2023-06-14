@@ -6,10 +6,7 @@ import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Models.Clinic;
 import com.esliceu.pawcients.Models.User;
-import com.esliceu.pawcients.Services.AppointmentService;
-import com.esliceu.pawcients.Services.ClinicService;
-import com.esliceu.pawcients.Services.TokenService;
-import com.esliceu.pawcients.Services.UserService;
+import com.esliceu.pawcients.Services.*;
 import com.esliceu.pawcients.Utils.Encrypt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,15 +25,18 @@ public class UserController {
     ClinicService clinicService;
     TokenService tokenService;
     AppointmentService appointmentService;
+    MascotService mascotService;
 
     public UserController(UserService userService,
                           ClinicService clinicService,
                           TokenService tokenService,
-                          AppointmentService appointmentService) {
+                          AppointmentService appointmentService,
+                          MascotService mascotService) {
         this.userService = userService;
         this.clinicService = clinicService;
         this.tokenService = tokenService;
         this.appointmentService = appointmentService;
+        this.mascotService = mascotService;
     }
 
     @PostMapping("/signup/admin")
@@ -188,6 +188,9 @@ public class UserController {
         User actualUser = (User) req.getAttribute("user");
         try {
             String action = userService.deleteUser(userId, actualUser);
+            if(action.equals("User deleted successfully")){
+                mascotService.deleteMascotByOwnerId(userId);
+            }
             result.put("action", action);
             res.setStatus(200);
         } catch (UnverifiedUserException | UnauthorizedUserException | FailedActionException e) {

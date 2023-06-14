@@ -95,4 +95,13 @@ public class MascotService {
     public void updateMascot(Mascot mascotToUpdate) {
         mascotRepo.save(mascotToUpdate);
     }
+
+    public void deleteMascotByOwnerId(String ownerId) {
+        List<Mascot> mascotsFromOwner = mascotRepo.findByOwnerId(ownerId);
+        if(mascotsFromOwner.size() > 0){
+            for(Mascot m : mascotsFromOwner) {
+                mascotRepo.deleteById(m.getId());
+            }
+        }
+    }
 }
