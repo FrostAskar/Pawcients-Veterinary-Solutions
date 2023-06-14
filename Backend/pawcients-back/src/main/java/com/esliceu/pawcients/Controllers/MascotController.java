@@ -195,12 +195,22 @@ public class MascotController {
     @PutMapping("/mascot/{mascotId}")
     @CrossOrigin
     public String updateMascotInfo(@PathVariable String mascotId,
-                                   HttpServletRequest req,
+                                   HttpServletRequest req, HttpServletResponse res,
                                    @RequestBody UpdateMascotForm updateMascotForm) {
-        User actualUser = (User) req.getAttribute("user");
-        Mascot mascotToUpdate = mascotService.findMascotById(mascotId);
-        mascotToUpdate = mascotService.updateMascotInfo(mascotToUpdate, updateMascotForm);
-        mascotService.updateMascot(mascotToUpdate);
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            Mascot mascotToUpdate = mascotService.findMascotById(mascotId);
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, mascotToUpdate.getOwnerId());
+            mascotToUpdate = mascotService.updateMascotInfo(mascotToUpdate, updateMascotForm);
+            mascotService.updateMascot(mascotToUpdate);
+        } catch (ExpiredUserException | UnverifiedUserException | UnauthorizedUserException e) {
+            res.setStatus(401);
+            return e.getMessage();
+        } catch (NotFoundMascotException e){
+            res.setStatus(409);
+            return e.getMessage();
+        }
         return "ok";
     }
 

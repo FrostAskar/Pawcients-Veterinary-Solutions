@@ -3,14 +3,19 @@ package com.esliceu.pawcients.Controllers;
 import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
 import com.esliceu.pawcients.DTO.NextSevenDaysAppointmentsDTO;
 import com.esliceu.pawcients.DTO.TodayAppointmentsDTO;
+import com.esliceu.pawcients.Exceptions.ExpiredUserException;
 import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
+import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
+import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
 import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Services.AppointmentService;
 import com.esliceu.pawcients.Services.MascotService;
+import com.esliceu.pawcients.Services.PermissionService;
 import com.esliceu.pawcients.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,23 +30,51 @@ public class AppointmentController {
     AppointmentService appointmentService;
     UserService userService;
     MascotService mascotService;
+    PermissionService permissionService;
 
-    public AppointmentController(AppointmentService appointmentService, UserService userService, MascotService mascotService) {
+    public AppointmentController(AppointmentService appointmentService, UserService userService,
+                                 MascotService mascotService, PermissionService permissionService) {
         this.appointmentService = appointmentService;
         this.userService = userService;
         this.mascotService = mascotService;
+        this.permissionService = permissionService;
     }
 
     @GetMapping("/vet/{vetId}/appointment")
     @CrossOrigin
-    public List<CalendarAppointmentDTO> getAppointments(@PathVariable String vetId) {
-        return appointmentService.getCalendarAppointmentsByVet(vetId);
+    public Map<String, Object> getAppointments(@PathVariable String vetId,
+                                               HttpServletResponse res, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            List<CalendarAppointmentDTO> calendarAppointments = appointmentService.getCalendarAppointmentsByVet(vetId);
+            result.put("calendarAppointments", calendarAppointments);
+            res.setStatus(200);
+        } catch (ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        }
+        return result;
     }
 
     @GetMapping("/client/{clientId}/appointment")
     @CrossOrigin
-    public List<CalendarAppointmentDTO> getAppointmentsByClient(@PathVariable String clientId) {
-        return appointmentService.getCalendarAppointmentsByClient(clientId);
+    public Map<String, Object> getAppointmentsByClient(@PathVariable String clientId,
+                                                                HttpServletResponse res, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, clientId);
+            List<CalendarAppointmentDTO> calendarAppointments = appointmentService.getCalendarAppointmentsByClient(clientId);
+            result.put("calendarAppointments", calendarAppointments);
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnverifiedUserException | UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        }
+        return result;
     }
 
     @PostMapping("/vet/{vetId}/appointment")
