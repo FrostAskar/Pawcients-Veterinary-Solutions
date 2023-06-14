@@ -10,6 +10,7 @@ public class AppointmentForm {
     String typeAppointment;
     LocalDateTime startDate;
     LocalDateTime endDate;
+    boolean isCompleted;
 
     public String getClientId() {
         return clientId;
@@ -57,5 +58,13 @@ public class AppointmentForm {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

@@ -123,6 +123,15 @@ public class AppointmentController {
         return result;
     }
 
+    @PutMapping("/vet/appointment/{appointmentId}")
+    @CrossOrigin
+    public Map<String, Object> updateAppointment(@PathVariable String appointmentId,
+                                                 HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        User actualUser = (User) req.getAttribute("user");
+        return result;
+    }
+
     @GetMapping("/vet/appointmentgraph")
     @CrossOrigin
     public List<NextSevenDaysAppointmentsDTO> getAppointmentsForGraphic(HttpServletRequest req) {

@@ -150,8 +150,7 @@ public class MascotController {
 
     @PutMapping("/mascot/{mascotId}")
     @CrossOrigin
-    public String updateMascotInfo(@PathVariable String clientId,
-                                   @PathVariable String mascotId,
+    public String updateMascotInfo(@PathVariable String mascotId,
                                    HttpServletRequest req,
                                    @RequestBody UpdateMascotForm updateMascotForm) {
         User actualUser = (User) req.getAttribute("user");
