@@ -90,13 +90,7 @@ public class MascotController {
                 registerMascotForm.getMascotName(),
                 registerMascotForm.getSpecies(),
                 registerMascotForm.getBreed(),
-                registerMascotForm.getAge(),
                 registerMascotForm.getGender(),
-                registerMascotForm.getWeight(),
-                registerMascotForm.getColor(),
-                registerMascotForm.getIdentificationSerial(),
-                registerMascotForm.getAllergies(),
-                registerMascotForm.getNotes(),
                 registerMascotForm.getBirthDate(),
                 clientId
         );

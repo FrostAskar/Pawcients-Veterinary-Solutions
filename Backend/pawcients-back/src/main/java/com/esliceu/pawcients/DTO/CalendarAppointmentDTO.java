@@ -10,6 +10,8 @@ public class CalendarAppointmentDTO {
 
     LocalDateTime endDate;
 
+    String appointmentId;
+
     String type;
 
     public String getTitle() {
@@ -42,5 +44,13 @@ public class CalendarAppointmentDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
     }
 }
