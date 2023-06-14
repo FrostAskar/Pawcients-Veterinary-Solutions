@@ -7,6 +7,7 @@ import {
   fetchAddHistoryVaccine,
   fetchAddHistorySurgery,
   fetchAddHistoryDeworming,
+  fetchAddHistoryCheckup,
 } from "fetches/Worker/Mascots/FetchAddHistory";
 import moment from "moment";
 
@@ -67,6 +68,10 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
         visitNotes: desc,
         vaccineRenewal: renewal,
       };
+      if (history.vaccineName === "" || history.visitNotes === "") {
+        setErrorMessage("Please fill all the fields");
+        return;
+      }
 
       fetchAddHistoryVaccine({ history, mascotID }).then((response) => {
         if (response.status === 200) {
@@ -78,14 +83,27 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
     } else if (type === "Checkup") {
       if (checkupType === "1") {
         history = {
-          checkupName: document.getElementById("checkup").value,
           visitNotes: desc,
         };
+        if (history.visitNotes === "") {
+          setErrorMessage("Please fill all the fields");
+          return;
+        }
+
+        fetchAddHistoryCheckup(history, mascotID).then((response) => {
+          if (response.status === 200) {
+            setSuccessMessage("History added successfully");
+          }
+        });
       } else if (checkupType === "2") {
         history = {
           dewormingName: document.getElementById("checkup").value,
           visitNotes: desc,
         };
+        if (history.dewormingName === "" || history.visitNotes === "") {
+          setErrorMessage("Please fill all the fields");
+          return;
+        }
         fetchAddHistoryDeworming(history, mascotID).then((response) => {
           if (response.status === 200) {
             setSuccessMessage("History added successfully");
@@ -99,6 +117,10 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
         surgeryName: document.getElementById("surgery").value,
         visitNotes: desc,
       };
+      if (history.surgeryName === "" || history.visitNotes === "") {
+        setErrorMessage("Please fill all the fields");
+        return;
+      }
 
       fetchAddHistorySurgery(history, mascotID).then((response) => {
         if (response.status === 200) {
@@ -166,9 +188,6 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
 
                   {checkupType === "1" && (
                     <div>
-                      <p>
-                        Checkup: <input type="text" id="checkup" required />
-                      </p>
                       <p>
                         Notes: <textarea id="desc" required></textarea>
                       </p>
