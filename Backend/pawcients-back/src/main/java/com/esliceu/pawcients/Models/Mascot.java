@@ -29,21 +29,13 @@ public class Mascot {
     public Mascot(){}
 
     public Mascot(String id, String clinicId, String name, String species, String breed,
-                  int age, String gender, int weight, String color, String identificationSerial,
-                  String allergies, String notes,
-                  LocalDate birthDate, String ownerId) {
+                  String gender, LocalDate birthDate, String ownerId) {
         this.id = id;
         this.clinicId = clinicId;
         this.name = name;
         this.species = species;
         this.breed = breed;
-        this.age = age;
         this.gender = gender;
-        this.weight = weight;
-        this.color = color;
-        this.identificationSerial = identificationSerial;
-        this.allergies = allergies;
-        this.notes = notes;
         this.birthDate = birthDate;
         this.ownerId = ownerId;
     }

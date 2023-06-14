@@ -44,6 +44,7 @@ public class AppointmentService {
             cadto.setStartDate(a.getStartDate());
             cadto.setEndDate(a.getEndDate());
             cadto.setType(a.getType());
+            cadto.setAppointmentId(a.getId());
             calendarAppointments.add(cadto);
         }
         return calendarAppointments;
@@ -95,7 +96,8 @@ public class AppointmentService {
     }
 
     public List<Appointment> getTodaysAppointments(User actualUser) {
-        return appointmentRepo.findByWorkerId(actualUser.getId());
+        LocalDate today = LocalDate.now();
+        return appointmentRepo.findByWorkerIdAndStartDate(actualUser.getId(), today);
     }
 
     public Appointment getEarliestClientAppointment(String clientId) {
