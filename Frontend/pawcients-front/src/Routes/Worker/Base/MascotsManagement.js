@@ -18,13 +18,13 @@ export default function MascotsManagement() {
 
   const obtainMascots = async () => {
     const mascotsData = await getMascots();
-    setMascots(mascotsData.mascotData);
-    setVisibleMascots(mascotsData.mascotData);
+    if (mascotsData && mascotsData.mascotData) {
+      setMascots(mascotsData.mascotData);
+      setVisibleMascots(mascotsData.mascotData);
+    } else {
+      console.log("Failed to fetch mascots");
+    }
   };
-
-  // const openModal = () => {
-  //     setCreationMode(true);
-  // };
 
   const handleClose = () => {
     setCreationMode(false);
@@ -39,7 +39,7 @@ export default function MascotsManagement() {
     e.preventDefault();
     const searchText = e.target.value;
     let filtered = [];
-    filtered = [...mascots].filter((mascot) =>
+    filtered = mascots.filter((mascot) =>
       mascot.name.toLowerCase().includes(searchText.toLowerCase())
     );
     setVisibleMascots(filtered);
@@ -69,28 +69,27 @@ export default function MascotsManagement() {
                         <th>More details</th>
                       </tr>
                     </thead>
-
-                    {visibleMascots.map((pet) => (
-                      <tbody key={pet.id}>
-                        <tr>
-                          <td>{pet.name}</td>
-                          <td>{pet.species}</td>
-                          <td>{pet.gender}</td>
-                          <td>{pet.birthDate}</td>
+                    <tbody>
+                      {visibleMascots.map((mascot) => (
+                        <tr key={mascot.id}>
+                          <td>{mascot.name}</td>
+                          <td>{mascot.species}</td>
+                          <td>{mascot.gender}</td>
+                          <td>{mascot.birthDate}</td>
                           <td>
-                            {pet.ownerName} {pet.ownerSurname}
+                            {mascot.ownerName} {mascot.ownerSurname}
                           </td>
                           <td>
                             <Link
                               className="small-button"
-                              to={"/vet/mascot/" + pet.id}
+                              to={"/vet/mascot/" + mascot.id}
                             >
                               View
                             </Link>
                           </td>
                         </tr>
-                      </tbody>
-                    ))}
+                      ))}
+                    </tbody>
                   </table>
                 </div>
               </div>

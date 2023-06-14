@@ -58,7 +58,7 @@ const AnimalManagementPage = () => {
             mascotidRef.current
           );
           if (isMounted) {
-            setFetchedAnimalData(data);
+            setFetchedAnimalData(data.mascot);
           }
         } catch (error) {
           console.error("Error fetching mascot data:", error);
@@ -73,7 +73,7 @@ const AnimalManagementPage = () => {
         try {
           const data = await fetchMascotDataVet(mascotidRef.current);
           if (isMounted) {
-            setFetchedAnimalData(data);
+            setFetchedAnimalData(data.mascot);
           }
         } catch (error) {
           console.error("Error fetching mascot data:", error);
@@ -95,6 +95,8 @@ const AnimalManagementPage = () => {
     breed: fetchedAnimalData?.breed,
     age: fetchedAnimalData?.age,
     gender: fetchedAnimalData?.gender,
+    weight: fetchedAnimalData?.weight,
+    color: fetchedAnimalData?.color,
     identificationNumber: fetchedAnimalData?.identificationSerial,
   };
   const [isEditing, setIsEditing] = useState(false);
@@ -124,13 +126,17 @@ const AnimalManagementPage = () => {
   const handleSaveClick = () => {
     // Send only profile details of the animal to backend
     const editedAnimalDataToSend = {
-      image: editedAnimalData.image,
-      species: editedAnimalData.species,
-      breed: editedAnimalData.breed,
-      age: editedAnimalData.age,
-      gender: editedAnimalData.gender,
-      weight: editedAnimalData.weight,
-      color: editedAnimalData.color,
+      mascot: {
+        ...fetchedAnimalData?.mascot,
+        image: editedAnimalData.image,
+        species: editedAnimalData.species,
+        breed: editedAnimalData.breed,
+        age: editedAnimalData.age,
+        gender: editedAnimalData.gender,
+        weight: editedAnimalData.weight,
+        color: editedAnimalData.color,
+        identificationSerial: editedAnimalData.identificationNumber,
+      },
     };
     fetchMascotDataChangeProfileInfo(
       mascotidRef.current,
@@ -138,6 +144,7 @@ const AnimalManagementPage = () => {
     );
 
     setIsEditing(false);
+    window.location.reload();
   };
 
   const handleChange = (e) => {
@@ -149,7 +156,8 @@ const AnimalManagementPage = () => {
       name === "age" ||
       name === "gender" ||
       name === "weight" ||
-      name === "color"
+      name === "color" ||
+      name === "identificationNumber"
     ) {
       setEditedAnimalData((prevData) => ({
         ...prevData,
@@ -199,12 +207,8 @@ const AnimalManagementPage = () => {
               )}
               <div className="animal-details">
                 <h2 className="animal-name">
-                  <strong>Name: {animalData.name}</strong>{" "}
+                  <strong>Name: {name}</strong>
                 </h2>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
                 <p>
                   <strong>Species:</strong>{" "}
                   {isEditing ? (
@@ -293,14 +297,25 @@ const AnimalManagementPage = () => {
                   color
                 )}
               </p>
+              <p>
+                <strong>Identification Number:</strong>{" "}
+                {isEditing ? (
+                  <input
+                    className="animalprofile-input"
+                    type="text"
+                    name="identificationNumber"
+                    value={identificationNumber}
+                    onChange={handleChange}
+                  />
+                ) : (
+                  identificationNumber
+                )}
+              </p>
               {isEditing ? (
                 <button onClick={handleSaveClick}>Save</button>
               ) : (
                 <button onClick={handleEditClick}>Edit</button>
               )}
-              <p>
-                <strong>Identification Number:</strong> {identificationNumber}
-              </p>
             </div>
             {visits && visits.length > 0 ? (
               <div>
