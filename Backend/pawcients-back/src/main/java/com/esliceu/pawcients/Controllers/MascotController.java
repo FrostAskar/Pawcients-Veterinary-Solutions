@@ -148,7 +148,7 @@ public class MascotController {
         return mdto;
     }
 
-    @PutMapping("/client/{clientId}/mascot/{mascotId}")
+    @PutMapping("/mascot/{mascotId}")
     @CrossOrigin
     public String updateMascotInfo(@PathVariable String clientId,
                                    @PathVariable String mascotId,
@@ -161,5 +161,5 @@ public class MascotController {
         return "ok";
     }
 
-    
+
 }
