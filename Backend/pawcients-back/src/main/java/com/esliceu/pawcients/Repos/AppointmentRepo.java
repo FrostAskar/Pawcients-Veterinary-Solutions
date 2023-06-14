@@ -16,4 +16,5 @@ public interface AppointmentRepo extends MongoRepository<Appointment, String> {
     boolean existsByClientId(String clientId);
     List<Appointment> findByWorkerIdAndStartDate(String workerId, LocalDate date);
 
+    List<Appointment> findByClientId(String clientId);
 }

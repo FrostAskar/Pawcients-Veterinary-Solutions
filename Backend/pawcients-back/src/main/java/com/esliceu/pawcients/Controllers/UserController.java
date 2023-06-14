@@ -190,6 +190,7 @@ public class UserController {
             String action = userService.deleteUser(userId, actualUser);
             if(action.equals("User deleted successfully")){
                 mascotService.deleteMascotByOwnerId(userId);
+                appointmentService.deleteAppointmentByClientId(userId);
             }
             result.put("action", action);
             res.setStatus(200);

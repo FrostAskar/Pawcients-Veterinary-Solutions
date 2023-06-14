@@ -160,4 +160,6 @@ public class MascotController {
         mascotService.updateMascot(mascotToUpdate);
         return "ok";
     }
+
+    
 }

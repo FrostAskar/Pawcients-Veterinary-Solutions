@@ -127,4 +127,13 @@ public class AppointmentService {
         }
         return nextSeven;
     }
+
+    public void deleteAppointmentByClientId(String userId) {
+        List<Appointment> appointmentsByClient = appointmentRepo.findByClientId(userId);
+        if(appointmentsByClient.size() > 0) {
+            for (Appointment a : appointmentsByClient) {
+                appointmentRepo.deleteById(a.getId());
+            }
+        }
+    }
 }
