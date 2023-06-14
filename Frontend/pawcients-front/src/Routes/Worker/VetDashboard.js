@@ -3,20 +3,33 @@ import "css/global/variables.css";
 import "css/vet/vetHome.scss";
 import TodayPatient from "Routes/Worker/TodayPatient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
-import FilterComponent from "Routes/Common/FilterComponent"
+import FilterComponent from "Routes/Common/FilterComponent";
 import Paw from "../../media/paw.png";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getTodayAppointments } from "fetches/Worker/Appointments/FetchGetTodayAppointments";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
-import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from "recharts";
+import {
+  BarChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Bar,
+  CartesianGrid,
+} from "recharts";
 
 const citas = [
   { date: "2023-06-01", citas: 5 },
   { date: "2023-06-02", citas: 10 },
   { date: "2023-06-03", citas: 7 },
   { date: "2023-06-04", citas: 12 },
+];
+const animals = [
+  { date: "Dogs", citas: 30 },
+  { date: "Cats", citas: 45 },
+  { date: "Others", citas: 25 },
 ];
 
 export default function VetDashboard() {
@@ -61,12 +74,19 @@ export default function VetDashboard() {
     e.preventDefault();
     const searchText = e.target.value;
     let filtered = [];
-    filtered = [...todayAppointments].filter(todayAppointment => todayAppointment.mascot.name.toLowerCase().includes(searchText.toLowerCase()) || todayAppointment.user.name.toLowerCase().includes(searchText.toLowerCase()));
+    filtered = [...todayAppointments].filter(
+      (todayAppointment) =>
+        todayAppointment.mascot.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        todayAppointment.user.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+    );
     setVisibleTodayAppointments(filtered);
-  }
+  };
 
   console.log(todayAppointments);
-
 
   return (
     <div className="dashboard">
@@ -96,9 +116,7 @@ export default function VetDashboard() {
                     Today:{" "}
                     <span className="today-patients-number">
                       {" "}
-                      {todayAppointments.length}
-                      {" "}
-                      appointments
+                      {todayAppointments.length} appointments
                     </span>
                   </p>
                 </div>
@@ -108,18 +126,14 @@ export default function VetDashboard() {
               <div className="section-content">
                 <div className="patients-type">
                   <h3>Patients by type</h3>
-                  <div className="patients-type-class">
-                    <div className="blue-circle"> </div>
-                    <p>Dog</p>
-                  </div>
-                  <div className="patients-type-class">
-                    <div className="red-circle"></div>
-                    <p>Cat</p>
-                  </div>
-                  <div className="patients-type-class">
-                    <div className="yellow-circle"></div>
-                    <p>Others</p>
-                  </div>
+                  <BarChart width={500} height={300} data={animals}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="value" fill="#8884d8" />
+                  </BarChart>
                 </div>
               </div>
             </div>
