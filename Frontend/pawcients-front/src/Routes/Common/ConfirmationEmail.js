@@ -45,7 +45,8 @@ const ConfirmationEmail = () => {
     const response = fetchVerifyEmail(confirmationCode);
     response.then((data) => {
       console.log("Response:", data);
-      if (data.status === "ok") {
+      //if (data.status === "ok") {
+        if (response != null) {
         if (profileData.type === "client") {
           window.location.href = "/clientdashboard";
         }

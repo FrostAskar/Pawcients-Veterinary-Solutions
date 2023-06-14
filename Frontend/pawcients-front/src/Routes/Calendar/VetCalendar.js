@@ -153,8 +153,6 @@ const VetCalendar = () => {
                 setAddEvent(false);
                 getAppointments();
                 setAvailableHours(allowedHours.filter(event => event !== startTime));
-                console.log(availableHours);
-                console.log(startTime);
             }
         } catch (e) {
             //setErrorMessage("Error en la conexión con el servidor");

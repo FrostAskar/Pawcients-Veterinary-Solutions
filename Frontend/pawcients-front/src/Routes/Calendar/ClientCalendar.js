@@ -5,6 +5,7 @@ import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { useState, useEffect, useCallback } from 'react';
 import { getAllAppointments } from 'fetches/Client/Appointments/FetchGetAllAppoinments';
 import { getVetAppointments } from 'fetches/Worker/Appointments/FetchGetVetAppointments';
+import { addAppointment } from 'fetches/Client/Appointments/FetchAddAppointment';
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
 import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClient'
@@ -12,7 +13,7 @@ import 'css/calendar/calendar.scss';
 import 'css/global/global.scss';
 
 const ClientCalendar = () => {
-    //const [profileData, setProfileData] = useState(null);
+    const [profileData, setProfileData] = useState(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [addEventButton, setAddEventButton] = useState(false);
@@ -37,11 +38,14 @@ const ClientCalendar = () => {
 
         try {
             const data = await fetchProfile();
-            //setProfileData(data);
+            setProfileData(data);
             const eventsData = await getAllAppointments(data.id);
             setEvents(formatDate(eventsData.calendarAppointments));
-            const mascotsData = await getMascotsByClient(data.id);
-            setMascots(mascotsData.mascots);
+            const mascotData = await getMascotsByClient(data.id);
+            setMascots(mascotData.mascots);
+            if (mascotData.mascots.length > 0) {
+                setSelectedMascot(mascotData.mascots[0].id);
+            }
 
         } catch (error) {
             setErrorMessage("Error en la conexión con el servidor");
@@ -98,6 +102,27 @@ const ClientCalendar = () => {
 
     const handleAddEvent = async (e) => {
         e.preventDefault();
+        const [startHours, startMinutes] = selectedTime.split(':');
+
+        const fullDateStart = new Date(selectedDate);
+        fullDateStart.setHours(startHours);
+        fullDateStart.setMinutes(startMinutes);
+
+        const fullDateEnd = new Date(selectedDate);
+        const endHours = Number(startHours) + 1
+        fullDateEnd.setHours(endHours);
+        fullDateEnd.setMinutes(startMinutes);
+
+        try {
+            const response = await addAppointment(profileData.id, selectedMascot, selectedVet, "Checkup", fullDateStart, fullDateEnd)
+            if (response != null) {
+                setAddEventModal(false);
+                getAppointments();
+                setAvailableHours(allowedHours.filter(event => event !== selectedTime));
+            }
+        } catch (e) {
+            //setErrorMessage("Error en la conexión con el servidor");
+        }
     }
 
     const handleChangeVet = async (e) => {
