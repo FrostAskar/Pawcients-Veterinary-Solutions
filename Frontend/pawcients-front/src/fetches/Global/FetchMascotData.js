@@ -1,6 +1,6 @@
 export async function fetchMascotData(clientID, mascotID) {
   const response = await fetch(
-    "http://localhost:8080/client/" + clientID + "/mascot/" + mascotID,
+    "http://localhost:8080/client/mascot/" + mascotID,
     {
       method: "GET",
       headers: {
@@ -14,7 +14,7 @@ export async function fetchMascotData(clientID, mascotID) {
   return data;
 }
 export async function fetchMascotDataVet(mascotID) {
-  const response = await fetch("http://localhost:8080/vet/mascot/" + mascotID, {
+  const response = await fetch("http://localhost:8080/mascot/" + mascotID, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -52,8 +52,7 @@ export async function fetchMascotDataChangeProfileInfo(
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
     body: JSON.stringify({
-      name: editedAnimalData.name,
-      image: editedAnimalData.image,
+      photo: editedAnimalData.image,
       species: editedAnimalData.species,
       breed: editedAnimalData.breed,
       age: editedAnimalData.age,

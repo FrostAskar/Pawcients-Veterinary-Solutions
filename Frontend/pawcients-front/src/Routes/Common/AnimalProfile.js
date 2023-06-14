@@ -20,6 +20,7 @@ const AnimalManagementPage = () => {
 
   const [profileData, setProfileData] = useState(null);
   const [visits, setVisits] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -103,10 +104,26 @@ const AnimalManagementPage = () => {
     setIsEditing(true);
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setSelectedImage(reader.result);
+      setEditedAnimalData((prevData) => ({
+        ...prevData,
+        image: reader.result,
+      }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSaveClick = () => {
     // Send only profile details of the animal to backend
     const editedAnimalDataToSend = {
-      name: editedAnimalData.name,
       image: editedAnimalData.image,
       species: editedAnimalData.species,
       breed: editedAnimalData.breed,
@@ -166,21 +183,28 @@ const AnimalManagementPage = () => {
         <div className="animal-management-page">
           <div className="animal-profile">
             <div className="profile-header">
-              <img src={image} alt={name} className="animal-image" />
+              <img
+                src={selectedImage || image}
+                alt={name}
+                className="animal-image"
+              />
+              {isEditing && (
+                <div className="image-upload">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                </div>
+              )}
               <div className="animal-details">
                 <h2 className="animal-name">
-                  {isEditing ? (
-                    <input
-                      className="animalprofile-input"
-                      type="text"
-                      name="name"
-                      value={name}
-                      onChange={handleChange}
-                    />
-                  ) : (
-                    name
-                  )}
+                  <strong>Name: {animalData.name}</strong>{" "}
                 </h2>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
                 <p>
                   <strong>Species:</strong>{" "}
                   {isEditing ? (
