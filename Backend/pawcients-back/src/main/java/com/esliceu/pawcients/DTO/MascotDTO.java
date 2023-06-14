@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class MascotDTO {
     private String id;
-    private String image;
+    private String photo;
     private String name;
     private String species;
     private String gender;
@@ -27,12 +27,12 @@ public class MascotDTO {
     public MascotDTO() {
     }
 
-    public String getImage() {
-        return image;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(String photo) {
+        this.photo = photo;
     }
 
     public String getBreed() {

@@ -89,6 +89,7 @@ public class MascotService {
         mascotToUpdate.setWeight(updateMascotForm.getWeight());
         mascotToUpdate.setColor(updateMascotForm.getColor());
         mascotToUpdate.setIdentificationSerial(updateMascotForm.getIdentificationNumber());
+        mascotToUpdate.setPhoto(updateMascotForm.getPhoto());
         return mascotToUpdate;
     }
 

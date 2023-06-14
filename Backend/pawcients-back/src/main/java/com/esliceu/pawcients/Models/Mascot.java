@@ -11,7 +11,7 @@ public class Mascot {
     String id;
     String clinicId;
     String name;
-    String photo = "https://thecontemporarypet.com/wp-content/themes/contemporarypet/images/default.png";
+    String photo;
     String species;
     String breed;
     int age;

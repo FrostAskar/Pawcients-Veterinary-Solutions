@@ -9,8 +9,7 @@ public class UpdateMascotForm {
     int weight;
     String color;
     String identificationNumber;
-    String allergies;
-    String notes;
+    String photo;
 
     //History Updates
 
@@ -54,4 +53,11 @@ public class UpdateMascotForm {
         this.identificationNumber = identificationNumber;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 }
