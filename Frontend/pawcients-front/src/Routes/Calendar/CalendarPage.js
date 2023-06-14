@@ -37,28 +37,23 @@ const CalendarPage = () => {
 
     const location = useLocation();
 
-
-    useEffect(() => {
-        obtainClients();
-    }, []);
-
-
     useEffect(() => {
         const getAppointments = async () => {
             try {
                 const profileData = await fetchProfile();
                 setProfileData(profileData);
-    
+
                 const eventsData = await getAllAppointments(profileData.id);
                 setEvents(formatDate(eventsData));
             } catch (error) {
                 setErrorMessage("Error en la conexión con el servidor");
             }
         };
+
         getAppointments();
+        obtainClients();
 
     }, [events])
-
 
 
 
@@ -70,10 +65,14 @@ const CalendarPage = () => {
             const getMascots = async () => {
                 const mascotsData = await getMascotsByClient(selectedClient);
                 setMascots(mascotsData.mascots);
+                if (mascotsData.mascots.length > 0) {
+                    setSelectedMascot(mascotsData.mascots[0].id); 
+                  }
             };
             getMascots();
         } else {
             setMascots([]);
+            setSelectedMascot("")
         }
     }, [selectedClient, location]);
 
@@ -129,12 +128,13 @@ const CalendarPage = () => {
 
         try {
             if (selectedMascot === "") {
-                console.log(selectedClient, profileData.id, type, fullDateStart, fullDateEnd);
+                console.log(selectedMascot, selectedClient, profileData.id, type, fullDateStart, fullDateEnd);
+                setErrorMessage("Could not add event successfully");
                 throw new Error("Mascot empty");
             }
             const response = await addAppointment(selectedClient, selectedMascot, profileData.id, type, fullDateStart, fullDateEnd, profileData.id)
             if (response != null) {
-                
+
                 setAddEvent(false);
             }
         } catch (e) {
@@ -262,10 +262,7 @@ const CalendarPage = () => {
                                     ))}
                                 </select>
                                 <label htmlFor="mascot">Mascot</label>
-                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => {
-                                    setSelectedMascot(e.target.value);
-                                    console.log(e.target.value);
-                                }} required>
+                                <select name="mascots" id="mascots" value={selectedMascot} onChange={(e) => setSelectedMascot(e.target.value)} required>
                                     {mascots.map((mascot, index) => (
                                         <option key={index} value={mascot.id}>
                                             {mascot.name}

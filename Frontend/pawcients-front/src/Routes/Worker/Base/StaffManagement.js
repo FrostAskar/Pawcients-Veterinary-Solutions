@@ -5,6 +5,8 @@ import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
 import FilterComponent from "Routes/Common/FilterComponent"
 import { fetchWorkerRegister } from "fetches/Worker/Staff/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
+import { deleteUser } from "fetches/Worker/FetchDeleteUser";
+import { ConfirmationPopup } from "Routes/Common/PopUp";
 import { Link } from 'react-router-dom'
 
 export default function StaffManagement() {
@@ -12,6 +14,7 @@ export default function StaffManagement() {
     const [workers, setWorkers] = useState([]);
     const [visibleWorkers, setVisibleWorkers] = useState([]);
     const [creationMode, setCreationMode] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState({});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -63,6 +66,40 @@ export default function StaffManagement() {
         filtered = [...workers].filter(worker => worker.name.toLowerCase().includes(searchText.toLowerCase()));
         setVisibleWorkers(filtered);
     }
+
+    //Delete Pop up 
+
+    const handleDeleteClick = (e, userId) => {
+        e.preventDefault();
+        setIsPopupOpen((prevState) => ({
+            ...prevState,
+            [userId]: true,
+        }));
+    };
+
+    const handleCancel = () => {
+        setIsPopupOpen(false);
+    };
+
+    const handleConfirm = async (e, userId) => {
+        e.preventDefault();
+        try {
+            // Fetch para login de cliente
+            const response = await deleteUser(userId);
+            if (response !== null) {
+                console.log(response);
+                setIsPopupOpen((prevState) => ({
+                    ...prevState,
+                    [userId]: false,
+                }));
+                obtainWorkers();
+            } else {
+            }
+        } catch (error) {
+        }
+        setIsPopupOpen(false);
+    };
+
 
     
     return (
@@ -117,7 +154,15 @@ export default function StaffManagement() {
                                                         </Link>
 
                                                     </td>
-                                                    <td><button className="small-button"><i className="material-icons">delete</i></button></td>
+                                                    <td><button className="small-button" onClick={(e) => handleDeleteClick(e, worker.id)}><i className="material-icons">delete</i></button></td>
+                                                    {isPopupOpen[worker.id] && (
+                                                        <div>
+                                                            <ConfirmationPopup
+                                                                onCancel={handleCancel}
+                                                                onConfirm={(e) => handleConfirm(e, worker.id)}
+                                                            />
+                                                        </div>
+                                                    )}
                                                 </tr>
                                             </tbody>
 

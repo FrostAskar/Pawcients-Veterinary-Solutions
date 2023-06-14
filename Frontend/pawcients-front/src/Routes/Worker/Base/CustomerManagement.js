@@ -17,11 +17,11 @@ export default function CustomerManagement() {
     const [clientID, setClientID] = useState("");
     const [customers, setCustomers] = useState([]);
     const [visibleCustomers, setVisibleCustomers] = useState([]);
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState({});
 
     useEffect(() => {
         obtainClients();
-        
+
     }, [])
 
     const obtainClients = async () => {
@@ -59,8 +59,12 @@ export default function CustomerManagement() {
 
     //Delete Pop up 
 
-    const handleDeleteClick = () => {
-        setIsPopupOpen(true);
+    const handleDeleteClick = (e, userId) => {
+        e.preventDefault();
+        setIsPopupOpen((prevState) => ({
+            ...prevState,
+            [userId]: true,
+        }));
     };
 
     const handleCancel = () => {
@@ -74,7 +78,11 @@ export default function CustomerManagement() {
             const response = await deleteUser(userId);
             if (response !== null) {
                 console.log(response);
-                setIsPopupOpen(false);
+                setIsPopupOpen((prevState) => ({
+                    ...prevState,
+                    [userId]: false,
+                }));
+                obtainClients();
             } else {
             }
         } catch (error) {
@@ -147,12 +155,12 @@ export default function CustomerManagement() {
                                                     </td>
                                                     <td><button className="small-button">View pets</button></td>
                                                     <td><button className="small-button" onClick={(e) => openMascotModal(e, item.client.id)}>Add</button></td>
-                                                    <td><button className="small-button" onClick={handleDeleteClick}><i className="material-icons">delete</i></button></td>
-                                                    {isPopupOpen && (
+                                                    <td><button className="small-button" onClick={(e) => handleDeleteClick(e, item.client.id)}><i className="material-icons">delete</i></button></td>
+                                                    {isPopupOpen[item.client.id] && (
                                                         <div>
                                                             <ConfirmationPopup
                                                                 onCancel={handleCancel}
-                                                                onConfirm={(e) => handleConfirm(e, item.client.id)}
+                                                                onConfirm={(e) => handleConfirm(e, item.client.id, item.client.name)}
                                                             />
                                                         </div>
                                                     )}
