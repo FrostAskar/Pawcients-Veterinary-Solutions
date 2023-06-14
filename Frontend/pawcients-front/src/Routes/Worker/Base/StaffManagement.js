@@ -87,7 +87,6 @@ export default function StaffManagement() {
             // Fetch para login de cliente
             const response = await deleteUser(userId);
             if (response !== null) {
-                console.log(response);
                 setIsPopupOpen((prevState) => ({
                     ...prevState,
                     [userId]: false,

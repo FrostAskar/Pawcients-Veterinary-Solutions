@@ -67,8 +67,12 @@ export default function CustomerManagement() {
         }));
     };
 
-    const handleCancel = () => {
-        setIsPopupOpen(false);
+    const handleCancel = (e, userId) => {
+        e.preventDefault();
+        setIsPopupOpen((prevState) => ({
+            ...prevState,
+            [userId]: false,
+        }));
     };
 
     const handleConfirm = async (e, userId) => {
@@ -77,7 +81,6 @@ export default function CustomerManagement() {
             // Fetch para login de cliente
             const response = await deleteUser(userId);
             if (response !== null) {
-                console.log(response);
                 setIsPopupOpen((prevState) => ({
                     ...prevState,
                     [userId]: false,
@@ -159,8 +162,8 @@ export default function CustomerManagement() {
                                                     {isPopupOpen[item.client.id] && (
                                                         <div>
                                                             <ConfirmationPopup
-                                                                onCancel={handleCancel}
-                                                                onConfirm={(e) => handleConfirm(e, item.client.id, item.client.name)}
+                                                                onCancel={(e) => handleCancel(e, item.client.id)}
+                                                                onConfirm={(e) => handleConfirm(e, item.client.id)}
                                                             />
                                                         </div>
                                                     )}

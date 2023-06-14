@@ -11,6 +11,8 @@ import { useLocation } from 'react-router-dom'
 import { getAllAppointments } from 'fetches/Worker/Appointments/FetchGetAllAppointments';
 import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClient'
 import { addAppointment } from 'fetches/Worker/Appointments/FetchAddAppointment';
+import { ConfirmationPopup } from "Routes/Common/PopUp";
+import { deleteAppointment } from 'fetches/Worker/Appointments/FetchDeleteAppointment';
 
 const localizer = momentLocalizer(moment);
 
@@ -34,6 +36,7 @@ const CalendarPage = () => {
     const [selectedMascot, setSelectedMascot] = useState("");
     //const [worker, setWorker] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [isPopupOpen, setIsPopupOpen] = useState({});
 
     const location = useLocation();
 
@@ -129,7 +132,6 @@ const CalendarPage = () => {
 
         try {
             if (selectedMascot === "") {
-                console.log(selectedMascot, selectedClient, profileData.id, type, fullDateStart, fullDateEnd);
                 setErrorMessage("Could not add event successfully");
                 throw new Error("Mascot empty");
             }
@@ -142,8 +144,6 @@ const CalendarPage = () => {
             //setErrorMessage("Error en la conexión con el servidor");
         }
     };
-
-    console.log(selectedEvent);
 
 
     const openModal = () => {
@@ -163,6 +163,42 @@ const CalendarPage = () => {
         return date.getHours() + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
     }
 
+    //Delete Pop up 
+
+    const handleDeleteClick = (e) => {
+        e.preventDefault();
+        setIsPopupOpen((prevState) => ({
+            ...prevState,
+            [selectedEvent.appointmentId]: true,
+        }));
+    };
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setIsPopupOpen((prevState) => ({
+            ...prevState,
+            [selectedEvent.appointmentId]: false,
+        }));
+    };
+
+    const handleConfirm = async (e) => {
+        e.preventDefault();
+        try {
+            console.log(selectedEvent.id)
+            const response = await deleteAppointment(profileData.id, selectedEvent.appointmentId);
+            setSelectedEvent(null)
+            if (response !== null) {
+                setIsPopupOpen((prevState) => ({
+                    ...prevState,
+                    [selectedEvent.appointmentId]: false,
+                }));
+                getAppointments();
+            } else {
+            }
+        } catch (error) {
+        }
+    };
+
 
     const allowedHours = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
         '13:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
@@ -180,9 +216,9 @@ const CalendarPage = () => {
                 <Calendar
                     localizer={localizer}
                     events={events}
+                    selectable
                     startAccessor="startDate"
                     endAccessor="endDate"
-                    selectable
                     onSelectEvent={handleEventSelect}
                     onNavigate={handleDateSelect}
                     min={minTime}
@@ -230,15 +266,15 @@ const CalendarPage = () => {
                                     ?
                                     <div className='buttons'>
                                         <button className='clasic-button' onClick={changeEditMode}>Edit</button>
-                                        <button className='clasic-button' id="cancel-button">Delete</button>
-                                        {/* {isPopupOpen[item.client.id] && (
+                                        <button className='clasic-button' id="cancel-button" onClick={(e) => handleDeleteClick(e)}>Delete</button>
+                                        {isPopupOpen[selectedEvent.appointmentId] && (
                                             <div>
                                                 <ConfirmationPopup
-                                                    onCancel={handleCancel}
-                                                    onConfirm={(e) => handleConfirm(e, item.client.id, item.client.name)}
+                                                    onCancel={(e) => handleCancel(e)}
+                                                    onConfirm={(e) => handleConfirm(e)}
                                                 />
                                             </div>
-                                        )} */}
+                                        )}
                                     </div>
                                     :
                                     <div className='buttons'>
