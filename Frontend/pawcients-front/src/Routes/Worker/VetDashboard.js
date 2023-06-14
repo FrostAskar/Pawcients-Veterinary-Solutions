@@ -86,8 +86,6 @@ export default function VetDashboard() {
     setVisibleTodayAppointments(filtered);
   };
 
-  console.log(todayAppointments);
-
   return (
     <div className="dashboard">
       <SideNavbarWorker />

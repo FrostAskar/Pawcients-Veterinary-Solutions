@@ -37,17 +37,29 @@ const CalendarPage = () => {
     //const [worker, setWorker] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isPopupOpen, setIsPopupOpen] = useState({});
-
+    const allowedHours = ['08:00', '09:00', '10:00', '11:00','12:00', '13:00', '16:00', '17:00', '18:00', '19:00'];
+    const [availableHours, setAvailableHours] = useState(allowedHours);
     const location = useLocation();
 
 
+    // function getAppointmentsHours() {
+    //     for (var i = 0; i < events.length; i++) {
+    //         const date = new Date(events[i].startDate)
+    //         const formattedDate = date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
+    //         setScheduleHours([...scheduledHours, formattedDate])
+    //     }
+    //     setAvailableHours(allowedHours.filter(event => !scheduledHours.includes(event)));
+    // }
+
+
     const getAppointments = useCallback(async () => {
+
         try {
             const data = await fetchProfile();
             setProfileData(data);
-
             const eventsData = await getAllAppointments(data.id);
             setEvents(formatDate(eventsData));
+
         } catch (error) {
             setErrorMessage("Error en la conexión con el servidor");
         }
@@ -88,7 +100,29 @@ const CalendarPage = () => {
 
     const handleDateSelect = date => {
         setSelectedDate(date);
+        setAvailableAppointments();
+
     };
+
+    function setAvailableAppointments() {
+        var scheduledHours = [];
+        setAvailableHours(allowedHours);
+        const dayEvents = events.filter(event => {
+            return event.startDate.toDateString() === selectedDate.toDateString();
+        });
+
+        if (dayEvents.length !== 0) {
+            for (var i = 0; i < dayEvents.length; i++) {
+                const date = new Date(dayEvents[i].startDate)
+                const formattedDate = date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
+                scheduledHours.push(formattedDate);
+            }
+            setAvailableHours(allowedHours.filter(event => !scheduledHours.includes(event)));
+            scheduledHours = [];
+        }
+    }
+
+
 
     const handleView = view => {
         if (view === 'day') {
@@ -139,11 +173,17 @@ const CalendarPage = () => {
             if (response != null) {
                 setAddEvent(false);
                 getAppointments();
+                setAvailableHours(allowedHours.filter(event => event !== startTime));
+                console.log(availableHours);
+                console.log(startTime);
             }
         } catch (e) {
             //setErrorMessage("Error en la conexión con el servidor");
         }
     };
+
+
+
 
     const openModal = () => {
         setAddEvent(true);
@@ -198,8 +238,6 @@ const CalendarPage = () => {
     };
 
 
-    const allowedHours = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
-        '13:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
 
     return (
         <div className="dashboard">
@@ -323,7 +361,7 @@ const CalendarPage = () => {
                                         </select>
                                         <label htmlFor='startTime'>Start Time</label>
                                         <select className='select-time' id="startTime" >
-                                            {allowedHours.map(option => (
+                                            {availableHours.map(option => (
                                                 <option key={option} value={option} >{option}</option>
                                             ))}
                                         </select>
