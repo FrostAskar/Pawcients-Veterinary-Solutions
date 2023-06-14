@@ -39,7 +39,7 @@ const ClientCalendar = () => {
             const data = await fetchProfile();
             //setProfileData(data);
             const eventsData = await getAllAppointments(data.id);
-            setEvents(formatDate(eventsData));
+            setEvents(formatDate(eventsData.calendarAppointments));
             const mascotsData = await getMascotsByClient(data.id);
             setMascots(mascotsData.mascots);
 

@@ -42,7 +42,7 @@ const VetCalendar = () => {
             const data = await fetchProfile();
             setProfileData(data);
             const eventsData = await getVetAppointments(data.id);
-            setEvents(formatDate(eventsData));
+            setEvents(formatDate(eventsData.calendarAppointments));
 
         } catch (error) {
             setErrorMessage("Error en la conexión con el servidor");
