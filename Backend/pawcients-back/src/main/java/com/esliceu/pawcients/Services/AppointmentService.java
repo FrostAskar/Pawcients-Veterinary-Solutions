@@ -96,8 +96,15 @@ public class AppointmentService {
     }
 
     public List<Appointment> getTodaysAppointments(User actualUser) {
+        List<Appointment> appointments = appointmentRepo.findByWorkerId(actualUser.getId());
+        List<Appointment> todayAppointments = new ArrayList<>();
         LocalDate today = LocalDate.now();
-        return appointmentRepo.findByWorkerIdAndStartDate(actualUser.getId(), today);
+        for(Appointment a : appointments) {
+            if(a.getStartDate().toLocalDate().equals(today)){
+                todayAppointments.add(a);
+            }
+        }
+        return todayAppointments;
     }
 
     public Appointment getEarliestClientAppointment(String clientId) {
