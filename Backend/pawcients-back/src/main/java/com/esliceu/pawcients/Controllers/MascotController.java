@@ -148,6 +148,13 @@ public class MascotController {
         return mdto;
     }
 
+    @GetMapping("/mascot/{mascotId}")
+    @CrossOrigin
+    public Mascot getMascotById(@PathVariable String mascotId,
+                                HttpServletRequest req) {
+        return mascotService.findMascotById(mascotId);
+    }
+
     @PutMapping("/mascot/{mascotId}")
     @CrossOrigin
     public String updateMascotInfo(@PathVariable String mascotId,
