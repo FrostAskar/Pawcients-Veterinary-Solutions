@@ -38,12 +38,11 @@ public class AppointmentController {
         return appointmentService.getCalendarAppointmentsByVet(vetId);
     }
 
-    @GetMapping("/vet/{vetId}/appointment/client/{clientId}")
+    @GetMapping("/client/{clientId}/appointment")
     @CrossOrigin
-    public List<Appointment> getAppointmentsByClient(@PathVariable String vetId,
-                                                     @PathVariable String clientId) {
-
-        return appointmentService.getAppointmentsByVetAndClient(vetId, clientId);
+    public List<CalendarAppointmentDTO> getAppointmentsByClient(@PathVariable String clientId,
+                                                     HttpServletRequest req) {
+        return appointmentService.getCalendarAppointmentsByClient(clientId);
     }
 
     @PostMapping("/vet/{vetId}/appointment")

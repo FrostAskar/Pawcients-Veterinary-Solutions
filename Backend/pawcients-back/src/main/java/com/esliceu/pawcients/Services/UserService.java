@@ -34,32 +34,18 @@ public class UserService {
     }
 
     public String saveUser(User user, User actualUser) {
-        if(!checkEmailValidity(user.getEmail())) throw new IncorrectRegisterException("Email is not a valid email");
+        if(!checkEmailValidity(user.getEmail()))
+            throw new IncorrectRegisterException("Email is not a valid email");
+        if (checkEmailIsInUse(user))
+            throw new IncorrectRegisterException("This email is already in use");
         String verificationCode = String.valueOf((int)(Math.random()*1000000));
+        String tempPassword = Encrypt.createTempPassword();
+        System.out.println(tempPassword);
         user.setVerificationCodeEmail(verificationCode);
         user.setPassword(Encrypt.sha512(verificationCode));
-        //If the user doing the register is the admin, goes through
-        if(actualUser.getType().equals("admin")) {
-            if (checkEmailIsInUse(user)) {
-                throw new IncorrectRegisterException("This email is already in use");
-            }
-        //If the user doing the register is any worker, can only register other vets, aux and clients
-        } else if (!actualUser.getType().equals("client")) {
-            if(!actualUser.getVerificationCodeEmailCheck()) {
-                throw new UnverifiedUserException("This user is not verified yet");
-            }
-            if(checkEmailIsInUse(user)) {
-                throw new IncorrectRegisterException("This email is already in use");
-            //Only one admin can be allowed
-            } else if(user.getType().equals("admin")) {
-                throw new IncorrectRegisterException("Admin users cannot be registered");
-            }
-        } else {
-            //User is client. Deny creation
-            throw new UnauthorizedUserException("This user is not allowed to register users");
-        }
+
         System.out.println("Email verification is disabled. --Dámaso");//Send verification email
-//        emailSenderService.SendWelcomeEmail(user.getEmail(), user.getName(), user.getSurname(), user.getVerificationCodeEmail());
+//        emailSenderService.SendWelcomeEmail(user, tempPassword);
         return userRepo.save(user).getId();
     }
 
@@ -85,6 +71,8 @@ public class UserService {
     }
 
     public User generateUser(String userId) {
+        if(userRepo.findById(userId).isEmpty())
+            throw new NotFoundUserException("User does not exist");
         return userRepo.findById(userId).get();
     }
 
@@ -131,29 +119,18 @@ public class UserService {
         return users;
     }
 
-    public String deleteUser(String userId, User actualUser) {
-        if(!actualUser.getVerificationCodeEmailCheck()) throw new UnverifiedUserException("User not verified");
-        if(actualUser.getType().equals("client") && !actualUser.getId().equals(userId))
-            throw new UnauthorizedUserException("This user cannot delete users");
-        User toDeleteUser = null;
-        //Checks user exists to proceed
-        if(userRepo.findById(userId).isEmpty()){
-            throw new NotFoundUserException("User not found");
-        } else {
-            toDeleteUser = userRepo.findById(userId).get();
-            userRepo.deleteById(userId);
-        }
+    public String deleteUser(User targetUser, User actualUser) {
+        userRepo.deleteById(targetUser.getId());
         //Additional check. If no more users for that clinic, delete the clinic
-        List<User> usersOnClinic = getUsersByClinic(toDeleteUser.getClinicId());
+        List<User> usersOnClinic = getUsersByClinic(targetUser.getClinicId());
         if(usersOnClinic.size() < 1) {
-            clinicService.deleteClinic(toDeleteUser.getClinicId());
+            clinicService.deleteClinic(targetUser.getClinicId());
         }
         //Verification delete has proceeded without error
-        if(userRepo.findById(userId).isEmpty()) {
-            return "User deleted successfully";
-        } else {
+        if(!userRepo.findById(targetUser.getId()).isEmpty()) {
             throw new FailedActionException("Delete Action Failed");
         }
+        return "User deleted successfully";
     }
 
     public List<User> getUsersByClinic(String clinicId) {

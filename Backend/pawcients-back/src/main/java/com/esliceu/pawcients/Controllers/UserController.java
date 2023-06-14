@@ -26,17 +26,20 @@ public class UserController {
     TokenService tokenService;
     AppointmentService appointmentService;
     MascotService mascotService;
+    PermissionService permissionService;
 
     public UserController(UserService userService,
                           ClinicService clinicService,
                           TokenService tokenService,
                           AppointmentService appointmentService,
-                          MascotService mascotService) {
+                          MascotService mascotService,
+                          PermissionService permissionService) {
         this.userService = userService;
         this.clinicService = clinicService;
         this.tokenService = tokenService;
         this.appointmentService = appointmentService;
         this.mascotService = mascotService;
+        this.permissionService = permissionService;
     }
 
     @PostMapping("/signup/admin")
@@ -112,21 +115,26 @@ public class UserController {
         Map<String, String> result = new HashMap<>();
         String workerId;
         User actualUser = (User) req.getAttribute("user");
+        User user = new User(null,
+                registerUserForm.getName(),
+                registerUserForm.getSurname(),
+                registerUserForm.getLicense(),
+                registerUserForm.getEmail(),
+                registerUserForm.getPhone(),
+                registerUserForm.getType(),
+                actualUser.getClinicId());
         try {
-            User user = new User(null,
-                    registerUserForm.getName(),
-                    registerUserForm.getSurname(),
-                    registerUserForm.getLicense(),
-                    registerUserForm.getEmail(),
-                    registerUserForm.getPhone(),
-                    registerUserForm.getType(),
-                    actualUser.getClinicId());
+            permissionService.isActualUserWorker(actualUser);
             workerId = userService.saveUser(user, actualUser);
             result.put("workerId", workerId);
-
+            result.put("status", "ok");
+            res.setStatus(200);
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
+        } catch (UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
         }
         return result;
     }
@@ -139,25 +147,34 @@ public class UserController {
         Map<String, String> result = new HashMap<>();
         String clientId = "";
         User actualUser = (User) req.getAttribute("user");
+        User user = new User(null,
+                registerUserForm.getEmail(),
+                registerUserForm.getName(),
+                registerUserForm.getSurname(),
+                "client",
+                actualUser.getClinicId(),
+                registerUserForm.getPhone());
         try {
-            User user = new User(null,
-                    registerUserForm.getEmail(),
-                    registerUserForm.getName(),
-                    registerUserForm.getSurname(),
-                    "client",
-                    actualUser.getClinicId(),
-                    registerUserForm.getPhone());
+            permissionService.isActualUserWorker(actualUser);
             clientId = userService.saveUser(user, actualUser);
             result.put("clientId", clientId);
             result.put("status", "ok");
-
+            res.setStatus(200);
         } catch (IncorrectRegisterException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
+        } catch (UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
         }
         return result;
     }
-
+/*
+* TODO
+*  #####################################
+*  ESTO NO PUEDE QUEDAR EN LA BUILD FINAL
+*  #####################################
+*/
     //Debugger methods to recover data for postman
     @GetMapping("/users")
     @CrossOrigin
@@ -187,14 +204,18 @@ public class UserController {
         Map<String, String> result = new HashMap<>();
         User actualUser = (User) req.getAttribute("user");
         try {
-            String action = userService.deleteUser(userId, actualUser);
-            if(action.equals("User deleted successfully")){
-                mascotService.deleteMascotByOwnerId(userId);
-                appointmentService.deleteAppointmentByClientId(userId);
-            }
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, userId);
+            User target = userService.generateUser(userId);
+            String action = userService.deleteUser(target, actualUser);
+            mascotService.deleteMascotByOwnerId(userId);
+            appointmentService.deleteAppointmentByClientId(userId);
             result.put("action", action);
             res.setStatus(200);
-        } catch (UnverifiedUserException | UnauthorizedUserException | FailedActionException e) {
+        } catch (UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (UnverifiedUserException | NotFoundUserException | FailedActionException e) {
             result.put("error", e.getMessage());
             res.setStatus(409);
         }

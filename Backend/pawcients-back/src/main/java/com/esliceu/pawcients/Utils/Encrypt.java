@@ -1,9 +1,11 @@
 package com.esliceu.pawcients.Utils;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 public class Encrypt {
     public static String sha512(String pass) {
@@ -18,5 +20,11 @@ public class Encrypt {
             System.err.println(e);
         }
         return encodedPass;
+    }
+
+    public static String createTempPassword() {
+        byte[] byteArray = new byte[8];
+        new Random().nextBytes(byteArray);
+        return new String(byteArray, StandardCharsets.UTF_8);
     }
 }

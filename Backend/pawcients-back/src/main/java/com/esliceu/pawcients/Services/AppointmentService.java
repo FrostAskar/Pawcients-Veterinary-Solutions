@@ -136,4 +136,21 @@ public class AppointmentService {
             }
         }
     }
+
+    public List<CalendarAppointmentDTO> getCalendarAppointmentsByClient(String clientId) {
+        List<Appointment> appointments = appointmentRepo.findByClientId(clientId);
+        List<CalendarAppointmentDTO> calendarAppointments = new ArrayList<>();
+        for(Appointment a : appointments) {
+            User u = userService.generateUser(a.getWorkerId());
+            Mascot m = mascotService.findMascotById(a.getMascotId());
+            CalendarAppointmentDTO cadto = new CalendarAppointmentDTO();
+            cadto.setTitle(m.getName() + "/" + u.getName() + " " + u.getSurname());
+            cadto.setStartDate(a.getStartDate());
+            cadto.setEndDate(a.getEndDate());
+            cadto.setType(a.getType());
+            cadto.setAppointmentId(a.getId());
+            calendarAppointments.add(cadto);
+        }
+        return calendarAppointments;
+    }
 }
