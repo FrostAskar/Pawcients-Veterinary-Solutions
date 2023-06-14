@@ -4,7 +4,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import SideNavbarWorker from 'Routes/Worker/SideNavbarWorker';
 import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { fetchProfile } from "fetches/Global/getProfile";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import 'css/calendar/calendar.scss';
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 import { useLocation } from 'react-router-dom'
@@ -37,23 +37,24 @@ const CalendarPage = () => {
 
     const location = useLocation();
 
+
+    const getAppointments = useCallback(async () => {
+        try {
+            const data = await fetchProfile();
+            setProfileData(data);
+
+            const eventsData = await getAllAppointments(data.id);
+            setEvents(formatDate(eventsData));
+        } catch (error) {
+            setErrorMessage("Error en la conexión con el servidor");
+        }
+    }, []);
+
+
     useEffect(() => {
-        const getAppointments = async () => {
-            try {
-                const profileData = await fetchProfile();
-                setProfileData(profileData);
-
-                const eventsData = await getAllAppointments(profileData.id);
-                setEvents(formatDate(eventsData));
-            } catch (error) {
-                setErrorMessage("Error en la conexión con el servidor");
-            }
-        };
-
         getAppointments();
         obtainClients();
-
-    }, [events])
+    }, [getAppointments])
 
 
 
@@ -66,8 +67,8 @@ const CalendarPage = () => {
                 const mascotsData = await getMascotsByClient(selectedClient);
                 setMascots(mascotsData.mascots);
                 if (mascotsData.mascots.length > 0) {
-                    setSelectedMascot(mascotsData.mascots[0].id); 
-                  }
+                    setSelectedMascot(mascotsData.mascots[0].id);
+                }
             };
             getMascots();
         } else {
@@ -134,13 +135,15 @@ const CalendarPage = () => {
             }
             const response = await addAppointment(selectedClient, selectedMascot, profileData.id, type, fullDateStart, fullDateEnd, profileData.id)
             if (response != null) {
-
                 setAddEvent(false);
+                getAppointments();
             }
         } catch (e) {
             //setErrorMessage("Error en la conexión con el servidor");
         }
     };
+
+    console.log(selectedEvent);
 
 
     const openModal = () => {
@@ -228,6 +231,14 @@ const CalendarPage = () => {
                                     <div className='buttons'>
                                         <button className='clasic-button' onClick={changeEditMode}>Edit</button>
                                         <button className='clasic-button' id="cancel-button">Delete</button>
+                                        {/* {isPopupOpen[item.client.id] && (
+                                            <div>
+                                                <ConfirmationPopup
+                                                    onCancel={handleCancel}
+                                                    onConfirm={(e) => handleConfirm(e, item.client.id, item.client.name)}
+                                                />
+                                            </div>
+                                        )} */}
                                     </div>
                                     :
                                     <div className='buttons'>
