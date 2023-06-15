@@ -80,6 +80,7 @@ export default function MascotInfoModal({
       }
 
       fetchAddHistoryVaccine({ history, mascotID }).then((response) => {
+        console.log(response.status);
         if (response.status === 200) {
           setSuccessMessage("History added successfully");
         } else {

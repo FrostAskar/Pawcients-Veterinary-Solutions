@@ -207,9 +207,18 @@ public class AppointmentController {
 
     @GetMapping("/vet/appointmentgraph")
     @CrossOrigin
-    public List<NextSevenDaysAppointmentsDTO> getAppointmentsForGraphic(HttpServletRequest req) {
-        User actualUser = (User) req.getAttribute("user");
-        List<NextSevenDaysAppointmentsDTO> nextAppointments = appointmentService.getNextSevenDaysAppointmentsCount(actualUser);
-        return nextAppointments;
+    public Map<String, Object> getAppointmentsForGraphic(HttpServletRequest req, HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            List<NextSevenDaysAppointmentsDTO> nextAppointments = appointmentService.getNextSevenDaysAppointmentsCount(actualUser);
+            result.put("nextSevenDaysAppointments", nextAppointments);
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        }
+        return result;
     }
 }
