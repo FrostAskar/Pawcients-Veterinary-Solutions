@@ -97,7 +97,7 @@ const AnimalManagementPage = () => {
     gender: fetchedAnimalData?.gender,
     weight: fetchedAnimalData?.weight,
     color: fetchedAnimalData?.color,
-    identificationNumber: fetchedAnimalData?.identificationNumber,
+    identificationNumber: fetchedAnimalData?.identificationSerial,
   };
   const [isEditing, setIsEditing] = useState(false);
   const [editedAnimalData, setEditedAnimalData] = useState(animalData);
@@ -176,7 +176,6 @@ const AnimalManagementPage = () => {
     color,
     identificationNumber,
   } = isEditing ? editedAnimalData : animalData;
-  console.log("Aniaml data:", animalData);
   return (
     <div className="dashboard">
       {profileData?.type === "vet" ||
@@ -191,13 +190,21 @@ const AnimalManagementPage = () => {
           <div className="animal-profile">
             <div className="profile-header">
               <img
-                src={selectedImage || image}
+                src={
+                  selectedImage !== null
+                    ? selectedImage
+                    : image === null
+                    ? "https://img.freepik.com/vector-gratis/silueta-pastor-aleman-diseno-plano_23-2150283164.jpg"
+                    : image
+                }
                 alt={name}
                 className="animal-image"
               />
+
               {isEditing && (
                 <div className="image-upload">
                   <input
+                    className="animalprofile-input"
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
@@ -307,7 +314,7 @@ const AnimalManagementPage = () => {
                     onChange={handleChange}
                   />
                 ) : (
-                  identificationNumber
+                  animalData.identificationNumber
                 )}
               </p>
               {isEditing ? (
