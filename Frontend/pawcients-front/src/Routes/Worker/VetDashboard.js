@@ -19,13 +19,8 @@ import {
   Bar,
   CartesianGrid,
 } from "recharts";
+import { fetchNext7Days } from "fetches/Worker/Appointments/FetchNext7Days";
 
-const citas = [
-  { date: "2023-06-01", citas: 5 },
-  { date: "2023-06-02", citas: 10 },
-  { date: "2023-06-03", citas: 7 },
-  { date: "2023-06-04", citas: 12 },
-];
 const animals = [
   { date: "Dogs", citas: 30 },
   { date: "Cats", citas: 45 },
@@ -37,6 +32,15 @@ export default function VetDashboard() {
   const [visibleTodayAppointments, setVisibleTodayAppointments] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [title, setTitle] = useState("");
+  const [next7days, setNext7days] = useState([]);
+
+  useEffect(() => {
+    const getGraphData = async () => {
+      const next7daysData = await fetchNext7Days();
+      setNext7days(next7daysData);
+    };
+    getGraphData();
+  }, []);
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -157,12 +161,12 @@ export default function VetDashboard() {
               <div className="section-content">
                 <div className="appointments-graphic">
                   <h2>Citas</h2>
-                  <BarChart width={700} height={200} data={citas}>
+                  <BarChart width={700} height={200} data={next7days}>
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="citas" fill="#8884d8" />
+                    <Bar dataKey="appointments" fill="#8884d8" />
                   </BarChart>
                 </div>
               </div>
