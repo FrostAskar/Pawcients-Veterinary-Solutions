@@ -27,6 +27,7 @@ import StaffManagement from "Routes/Worker/Base/StaffManagement";
 import VetCalendar from "Routes/Calendar/VetCalendar";
 import ClientCalendar from "Routes/Calendar/ClientCalendar";
 import Logout from "Routes/Common/logout";
+import EmailSended from "Routes/LandingPage/EmailSended";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,7 @@ const router = createBrowserRouter([
       { path: "/vetcalendar", element: <VetCalendar /> },
       { path: "/clientcalendar", element: <ClientCalendar /> },
       { path: "/logout", element: <Logout /> },
+      { path: "/recoverpass/:userId", element: <EmailSended /> },
     ],
   },
 ]);

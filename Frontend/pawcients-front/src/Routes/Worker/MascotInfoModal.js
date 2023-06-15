@@ -9,6 +9,7 @@ import {
   fetchAddHistoryDeworming,
   fetchAddHistoryCheckup,
 } from "fetches/Worker/Mascots/FetchAddHistory";
+// import { fetchPutAppointment } from "fetches/Worker/Appointments/FetchPutAppointment";
 import moment from "moment";
 
 export default function MascotInfoModal({ mascotID, type, onClose }) {
@@ -130,6 +131,9 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
         }
       });
     }
+    // fetchPutAppointment(AppointmentID, completed);
+
+    window.location.reload();
   };
 
   return (
