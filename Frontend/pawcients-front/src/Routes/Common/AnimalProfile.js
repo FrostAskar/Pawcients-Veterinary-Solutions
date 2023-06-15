@@ -33,19 +33,6 @@ const AnimalManagementPage = () => {
 
   useEffect(() => {
     let isMounted = true; // Variable auxiliar para controlar el estado del componente
-    const fetchHistoryData = async () => {
-      try {
-        const historyData = await fetchMascotDataVetHistory(
-          mascotidRef.current
-        );
-        if (isMounted) {
-          setVisits(historyData?.visits || []); // Almacena el historial de visitas en el estado "visits"
-        }
-      } catch (error) {
-        console.error("Error fetching mascot history:", error);
-      }
-    };
-    fetchHistoryData();
 
     if (url.includes("client")) {
       clientidRef.current = url.split("/")[2];
@@ -81,6 +68,19 @@ const AnimalManagementPage = () => {
       };
       fetchData();
     }
+    const fetchHistoryData = async () => {
+      try {
+        const historyData = await fetchMascotDataVetHistory(
+          mascotidRef.current
+        );
+        if (isMounted) {
+          setVisits(historyData?.history.visits || []); // Almacena el historial de visitas en el estado "visits"
+        }
+      } catch (error) {
+        console.error("Error fetching mascot history:", error);
+      }
+    };
+    fetchHistoryData();
 
     // Cleanup function to cancel fetch requests and prevent state updates on unmounted components
     return () => {
@@ -128,7 +128,7 @@ const AnimalManagementPage = () => {
     const editedAnimalDataToSend = {
       mascot: {
         ...fetchedAnimalData?.mascot,
-        image: editedAnimalData.photo,
+        image: editedAnimalData?.image,
         species: editedAnimalData.species,
         breed: editedAnimalData.breed,
         age: editedAnimalData.age,
@@ -138,6 +138,8 @@ const AnimalManagementPage = () => {
         identificationNumber: editedAnimalData.identificationNumber,
       },
     };
+    console.log(editedAnimalDataToSend);
+
     fetchMascotDataChangeProfileInfo(
       mascotidRef.current,
       editedAnimalDataToSend.mascot
@@ -195,7 +197,7 @@ const AnimalManagementPage = () => {
                     ? selectedImage
                     : image === null
                     ? "https://img.freepik.com/vector-gratis/silueta-pastor-aleman-diseno-plano_23-2150283164.jpg"
-                    : image
+                    : selectedImage || image
                 }
                 alt={name}
                 className="animal-image"
@@ -333,22 +335,22 @@ const AnimalManagementPage = () => {
                       <p>Notes: {visit.notes}</p>
                       {visit.vaccine && (
                         <>
-                          <hr />
                           <p>Vaccine: {visit.vaccine.name}</p>
+                          <p>Renewal: {visit.vaccine.renewalDate}</p>
                         </>
                       )}
                       {visit.surgery && (
                         <>
-                          <hr />
                           <p>Surgery: {visit.surgery.name}</p>
                         </>
                       )}
+
                       {visit.deworming && (
                         <>
-                          <hr />
                           <p>Deworming: {visit.deworming.name}</p>
                         </>
                       )}
+                      <hr />
                     </li>
                   ))}
                 </ul>

@@ -10,7 +10,24 @@ public class UpdateMascotForm {
     String color;
     String identificationNumber;
     String photo;
+    String breed;
+    String species;
 
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
     //History Updates
 
     public int getAge() {

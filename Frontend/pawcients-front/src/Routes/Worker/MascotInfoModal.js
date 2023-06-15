@@ -139,19 +139,22 @@ export default function MascotInfoModal({ mascotID, type, onClose }) {
         <form>
           {mascotInfo ? (
             <div className="mascot-info">
-              <img src={mascotInfo.image} alt={mascotInfo.name} />
-              <p>
-                Owner name: {mascotInfo.ownerName} {mascotInfo.ownerSurname}
-              </p>
+              <img
+                src={
+                  mascotInfo.photo === null
+                    ? "https://img.freepik.com/vector-gratis/silueta-pastor-aleman-diseno-plano_23-2150283164.jpg"
+                    : mascotInfo.photo
+                }
+                alt={mascotInfo.name}
+                width="200"
+              />
+
               <p>Name: {mascotInfo.name}</p>
               <p>Specie: {mascotInfo.species}</p>
               <p>Breed: {mascotInfo.breed}</p>
               <p>Birth Date: {mascotInfo.birthDate}</p>
               <p>Weight: {mascotInfo.weight} kg</p>
               <p>Gender: {mascotInfo.gender}</p>
-              {/* Add more mascot information here */}
-              <p>Allergies: {mascotInfo.allergies}</p>
-              <p>Notes: {mascotInfo.notes}</p>
 
               {type === "Vaccine" && (
                 <div>
