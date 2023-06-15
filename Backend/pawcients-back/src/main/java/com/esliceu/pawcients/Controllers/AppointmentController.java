@@ -3,10 +3,7 @@ package com.esliceu.pawcients.Controllers;
 import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
 import com.esliceu.pawcients.DTO.NextSevenDaysAppointmentsDTO;
 import com.esliceu.pawcients.DTO.TodayAppointmentsDTO;
-import com.esliceu.pawcients.Exceptions.ExpiredUserException;
-import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
-import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
-import com.esliceu.pawcients.Exceptions.UnverifiedUserException;
+import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.AppointmentForm;
 import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Models.User;
@@ -80,14 +77,21 @@ public class AppointmentController {
     @PostMapping("/vet/{vetId}/appointment")
     @CrossOrigin
     public Map<String, Object> vetCreatesAppointment(@PathVariable String vetId,
-                                       @RequestBody AppointmentForm appointmentForm) {
+                                                     @RequestBody AppointmentForm appointmentForm,
+                                                     HttpServletRequest req, HttpServletResponse res) {
         Map<String, Object> result = new HashMap<>();
-        String appointmentId;
         try {
-            appointmentId = appointmentService.createVetAppointment(appointmentForm, vetId);
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            String appointmentId = appointmentService.createVetAppointment(appointmentForm, vetId);
             result.put("appointmentId", appointmentId);
-        } catch (Exception e) {
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnauthorizedUserException e) {
             result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (AppointmentDuplicationException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
         }
         return result;
     }
@@ -95,14 +99,22 @@ public class AppointmentController {
     @PostMapping("/client/{clientId}/appointment")
     @CrossOrigin
     public Map<String, Object> clientRequestsAppointment(@PathVariable String clientId,
-                                           @RequestBody AppointmentForm appointmentForm){
+                                                         @RequestBody AppointmentForm appointmentForm,
+                                                         HttpServletRequest req, HttpServletResponse res){
         Map<String, Object> result = new HashMap<>();
-        String appointmentId;
         try {
-            appointmentId = appointmentService.createClientAppointment(appointmentForm, clientId);
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, clientId);
+            String appointmentId = appointmentService.createClientAppointment(appointmentForm, clientId);
             result.put("appointmentId", appointmentId);
-        } catch (Exception e) {
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnauthorizedUserException | UnverifiedUserException e) {
             result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (AppointmentDuplicationException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
         }
         return result;
     }
@@ -110,13 +122,21 @@ public class AppointmentController {
     @DeleteMapping("/vet/{vetId}/appointment/{appointmentId}")
     @CrossOrigin
     public Map<String, Object> vetDeletesAppointment(@PathVariable String vetId,
-                                       @PathVariable String appointmentId) {
+                                                     @PathVariable String appointmentId,
+                                                     HttpServletRequest req, HttpServletResponse res) {
         Map<String, Object> result = new HashMap<>();
         try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
             appointmentId = appointmentService.deleteAppointment(appointmentId, vetId);
             result.put("deleted appointmentId", appointmentId);
-        } catch (NotFoundAppointmentException e) {
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnauthorizedUserException e) {
             result.put("error", e.getMessage());
+            res.setStatus(401);
+        }catch (NotFoundAppointmentException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
         }
         return result;
     }
@@ -124,13 +144,22 @@ public class AppointmentController {
     @DeleteMapping("/client/{clientId}/appointment/{appointmentId}")
     @CrossOrigin
     public Map<String, Object> clientDeletesAppointment(@PathVariable String clientId,
-                                           @PathVariable String appointmentId){
+                                                        @PathVariable String appointmentId,
+                                                        HttpServletRequest req, HttpServletResponse res){
         Map<String, Object> result = new HashMap<>();
         try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, clientId);
             appointmentId = appointmentService.deleteAppointment(appointmentId, clientId);
             result.put("deleted appointmentId", appointmentId);
-        } catch (NotFoundAppointmentException e) {
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnauthorizedUserException | UnverifiedUserException e) {
             result.put("error", e.getMessage());
+            res.setStatus(401);
+        }catch (NotFoundAppointmentException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
         }
         return result;
     }

@@ -174,4 +174,10 @@ public class UserService {
         }
         return actualUser;
     }
+
+    public User getUserByEmail(String email) {
+        if(userRepo.findByEmail(email).isEmpty())
+            throw new NotFoundUserException("This email is not registered");
+        return userRepo.findByEmail(email).get(0);
+    }
 }

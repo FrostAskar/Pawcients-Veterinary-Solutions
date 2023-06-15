@@ -2,6 +2,7 @@ package com.esliceu.pawcients.Services;
 
 import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
 import com.esliceu.pawcients.DTO.NextSevenDaysAppointmentsDTO;
+import com.esliceu.pawcients.Exceptions.AppointmentDuplicationException;
 import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
 import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
@@ -56,6 +57,7 @@ public class AppointmentService {
 
     //VetId inserted just in case of checks?? Not really sure right now
     public String createVetAppointment(AppointmentForm appointmentForm, String vetId) {
+        checkAppointmentExists(appointmentForm, vetId);
         Appointment appointment = new Appointment(null,
                 appointmentForm.getStartDate(),
                 appointmentForm.getEndDate(),
@@ -66,7 +68,14 @@ public class AppointmentService {
         return appointmentRepo.save(appointment).getId();
     }
 
+    private boolean checkAppointmentExists(AppointmentForm appointmentForm, String vetId) {
+        if(appointmentRepo.findByWorkerIdAndStartDate(vetId, appointmentForm.getStartDate()).isEmpty())
+            return true;
+        throw new AppointmentDuplicationException("This hour is already occupied for this vet");
+    }
+
     public String createClientAppointment(AppointmentForm appointmentForm, String clientId) {
+        checkAppointmentExists(appointmentForm, appointmentForm.getWorkerId());
         Appointment appointment = new Appointment(null,
                 appointmentForm.getStartDate(),
                 appointmentForm.getEndDate(),
@@ -89,8 +98,6 @@ public class AppointmentService {
             appointmentRepo.deleteById(appointmentId);
         } else if (user.getId().equals(userId)) {
             appointmentRepo.deleteById(appointmentId);
-        } else {
-            throw new UnauthorizedUserException("Current user is not authorized to remove appointment");
         }
         return appointment.getId();
     }

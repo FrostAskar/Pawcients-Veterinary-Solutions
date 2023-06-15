@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -26,19 +23,22 @@ public class UserController {
     AppointmentService appointmentService;
     MascotService mascotService;
     PermissionService permissionService;
+    EmailSenderService emailSenderService;
 
     public UserController(UserService userService,
                           ClinicService clinicService,
                           TokenService tokenService,
                           AppointmentService appointmentService,
                           MascotService mascotService,
-                          PermissionService permissionService) {
+                          PermissionService permissionService,
+                          EmailSenderService emailSenderService) {
         this.userService = userService;
         this.clinicService = clinicService;
         this.tokenService = tokenService;
         this.appointmentService = appointmentService;
         this.mascotService = mascotService;
         this.permissionService = permissionService;
+        this.emailSenderService = emailSenderService;
     }
 
     @PostMapping("/signup/admin")
@@ -59,7 +59,7 @@ public class UserController {
                         registerVetAndClinicForm.getName(),
                         registerVetAndClinicForm.getSurname(),
                         registerVetAndClinicForm.getLicense(),
-                        registerVetAndClinicForm.getEmail(),
+                        registerVetAndClinicForm.getEmail().toLowerCase(),
                         registerVetAndClinicForm.getPhone(),
                         "admin",
                         Encrypt.sha512(registerVetAndClinicForm.getPassword()),
@@ -93,7 +93,7 @@ public class UserController {
         Map<String, Object> result = new HashMap<>();
         User user = null;
         try{
-            user = userService.authenticateUser(loginForm.getEmail(), loginForm.getPassword());
+            user = userService.authenticateUser(loginForm.getEmail().toLowerCase(), loginForm.getPassword());
             res.setStatus(200);
         } catch (IncorrectLoginException e) {
             result.put("message", e.getMessage());
@@ -119,7 +119,7 @@ public class UserController {
                     registerUserForm.getName(),
                     registerUserForm.getSurname(),
                     registerUserForm.getLicense(),
-                    registerUserForm.getEmail(),
+                    registerUserForm.getEmail().toLowerCase(),
                     registerUserForm.getPhone(),
                     registerUserForm.getType(),
                     actualUser.getClinicId());
@@ -149,7 +149,7 @@ public class UserController {
             User actualUser = userService.getActualUser((User) req.getAttribute("user"));
             permissionService.isActualUserWorker(actualUser);
             User user = new User(null,
-                    registerUserForm.getEmail(),
+                    registerUserForm.getEmail().toLowerCase(),
                     registerUserForm.getName(),
                     registerUserForm.getSurname(),
                     "client",
@@ -266,4 +266,37 @@ public class UserController {
         return clientData;
     }
 
+    @PostMapping("/passwordreset")
+    @CrossOrigin
+    public Map<String, Object> requestNewPassword(@RequestBody ChangePasswordForm changePasswordForm,
+                                               HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
+        try{
+            User user = userService.getUserByEmail(changePasswordForm.getEmail());
+            emailSenderService.sendPasswordRecoveryEmail(user);
+            result.put("action", "Password recovery email sent");
+            res.setStatus(200);
+        } catch (NotFoundUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
+    }
+
+    @GetMapping("/recoverpass/{userId}")
+    @CrossOrigin
+    public Map<String, Object> sendNewPassword(@PathVariable String userId, HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
+        try{
+           User user = userService.generateUser(userId);
+           String newPass = Encrypt.createTempPassword();
+           emailSenderService.sendNewPassword(user, newPass);
+           result.put("Success", "New password has been sent to your email");
+           res.setStatus(200);
+        } catch (NotFoundUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
+    }
 }

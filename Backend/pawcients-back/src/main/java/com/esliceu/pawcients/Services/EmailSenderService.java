@@ -57,4 +57,18 @@ public class EmailSenderService {
 
 
     }
+
+    public void sendPasswordRecoveryEmail(User user) {
+        String subject = "Recover Password";
+        String body = "To recover your password check the following URL " +
+                "http://localhost:8080/recoverpass/" + user.getId();
+        sendEmailWithoutAttachment(user.getEmail(), subject, body);
+    }
+
+    public void sendNewPassword(User user, String newPass) {
+        String subject = "New Password for " + user.getName() + " " + user.getSurname();
+        String body = "This is your new password: " + newPass + "\n" +
+                "Remember to change it as soon as possible.";
+        sendEmailWithoutAttachment(user.getEmail(), subject, body);
+    }
 }

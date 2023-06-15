@@ -23,8 +23,13 @@ public class Encrypt {
     }
 
     public static String createTempPassword() {
-        byte[] byteArray = new byte[8];
-        new Random().nextBytes(byteArray);
-        return new String(byteArray, StandardCharsets.UTF_8);
+        String charsToUse = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder tempPass = new StringBuilder();
+        Random rng = new Random();
+        for (int i = 0; i < 8; i++) {
+            int rngChar = (int) (rng.nextFloat() * charsToUse.length());
+            tempPass.append(charsToUse.charAt(rngChar));
+        }
+        return tempPass.toString();
     }
 }
