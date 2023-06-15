@@ -12,6 +12,7 @@ public class UpdateMascotForm {
     String photo;
     String breed;
     String species;
+    String birthDate;
 
     public String getBreed() {
         return breed;
@@ -76,5 +77,13 @@ public class UpdateMascotForm {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 }

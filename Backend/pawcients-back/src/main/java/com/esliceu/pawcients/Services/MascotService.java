@@ -12,6 +12,8 @@ import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.MascotRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +76,9 @@ public class MascotService {
         mascotToUpdate.setIdentificationSerial(updateMascotForm.getIdentificationNumber());
         mascotToUpdate.setPhoto(updateMascotForm.getPhoto());
         mascotToUpdate.setBreed(updateMascotForm.getBreed());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthDate = LocalDate.parse(updateMascotForm.getBirthDate(), formatter);
+        mascotToUpdate.setBirthDate(birthDate);
         return mascotToUpdate;
     }
 
