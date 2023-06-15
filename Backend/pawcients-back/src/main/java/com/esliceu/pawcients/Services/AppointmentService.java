@@ -9,9 +9,11 @@ import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Models.Mascot;
 import com.esliceu.pawcients.Models.User;
 import com.esliceu.pawcients.Repos.AppointmentRepo;
+import com.esliceu.pawcients.Utils.TimeZoneConverter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +23,14 @@ public class AppointmentService {
     AppointmentRepo appointmentRepo;
     UserService userService;
     MascotService mascotService;
+    TimeZoneConverter timeZoneConverter;
 
     public AppointmentService(AppointmentRepo appointmentRepo, UserService userService,
-                              MascotService mascotService) {
+                              MascotService mascotService, TimeZoneConverter timeZoneConverter) {
         this.appointmentRepo = appointmentRepo;
         this.userService = userService;
         this.mascotService = mascotService;
+        this.timeZoneConverter = timeZoneConverter;
     }
 
     public Appointment findAppointmentById(String appointmentId) {
@@ -43,8 +47,8 @@ public class AppointmentService {
             Mascot m = mascotService.findMascotById(a.getMascotId());
             CalendarAppointmentDTO cadto = new CalendarAppointmentDTO();
             cadto.setTitle(m.getName() + "/" + u.getName() + " " + u.getSurname());
-            cadto.setStartDate(a.getStartDate());
-            cadto.setEndDate(a.getEndDate());
+            cadto.setStartDate(timeZoneConverter.transformIntoClinicTimeZone(a.getStartDate()));
+            cadto.setEndDate(timeZoneConverter.transformIntoClinicTimeZone(a.getEndDate()));
             cadto.setType(a.getType());
             cadto.setAppointmentId(a.getId());
             calendarAppointments.add(cadto);
@@ -109,6 +113,8 @@ public class AppointmentService {
         LocalDate today = LocalDate.now();
         for(Appointment a : appointments) {
             if(a.getStartDate().toLocalDate().equals(today)){
+                a.setStartDate(timeZoneConverter.transformIntoClinicTimeZone(a.getStartDate()));
+                a.setEndDate(timeZoneConverter.transformIntoClinicTimeZone(a.getEndDate()));
                 todayAppointments.add(a);
             }
         }
@@ -126,9 +132,9 @@ public class AppointmentService {
     public List<NextSevenDaysAppointmentsDTO> getNextSevenDaysAppointmentsCount(User actualUser) {
         List<NextSevenDaysAppointmentsDTO> nextSeven = new ArrayList<>();
         LocalDate today = LocalDate.now();
-        for (int i = 1; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             NextSevenDaysAppointmentsDTO nsdadto = new NextSevenDaysAppointmentsDTO();
-            List<Appointment> dayAppointments = appointmentRepo.findByWorkerIdAndStartDate(actualUser.getId(), today.plusDays(i));
+            List<Appointment> dayAppointments = appointmentRepo.findByWorkerIdAndStartDateAfterAndEndDateBefore(actualUser.getId(), today.plusDays(i).atStartOfDay(), today.plusDays(i+1).atStartOfDay());
             nsdadto.setDate(today.plusDays(i));
             nsdadto.setAppointments(dayAppointments.size());
             nextSeven.add(nsdadto);
@@ -153,8 +159,8 @@ public class AppointmentService {
             Mascot m = mascotService.findMascotById(a.getMascotId());
             CalendarAppointmentDTO cadto = new CalendarAppointmentDTO();
             cadto.setTitle(m.getName() + "/" + u.getName() + " " + u.getSurname());
-            cadto.setStartDate(a.getStartDate());
-            cadto.setEndDate(a.getEndDate());
+            cadto.setStartDate(timeZoneConverter.transformIntoClinicTimeZone(a.getStartDate()));
+            cadto.setEndDate(timeZoneConverter.transformIntoClinicTimeZone(a.getEndDate()));
             cadto.setType(a.getType());
             cadto.setAppointmentId(a.getId());
             calendarAppointments.add(cadto);

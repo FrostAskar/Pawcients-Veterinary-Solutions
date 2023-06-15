@@ -175,7 +175,7 @@ public class AppointmentController {
             TodayAppointmentsDTO tadto = new TodayAppointmentsDTO();
             tadto.setUser(userService.generateUser(a.getClientId()));
             tadto.setMascot(mascotService.findMascotById(a.getMascotId()));
-            tadto.setAppointment(appointmentService.findAppointmentById(a.getId()));
+            tadto.setAppointment(a);
             todayData.add(tadto);
         }
         result.put("appointments", todayData);
