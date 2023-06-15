@@ -18,7 +18,7 @@ export default function TodayPatient(props) {
   function getDate() {
     const date = new Date(props.patient.appointment.startDate);
     return (
-        date.getHours().toString().padStart(2, '0') +
+      date.getHours().toString().padStart(2, "0") +
       ":" +
       (date.getMinutes() === 0 ? "00" : date.getMinutes())
     );
@@ -61,6 +61,7 @@ export default function TodayPatient(props) {
       </button>
       {isModalOpen && (
         <MascotInfoModal
+          appointmentID={props.patient.appointment.id}
           mascotID={props.patient.mascot.id}
           type={props.patient.appointment.type}
           onClose={closeAppointmentInfo}

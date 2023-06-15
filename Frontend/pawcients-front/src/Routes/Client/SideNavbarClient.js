@@ -15,8 +15,8 @@ const SideNavbarClient = () => {
     getProfileData();
   }, []);
   useEffect(() => {
-    const iat = localStorage.getItem("IAT");
-    if (iat > Date.now()) {
+    const iat = parseInt(localStorage.getItem("IAT"), 10);
+    if (iat && iat > Date.now()) {
       localStorage.removeItem("IAT");
       localStorage.removeItem("token");
       window.location.href = "/sessionexpired";
