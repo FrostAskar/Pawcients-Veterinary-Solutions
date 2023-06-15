@@ -25,23 +25,22 @@ const ProfileSettings = () => {
     getProfileData();
   }, []);
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     // Lógica para cambiar la contraseña
     if (newPassword === confirmPassword) {
-      putChangePassword(profileData?.id, password, newPassword).then(
-        (response) => {
-          if (response.status === 200) {
-            console.log("Password changed successfully");
-          } else {
-            console.log("Failed to change password");
-          }
-        }
+      const response = await putChangePassword(
+        profileData?.id,
+        password,
+        newPassword,
+        confirmPassword
       );
+      if (response.status === 200) {
+        console.log("Password changed successfully");
+      }
     } else {
       console.log("Passwords don't match");
     }
   };
-
   const handleProfileImageChange = (event) => {
     // Lógica para cambiar la foto de perfil
     const imageFile = event.target.files[0];

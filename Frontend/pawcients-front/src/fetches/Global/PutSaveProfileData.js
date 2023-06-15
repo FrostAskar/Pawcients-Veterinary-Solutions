@@ -26,7 +26,8 @@ export async function putSaveProfileData(
 export async function putChangePassword(
   clientID,
   currentpassword,
-  newpassword
+  newpassword,
+  confirmPassword
 ) {
   const response = await fetch(
     "http://localhost:8080/profilesettings/changepassword",
@@ -40,6 +41,7 @@ export async function putChangePassword(
         client_id: clientID,
         currentpassword: currentpassword,
         newpassword: newpassword,
+        confirmNewPassword: confirmPassword,
       }),
     }
   );

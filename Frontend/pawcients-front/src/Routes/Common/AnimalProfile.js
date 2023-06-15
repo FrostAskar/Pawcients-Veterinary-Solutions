@@ -10,7 +10,6 @@ import {
 } from "fetches/Global/FetchMascotData";
 import { fetchProfile } from "fetches/Global/getProfile";
 import { parseISO, differenceInYears } from "date-fns";
-import moment from "moment";
 
 const AnimalManagementPage = () => {
   const [fetchedAnimalData, setFetchedAnimalData] = useState(null);
@@ -140,7 +139,6 @@ const AnimalManagementPage = () => {
         identificationNumber: editedAnimalData.identificationNumber,
       },
     };
-    console.log(editedAnimalDataToSend);
 
     fetchMascotDataChangeProfileInfo(
       mascotidRef.current,
@@ -148,6 +146,7 @@ const AnimalManagementPage = () => {
     );
 
     setIsEditing(false);
+    window.location.reload();
   };
 
   const handleChange = (e) => {
@@ -258,17 +257,14 @@ const AnimalManagementPage = () => {
                   <input
                     className="animalprofile-input"
                     type="date"
-                    name="age"
+                    name="birthDate"
                     onChange={handleChange}
                     value={birthDate}
                   />
                 ) : (
                   //geT bitrhdate and calculate
 
-                  differenceInYears(
-                    new Date(),
-                    parseISO(moment(birthDate).format())
-                  )
+                  differenceInYears(new Date(), parseISO(birthDate))
                 )}
               </p>
               <p>
