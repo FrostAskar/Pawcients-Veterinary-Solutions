@@ -15,7 +15,6 @@ export default function ClientCreation({ onClose }) {
             const response = await fetchClientRegister(name, surname, email, phone);
             
             if (response.status === 200) {
-                console.log("status 200");
                 onClose();
             } else if (response.status === 409) {
                 // Mensaje de error para cliente
@@ -23,7 +22,7 @@ export default function ClientCreation({ onClose }) {
                 setErrorMessage(data.error);
             } 
         } catch (error) {
-            console.log(error);
+            setErrorMessage(error);
         }
     };
 
@@ -44,7 +43,6 @@ export default function ClientCreation({ onClose }) {
                         <input type="email" name="email" id="email" required />
                         <label htmlFor="phone">Phone</label>
                         <input type="text" name="phone" id="phone" required />
-                        {/* Captcha: */}
 
                         <button className="clasic-button" type="submit">Sign up client</button>
                         <button className="clasic-button" type="button" onClick={cancelCreation}>Cancel</button>

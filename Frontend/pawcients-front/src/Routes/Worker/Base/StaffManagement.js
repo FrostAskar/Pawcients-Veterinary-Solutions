@@ -7,7 +7,6 @@ import { fetchWorkerRegister } from "fetches/Worker/Staff/FetchWorkerRegister";
 import React, { useState, useEffect } from "react";
 import { deleteUser } from "fetches/Worker/FetchDeleteUser";
 import { ConfirmationPopup } from "Routes/Common/PopUp";
-import { Link } from 'react-router-dom'
 
 export default function StaffManagement() {
     const [errorMessage, setErrorMessage] = useState("");
@@ -123,7 +122,6 @@ export default function StaffManagement() {
                                                 <th>Job Title</th>
                                                 <th>Phone</th>
                                                 <th>Email</th>
-                                                <th>Calendar</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
@@ -144,15 +142,6 @@ export default function StaffManagement() {
                                                     </td>
                                                     <td>{worker.phone}</td>
                                                     <td>{worker.email}</td>
-                                                    <td>
-                                                        <Link to="/vetcalendar" state={{
-                                                            workerID: worker.id,
-                                                            workerName: worker.name
-                                                        }}>
-                                                            <button className="small-button">View</button>
-                                                        </Link>
-
-                                                    </td>
                                                     <td><button className="small-button" onClick={(e) => handleDeleteClick(e, worker.id)}><i className="material-icons">delete</i></button></td>
                                                     {isPopupOpen[worker.id] && (
                                                         <div>

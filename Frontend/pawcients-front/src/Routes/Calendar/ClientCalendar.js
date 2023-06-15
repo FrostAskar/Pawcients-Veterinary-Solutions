@@ -65,6 +65,30 @@ const ClientCalendar = () => {
             setSelectedVet(workerData[0].id);
         }
     };
+
+    const setAvailableAppointments =  async() => {
+        var scheduledHours = [];
+        if (selectedVet) {
+            const eventsData = await getVetAppointments(selectedVet);
+            setWorkersEvents(formatDate(eventsData));
+            setAvailableHours(allowedHours);
+            const dayEvents = workersEvents.filter(event => {
+                return event.startDate.toDateString() === selectedDate.toDateString();
+            });
+
+            if (dayEvents.length !== 0) {
+                for (var i = 0; i < dayEvents.length; i++) {
+                    const date = new Date(dayEvents[i].startDate)
+                    const formattedDate = date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
+                    scheduledHours.push(formattedDate);
+                }
+                setAvailableHours(allowedHours.filter(event => !scheduledHours.includes(event)));
+                setSelectedTime(availableHours[0]);
+                scheduledHours = [];
+            }
+        }
+
+    }
     const formatDate = (eventsData) => {
         eventsData.forEach((event) => {
             event.startDate = new Date(event.startDate);
@@ -128,7 +152,6 @@ const ClientCalendar = () => {
     const handleChangeVet = async (e) => {
         e.preventDefault();
         setSelectedVet(e.target.value)
-        console.log(selectedVet);
         setAvailableAppointments();
     }
 
@@ -142,29 +165,7 @@ const ClientCalendar = () => {
         return date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
     }
 
-    const setAvailableAppointments =  async() => {
-        var scheduledHours = [];
-        if (selectedVet) {
-            const eventsData = await getVetAppointments(selectedVet);
-            setWorkersEvents(formatDate(eventsData));
-            setAvailableHours(allowedHours);
-            const dayEvents = workersEvents.filter(event => {
-                return event.startDate.toDateString() === selectedDate.toDateString();
-            });
-
-            if (dayEvents.length !== 0) {
-                for (var i = 0; i < dayEvents.length; i++) {
-                    const date = new Date(dayEvents[i].startDate)
-                    const formattedDate = date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
-                    scheduledHours.push(formattedDate);
-                }
-                setAvailableHours(allowedHours.filter(event => !scheduledHours.includes(event)));
-                setSelectedTime(availableHours[0]);
-                scheduledHours = [];
-            }
-        }
-
-    }
+    
 
     return (
         <div className="dashboard">

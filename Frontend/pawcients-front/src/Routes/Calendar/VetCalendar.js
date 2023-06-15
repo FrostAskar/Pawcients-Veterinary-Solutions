@@ -56,7 +56,7 @@ const VetCalendar = () => {
 
     useEffect(() => {
 
-    },[]);
+    }, []);
 
 
     useEffect(() => {
