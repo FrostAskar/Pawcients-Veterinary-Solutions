@@ -38,8 +38,7 @@
   font-size: 26px !important;
 }
 
-
-/* Pacients by type section */ 
+/* Pacients by type section */
 
 .patients-type {
   margin: 15px;
@@ -82,7 +81,7 @@
 
 .add-patient-button {
   font-size: 20px;
-  box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 10px;
   margin: 20px;
   width: 150px;
@@ -94,7 +93,7 @@
   color: white;
   font-weight: bold;
   background-color: var(--main-green);
-  right: 0;
+  align-self: center;
 }
 
 .add-patient-button:hover {
@@ -143,14 +142,13 @@
   border-bottom: 1px solid var(--dark-grey);
 }
 
-
 /* Graphic*/
 
 .appointments-graphic {
- width: 45em;
- height: 15em;
- margin: 15px;
- text-align: center;
+  width: 45em;
+  height: 15em;
+  margin: 15px;
+  text-align: center;
   h2 {
     font-size: 26px;
     margin: 5px;

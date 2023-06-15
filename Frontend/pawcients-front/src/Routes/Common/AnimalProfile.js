@@ -9,6 +9,8 @@ import {
   fetchMascotDataChangeProfileInfo,
 } from "fetches/Global/FetchMascotData";
 import { fetchProfile } from "fetches/Global/getProfile";
+import { parseISO, differenceInYears } from "date-fns";
+import moment from "moment";
 
 const AnimalManagementPage = () => {
   const [fetchedAnimalData, setFetchedAnimalData] = useState(null);
@@ -93,7 +95,7 @@ const AnimalManagementPage = () => {
     image: fetchedAnimalData?.photo,
     species: fetchedAnimalData?.species,
     breed: fetchedAnimalData?.breed,
-    age: fetchedAnimalData?.age,
+    birthDate: fetchedAnimalData?.birthDate,
     gender: fetchedAnimalData?.gender,
     weight: fetchedAnimalData?.weight,
     color: fetchedAnimalData?.color,
@@ -131,7 +133,7 @@ const AnimalManagementPage = () => {
         image: editedAnimalData?.image,
         species: editedAnimalData.species,
         breed: editedAnimalData.breed,
-        age: editedAnimalData.age,
+        birthDate: editedAnimalData.birthDate,
         gender: editedAnimalData.gender,
         weight: editedAnimalData.weight,
         color: editedAnimalData.color,
@@ -154,7 +156,7 @@ const AnimalManagementPage = () => {
       name === "name" ||
       name === "species" ||
       name === "breed" ||
-      name === "age" ||
+      name === "birthDate" ||
       name === "gender" ||
       name === "weight" ||
       name === "color" ||
@@ -172,7 +174,7 @@ const AnimalManagementPage = () => {
     image,
     species,
     breed,
-    age,
+    birthDate,
     gender,
     weight,
     color,
@@ -213,10 +215,13 @@ const AnimalManagementPage = () => {
                   />
                 </div>
               )}
-              <div className="animal-details">
-                <h2 className="animal-name">
-                  <strong>Name: {animalData.name}</strong>
-                </h2>
+              <div className="animal-details"></div>
+            </div>
+            <div className="profile-details">
+              <h2 className="animal-name">
+                <strong>Name: {animalData.name}</strong>
+              </h2>
+              <div className="animal-details-species">
                 <p>
                   <strong>Species:</strong>{" "}
                   {isEditing ? (
@@ -232,8 +237,6 @@ const AnimalManagementPage = () => {
                   )}
                 </p>
               </div>
-            </div>
-            <div className="profile-details">
               <h3 className="section-title">Profile Details</h3>
               <p>
                 <strong>Breed:</strong>{" "}
@@ -254,13 +257,18 @@ const AnimalManagementPage = () => {
                 {isEditing ? (
                   <input
                     className="animalprofile-input"
-                    type="text"
+                    type="date"
                     name="age"
-                    value={age}
                     onChange={handleChange}
+                    value={birthDate}
                   />
                 ) : (
-                  age
+                  //geT bitrhdate and calculate
+
+                  differenceInYears(
+                    new Date(),
+                    parseISO(moment(birthDate).format())
+                  )
                 )}
               </p>
               <p>
