@@ -81,11 +81,8 @@ export default function MascotInfoModal({
 
       fetchAddHistoryVaccine({ history, mascotID }).then((response) => {
         console.log(response.status);
-        if (response.status === 200) {
-          setSuccessMessage("History added successfully");
-        } else {
-          setErrorMessage("Failed to add history");
-        }
+
+        setSuccessMessage("History added successfully");
       });
     } else if (type === "Checkup") {
       if (checkupType === "1") {
@@ -98,9 +95,7 @@ export default function MascotInfoModal({
         }
 
         fetchAddHistoryCheckup(history, mascotID).then((response) => {
-          if (response.status === 200) {
-            setSuccessMessage("History added successfully");
-          }
+          setSuccessMessage("History added successfully");
         });
       } else if (checkupType === "2") {
         history = {
@@ -112,11 +107,7 @@ export default function MascotInfoModal({
           return;
         }
         fetchAddHistoryDeworming(history, mascotID).then((response) => {
-          if (response.status === 200) {
-            setSuccessMessage("History added successfully");
-          } else {
-            setErrorMessage("Failed to add history");
-          }
+          setSuccessMessage("History added successfully");
         });
       }
     } else if (type === "Surgery") {
