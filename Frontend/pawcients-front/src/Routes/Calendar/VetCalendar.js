@@ -51,8 +51,12 @@ const VetCalendar = () => {
 
     useEffect(() => {
         getAppointments();
-        obtainClients();
+        obtainClientsAndFirstMascot();
     }, [getAppointments])
+
+    useEffect(() => {
+
+    },[]);
 
 
     useEffect(() => {
@@ -75,10 +79,20 @@ const VetCalendar = () => {
     }, [selectedClient, location]);
 
 
-    const obtainClients = async () => {
+    const obtainClientsAndFirstMascot = async () => {
         const clientsData = await getClients();
         setClients(clientsData);
+        if (clientsData.length > 0) {
+            setSelectedClient(clientsData[0].client.id);
+        }
+        const mascotsData = await getMascotsByClient(clientsData[0].client.id);
+        setMascots(mascotsData.mascots);
+        if (mascotsData.mascots.length > 0) {
+            setSelectedMascot(mascotsData.mascots[0].id);
+        }
     };
+
+
 
     const handleDateSelect = date => {
         setSelectedDate(date);

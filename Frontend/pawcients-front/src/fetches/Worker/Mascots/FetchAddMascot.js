@@ -1,4 +1,4 @@
-export async function addMascot(mascotName, species, race, birthDate, gender, clientID) {
+export async function addMascot(mascotName, species, breed, birthDate, gender, clientID) {
   const token = localStorage.getItem("token");
   const response = await fetch(
     `http://127.0.0.1:8080/client/${clientID}/mascot`,
@@ -8,7 +8,7 @@ export async function addMascot(mascotName, species, race, birthDate, gender, cl
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body: JSON.stringify({ mascotName, species, race, birthDate, gender}),
+      body: JSON.stringify({ mascotName, species, breed, birthDate, gender}),
     }
   );
 
