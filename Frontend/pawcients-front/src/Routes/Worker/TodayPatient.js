@@ -57,7 +57,7 @@ export default function TodayPatient(props) {
         }`}
         onClick={openAppointmentInfo}
       >
-        {props.patient.active ? "Completed" : "On work"}
+        {props.patient.appointment.completed ? "Completed" : "On work"}
       </button>
       {isModalOpen && (
         <MascotInfoModal
