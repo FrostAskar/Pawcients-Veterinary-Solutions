@@ -37,7 +37,7 @@ export default function VetDashboard() {
   useEffect(() => {
     const getGraphData = async () => {
       const next7daysData = await fetchNext7Days();
-      setNext7days(next7daysData);
+      setNext7days(next7daysData.nextSevenDaysAppointments);
     };
     getGraphData();
   }, []);

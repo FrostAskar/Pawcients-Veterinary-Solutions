@@ -49,9 +49,7 @@ export default function NavbarLanding() {
             <li>
               <Link to="/aboutus">About us</Link>
             </li>
-            <li>
-              <Link to="/services">Services</Link>
-            </li>
+
             <li>
               <Link to="/contact">Contact</Link>
             </li>
