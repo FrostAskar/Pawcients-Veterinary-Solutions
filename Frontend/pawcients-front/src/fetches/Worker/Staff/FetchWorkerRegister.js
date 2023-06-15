@@ -9,6 +9,6 @@ export async function fetchWorkerRegister(name, surname, email, phone, license, 
       body: JSON.stringify({ name, surname, email, phone, license, type}),
     });
 
-    return response.json();;
+    return response;
   }
   

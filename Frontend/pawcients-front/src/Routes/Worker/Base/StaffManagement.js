@@ -27,12 +27,12 @@ export default function StaffManagement() {
 
         try {
             const response = await fetchWorkerRegister(name, surname, email, phone, license, type);
-            if (response !== null) {
+            if (response.status === 200) {
                 setCreationMode(false);
                 obtainWorkers();
-            } else {
-                // Mensaje de error para cliente
-                setErrorMessage(response.message);
+            } else if (response.status === 409){
+                const data = await response.json();
+                setErrorMessage(data.error);
             }
         } catch (error) {
             setErrorMessage("Error en la conexión con el servidor");

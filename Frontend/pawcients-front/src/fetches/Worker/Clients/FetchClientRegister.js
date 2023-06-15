@@ -9,6 +9,6 @@ export async function fetchClientRegister(name, surname, email, phone) {
       body: JSON.stringify({ name, surname, email, phone}),
     });
   
-    return response.json();
+    return response;
   }
   

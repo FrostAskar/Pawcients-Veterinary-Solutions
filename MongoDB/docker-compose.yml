@@ -1,13 +1,10 @@
 version: '3.3'
 services:
-  mongoDB:
+   mongoDB:
     image: mongo
     container_name: "mongodb"
     ports:
       - "27017:27017"
     volumes:
       - ./data/Pawcients:/data/db
-#    environment:
-#      - MONGO_INITDB_ROOT_USERNAME=root
-#      - MONGO_INITDB_ROOT_PASSWORD=root
     command: mongod

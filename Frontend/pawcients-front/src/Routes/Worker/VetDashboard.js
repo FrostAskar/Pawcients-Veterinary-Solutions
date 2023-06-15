@@ -98,7 +98,7 @@ export default function VetDashboard() {
         <div className="dashboard-content">
           <div className="add-patient">
             <button className="add-patient-button" onClick={openModal}>
-              Add patient
+              Add Client
             </button>
           </div>
           <section className="row-dashboard">
