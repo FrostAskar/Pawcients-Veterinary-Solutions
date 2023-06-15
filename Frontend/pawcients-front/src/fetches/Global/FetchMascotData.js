@@ -59,6 +59,7 @@ export async function fetchMascotDataChangeProfileInfo(
       gender: editedAnimalData.gender,
       weight: editedAnimalData.weight,
       color: editedAnimalData.color,
+      identificationNumber: editedAnimalData.identificationNumber,
     }),
   });
   const data = await response.json();

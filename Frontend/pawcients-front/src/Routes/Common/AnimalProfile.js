@@ -58,7 +58,7 @@ const AnimalManagementPage = () => {
             mascotidRef.current
           );
           if (isMounted) {
-            setFetchedAnimalData(data.mascot);
+            setFetchedAnimalData(data);
           }
         } catch (error) {
           console.error("Error fetching mascot data:", error);
@@ -73,7 +73,7 @@ const AnimalManagementPage = () => {
         try {
           const data = await fetchMascotDataVet(mascotidRef.current);
           if (isMounted) {
-            setFetchedAnimalData(data.mascot);
+            setFetchedAnimalData(data);
           }
         } catch (error) {
           console.error("Error fetching mascot data:", error);
@@ -97,7 +97,7 @@ const AnimalManagementPage = () => {
     gender: fetchedAnimalData?.gender,
     weight: fetchedAnimalData?.weight,
     color: fetchedAnimalData?.color,
-    identificationNumber: fetchedAnimalData?.identificationSerial,
+    identificationNumber: fetchedAnimalData?.identificationNumber,
   };
   const [isEditing, setIsEditing] = useState(false);
   const [editedAnimalData, setEditedAnimalData] = useState(animalData);
@@ -128,23 +128,22 @@ const AnimalManagementPage = () => {
     const editedAnimalDataToSend = {
       mascot: {
         ...fetchedAnimalData?.mascot,
-        image: editedAnimalData.image,
+        image: editedAnimalData.photo,
         species: editedAnimalData.species,
         breed: editedAnimalData.breed,
         age: editedAnimalData.age,
         gender: editedAnimalData.gender,
         weight: editedAnimalData.weight,
         color: editedAnimalData.color,
-        identificationSerial: editedAnimalData.identificationNumber,
+        identificationNumber: editedAnimalData.identificationNumber,
       },
     };
     fetchMascotDataChangeProfileInfo(
       mascotidRef.current,
-      editedAnimalDataToSend
+      editedAnimalDataToSend.mascot
     );
 
     setIsEditing(false);
-    window.location.reload();
   };
 
   const handleChange = (e) => {
@@ -177,7 +176,7 @@ const AnimalManagementPage = () => {
     color,
     identificationNumber,
   } = isEditing ? editedAnimalData : animalData;
-
+  console.log("Aniaml data:", animalData);
   return (
     <div className="dashboard">
       {profileData?.type === "vet" ||
@@ -207,7 +206,7 @@ const AnimalManagementPage = () => {
               )}
               <div className="animal-details">
                 <h2 className="animal-name">
-                  <strong>Name: {name}</strong>
+                  <strong>Name: {animalData.name}</strong>
                 </h2>
                 <p>
                   <strong>Species:</strong>{" "}
