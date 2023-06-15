@@ -299,4 +299,43 @@ public class UserController {
         }
         return result;
     }
+
+    @PutMapping("/profilesettings")
+    @CrossOrigin
+    public Map<String, Object> updateProfile(@RequestBody UpdateUserForm updateUserForm,
+                                             HttpServletResponse res, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserRequestingUser(actualUser, updateUserForm.getClient_id());
+            String userId = userService.updateUser(actualUser, updateUserForm);
+            result.put("userId", userId);
+            res.setStatus(200);
+        } catch (ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        }
+        return result;
+    }
+
+    @PutMapping("/profilesettings/changepassword")
+    @CrossOrigin
+    public Map<String, Object> updatePassword(@RequestBody ChangePasswordForm changePasswordForm,
+                                              HttpServletResponse res, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserRequestingUser(actualUser, changePasswordForm.getClient_id());
+            String userId = userService.updateUserPassword(actualUser, changePasswordForm);
+            result.put("userId", userId);
+            res.setStatus(200);
+        } catch (ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (InvalidPasswordException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
+    }
 }

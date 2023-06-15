@@ -30,10 +30,6 @@ public class PermissionService {
         throw new UnauthorizedUserException("User is not authorized");
     }
 
-    public boolean isUserRegistered(User actualUser) {
-        return true;
-    }
-
     public boolean isActualUserWorker(User actualUser) {
         if(actualUser.getType().equals("admin") || actualUser.getType().equals("vet") || actualUser.getType().equals("aux")){
             return true;
@@ -48,4 +44,9 @@ public class PermissionService {
         throw new UnauthorizedUserException("User is not authorized");
     }
 
+    public boolean isActualUserRequestingUser(User actualUser, String clientId) {
+        if(actualUser.getId().equals(clientId))
+            return true;
+        throw new UnauthorizedUserException("This user is not requested user");
+    }
 }
