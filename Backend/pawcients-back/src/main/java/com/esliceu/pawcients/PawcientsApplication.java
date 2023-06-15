@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.time.ZoneId;
+
 @SpringBootApplication
 public class PawcientsApplication implements WebMvcConfigurer {
 
@@ -14,6 +16,8 @@ public class PawcientsApplication implements WebMvcConfigurer {
 	public PawcientsApplication(TokenInterceptor tokenInterceptor) {
 		this.tokenInterceptor = tokenInterceptor;
 	}
+
+	public static ZoneId timeZone = ZoneId.systemDefault();
 
 	public static void main(String[] args) {
 		SpringApplication.run(PawcientsApplication.class, args);
