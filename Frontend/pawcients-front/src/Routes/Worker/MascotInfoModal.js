@@ -137,6 +137,7 @@ export default function MascotInfoModal({
       });
     }
     FetchPutAppoinment(appointmentID, true);
+    window.location.reload();
   };
 
   return (
