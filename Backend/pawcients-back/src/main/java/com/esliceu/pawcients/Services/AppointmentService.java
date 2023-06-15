@@ -4,7 +4,6 @@ import com.esliceu.pawcients.DTO.CalendarAppointmentDTO;
 import com.esliceu.pawcients.DTO.NextSevenDaysAppointmentsDTO;
 import com.esliceu.pawcients.Exceptions.AppointmentDuplicationException;
 import com.esliceu.pawcients.Exceptions.NotFoundAppointmentException;
-import com.esliceu.pawcients.Exceptions.UnauthorizedUserException;
 import com.esliceu.pawcients.Forms.AppointmentForm;
 import com.esliceu.pawcients.Models.Appointment;
 import com.esliceu.pawcients.Models.Mascot;
@@ -31,6 +30,8 @@ public class AppointmentService {
     }
 
     public Appointment findAppointmentById(String appointmentId) {
+        if(appointmentRepo.findById(appointmentId).isEmpty())
+            throw new NotFoundAppointmentException("This appointment does not exist");
         return appointmentRepo.findById(appointmentId).get();
     }
 
@@ -159,5 +160,10 @@ public class AppointmentService {
             calendarAppointments.add(cadto);
         }
         return calendarAppointments;
+    }
+
+    public String completeAppointment(Appointment appointment, AppointmentForm appointmentForm) {
+        appointment.setCompleted(appointmentForm.isCompleted());
+        return appointmentRepo.save(appointment).getId();
     }
 }

@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -186,9 +185,23 @@ public class AppointmentController {
     @PutMapping("/vet/appointment/{appointmentId}")
     @CrossOrigin
     public Map<String, Object> updateAppointment(@PathVariable String appointmentId,
-                                                 HttpServletRequest req) {
+                                                 @RequestBody AppointmentForm appointmentForm,
+                                                 HttpServletRequest req, HttpServletResponse res) {
         Map<String, Object> result = new HashMap<>();
-        User actualUser = (User) req.getAttribute("user");
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            Appointment appointment = appointmentService.findAppointmentById(appointmentId);
+            String modifiedAppointmentId = appointmentService.completeAppointment(appointment, appointmentForm);
+            result.put("modified appointmentId", modifiedAppointmentId);
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (NotFoundAppointmentException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
         return result;
     }
 
