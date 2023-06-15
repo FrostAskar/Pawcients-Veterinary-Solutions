@@ -54,7 +54,9 @@ const ProfileSettings = () => {
       profileData?.id,
       document.getElementById("name").value,
       document.getElementById("surname").value,
-      document.getElementById("phone").value
+      document.getElementById("phone").value,
+      // profileImage
+      profileImage
     ).then((response) => {
       if (response.status === 200) {
         window.location.href = "/profilesettings";

@@ -1,4 +1,10 @@
-export async function putSaveProfileData(clientID, name, surname, phone) {
+export async function putSaveProfileData(
+  clientID,
+  name,
+  surname,
+  phone,
+  image
+) {
   const response = await fetch("http://localhost:8080/profilesettings", {
     method: "PUT",
     headers: {
@@ -10,10 +16,11 @@ export async function putSaveProfileData(clientID, name, surname, phone) {
       name: name,
       surname: surname,
       phone: phone,
+      photo: image,
     }),
   });
 
-  const data = await response.json();
+  const data = await response();
   return data;
 }
 export async function putChangePassword(
@@ -37,6 +44,6 @@ export async function putChangePassword(
     }
   );
 
-  const data = await response.json();
+  const data = await response();
   return data;
 }

@@ -10,22 +10,8 @@ import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getTodayAppointments } from "fetches/Worker/Appointments/FetchGetTodayAppointments";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
-import {
-  BarChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Bar,
-  CartesianGrid,
-} from "recharts";
+import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from "recharts";
 import { fetchNext7Days } from "fetches/Worker/Appointments/FetchNext7Days";
-
-const animals = [
-  { date: "Dogs", citas: 30 },
-  { date: "Cats", citas: 45 },
-  { date: "Others", citas: 25 },
-];
 
 export default function VetDashboard() {
   const [todayAppointments, setTodayAppointments] = useState([]);
@@ -96,11 +82,6 @@ export default function VetDashboard() {
       <div className="dashboard-page">
         <FilterComponent title={title} onFilter={handleFilter} />
         <div className="dashboard-content">
-          <div className="add-patient">
-            <button className="add-patient-button" onClick={openModal}>
-              Add Client
-            </button>
-          </div>
           <section className="row-dashboard">
             <div className="section">
               <div className="section-content">
@@ -126,17 +107,9 @@ export default function VetDashboard() {
             </div>
             <div className="section">
               <div className="section-content">
-                <div className="patients-type">
-                  <h3>Patients by type</h3>
-                  <BarChart width={500} height={300} data={animals}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="value" fill="#8884d8" />
-                  </BarChart>
-                </div>
+                <button className="add-patient-button" onClick={openModal}>
+                  Add Client
+                </button>
               </div>
             </div>
           </section>

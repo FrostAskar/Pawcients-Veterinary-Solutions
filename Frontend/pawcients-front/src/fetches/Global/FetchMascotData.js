@@ -55,7 +55,7 @@ export async function fetchMascotDataChangeProfileInfo(
       photo: editedAnimalData.image,
       species: editedAnimalData.species,
       breed: editedAnimalData.breed,
-      age: editedAnimalData.age,
+      birthDate: editedAnimalData.birthDate,
       gender: editedAnimalData.gender,
       weight: editedAnimalData.weight,
       color: editedAnimalData.color,
