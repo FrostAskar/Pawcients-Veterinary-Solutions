@@ -43,7 +43,7 @@ public class UserService {
         String tempPassword = Encrypt.createTempPassword();
         System.out.println(tempPassword);
         user.setVerificationCodeEmail(verificationCode);
-        user.setPassword(Encrypt.sha512(verificationCode));
+        user.setPassword(Encrypt.sha512(tempPassword));
         if(PawcientsApplication.emailSenderEnable) {
             emailSenderService.SendWelcomeEmail(user, tempPassword);
         }

@@ -5,6 +5,7 @@ import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.Clinic;
 import com.esliceu.pawcients.Models.User;
+import com.esliceu.pawcients.PawcientsApplication;
 import com.esliceu.pawcients.Services.*;
 import com.esliceu.pawcients.Utils.Encrypt;
 import jakarta.servlet.http.HttpServletRequest;
@@ -83,7 +84,9 @@ public class UserController {
         try{
             User user = userService.generateUser(userId);
             String newPass = Encrypt.createTempPassword();
-            emailSenderService.sendNewPassword(user, newPass);
+            if(PawcientsApplication.emailSenderEnable) {
+                emailSenderService.sendNewPassword(user, newPass);
+            }
             result.put("Success", "New password has been sent to your email");
             res.setStatus(200);
         } catch (NotFoundUserException e) {
@@ -244,7 +247,9 @@ public class UserController {
         Map<String, Object> result = new HashMap<>();
         try{
             User user = userService.getUserByEmail(changePasswordForm.getEmail());
-            emailSenderService.sendPasswordRecoveryEmail(user);
+            if(PawcientsApplication.emailSenderEnable) {
+                emailSenderService.sendPasswordRecoveryEmail(user);
+            }
             result.put("action", "Password recovery email sent");
             res.setStatus(200);
         } catch (NotFoundUserException e) {
