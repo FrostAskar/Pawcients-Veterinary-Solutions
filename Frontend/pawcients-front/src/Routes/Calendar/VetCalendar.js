@@ -12,6 +12,7 @@ import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClie
 import { addAppointment } from 'fetches/Worker/Appointments/FetchAddAppointment';
 import { ConfirmationPopup } from "Routes/Common/PopUp";
 import { deleteAppointment } from 'fetches/Worker/Appointments/FetchDeleteAppointment';
+import { updateAppoitment } from 'fetches/Worker/Appointments/FetchUpdateAppointment';
 
 const VetCalendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -165,7 +166,7 @@ const VetCalendar = () => {
                 throw new Error("Mascot empty");
             }
             const response = await addAppointment(selectedClient, selectedMascot, profileData.id, type, fullDateStart, fullDateEnd, profileData.id)
-            if (response != null) {
+            if (response.status === 200) {
                 setAddEvent(false);
                 getAppointments();
                 setAvailableHours(allowedHours.filter(event => event !== startTime));
@@ -185,6 +186,7 @@ const VetCalendar = () => {
 
     const handleEventInfo = () => {
         setViewEvent(!viewEvent);
+        setEditMode(false);
     };
 
 
@@ -233,6 +235,31 @@ const VetCalendar = () => {
         }
     };
 
+    //Edit
+
+    const handleEditEvent = async (e) => {
+        e.preventDefault();
+        const typeEdited = e.target.typeEdited.value;
+        const startTimeEdited = e.target.startTimeEdited.value;
+
+        const [startHours, startMinutes] = startTimeEdited.split(':');
+
+        const fullDateStart = new Date(selectedDate);
+        fullDateStart.setHours(startHours);
+        fullDateStart.setMinutes(startMinutes);
+
+        const fullDateEnd = new Date(selectedDate);
+        const endHours = Number(startHours) + 1
+        fullDateEnd.setHours(endHours);
+        fullDateEnd.setMinutes(startMinutes);
+        const response = await updateAppoitment(fullDateStart, fullDateEnd, typeEdited, selectedEvent.appointmentId)
+        if (response.status === 200) {
+            getAppointments();
+            setEditMode(false);
+            setAvailableAppointments();
+        }
+    };
+
     return (
         <div className="dashboard">
             <SideNavbarWorker />
@@ -260,57 +287,60 @@ const VetCalendar = () => {
                                         <i className='material-icons'>close</i>
                                     </div>
                                     <h2>{selectedEvent.title}</h2>
-                                    {!editMode
-                                        ?
-                                        <p>{selectedEvent.type}</p>
-                                        :
-                                        <div className='clasic-form'>
-                                            <label htmlFor="type">Appointment type</label>
-                                            <select name="type" id="type">
-                                                <option value="checkup">Checkup</option>
-                                                <option value="vaccine">Vaccine</option>
-                                                <option value="surgery">Surgery</option>
-                                                <option value="cures">Cures</option>
-                                            </select>
-                                        </div>
-                                    }
-                                    {!editMode
-                                        ?
-                                        <div>
-                                            <p><span>Start time: </span> {setTime(selectedEvent.startDate)}</p>
-                                            <p><span>End time: </span> {setTime(selectedEvent.endDate)}</p>
-                                        </div>
-                                        :
-                                        <div className='clasic-form'>
-                                            <label htmlFor='startTime'>Start Time: </label>
-                                            <select className='select-time' id="startTime" >
-                                                {allowedHours.map(option => (
-                                                    <option key={option} value={option} >{option}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    }
-                                    {!editMode
-                                        ?
-                                        <div className='buttons'>
-                                            <button className='clasic-button' onClick={changeEditMode}>Edit</button>
-                                            <button className='clasic-button' id="cancel-button" onClick={(e) => handleDeleteClick(e)}>Delete</button>
-                                            {isPopupOpen[selectedEvent.appointmentId] && (
-                                                <div>
-                                                    <ConfirmationPopup
-                                                        onCancel={(e) => handleCancel(e)}
-                                                        onConfirm={(e) => handleConfirm(e)}
-                                                        item="appointment"
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-                                        :
-                                        <div className='buttons'>
-                                            <button className='clasic-button'>Apply</button>
-                                            <button className='clasic-button' id="cancel-button" onClick={changeEditMode}>Cancel</button>
-                                        </div>
-                                    }
+                                    <form className="clasic-form" onSubmit={handleEditEvent} method="put">
+                                        {!editMode
+                                            ?
+                                            <p>{selectedEvent.type}</p>
+                                            :
+                                            <div className='clasic-form'>
+                                                <label htmlFor="typeEdited">Appointment type</label>
+                                                <select name="typeEdited" id="typeEdited">
+                                                    <option value="Checkup">Checkup</option>
+                                                    <option value="Vaccine">Vaccine</option>
+                                                    <option value="Surgery">Surgery</option>
+                                                    <option value="Cures">Cures</option>
+                                                </select>
+                                            </div>
+                                        }
+                                        {!editMode
+                                            ?
+                                            <div>
+                                                <p><span>Start time: </span> {setTime(selectedEvent.startDate)}</p>
+                                                <p><span>End time: </span> {setTime(selectedEvent.endDate)}</p>
+                                            </div>
+                                            :
+                                            <div className='clasic-form'>
+                                                <label htmlFor='startTimeEdited'>Start Time: </label>
+                                                <select className='select-time' id="startTimeEdited" >
+                                                    {availableHours.map(option => (
+                                                        <option key={option} value={option} >{option}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        }
+                                        {!editMode
+                                            ?
+                                            <div className='buttons'>
+                                                <button className='clasic-button' onClick={changeEditMode}>Edit</button>
+                                                <button className='clasic-button' id="cancel-button" onClick={(e) => handleDeleteClick(e)}>Delete</button>
+                                                {isPopupOpen[selectedEvent.appointmentId] && (
+                                                    <div>
+                                                        <ConfirmationPopup
+                                                            onCancel={(e) => handleCancel(e)}
+                                                            onConfirm={(e) => handleConfirm(e)}
+                                                            item="appointment"
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            :
+                                            <div className='buttons'>
+                                                <button className='clasic-button' type="submit">Apply</button>
+                                                <button className='clasic-button' id="cancel-button" onClick={changeEditMode}>Cancel</button>
+                                            </div>
+                                        }
+                                    </form>
+
 
 
                                 </div>

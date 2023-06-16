@@ -4,6 +4,8 @@
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+
+
 }
 
 .animal-profile {
@@ -12,9 +14,13 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 15px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin: 40px;
   width: 100%;
   max-width: 600px;
+  @media (max-width:750px) {
+    margin-top: 150px;
+  }
+  
 }
 
 .profile-container {

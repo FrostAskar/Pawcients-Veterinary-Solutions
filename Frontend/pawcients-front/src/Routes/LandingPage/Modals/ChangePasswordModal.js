@@ -14,7 +14,7 @@ function ChangePasswordModal({ onClose }) {
   return (
     <div className="modal managementpage">
       <div className="modal-content">
-        <h2 className="management-header">Forgot Password</h2>
+        <h2>Forgot Password</h2>
         <form className="creation-section" onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
           <input

@@ -42,16 +42,16 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1250px) {
   .management-table {
     td,
     th {
-      padding: 10px;
+      padding: 5px;
     }
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .management-table {
     width: 100%;
     td,
