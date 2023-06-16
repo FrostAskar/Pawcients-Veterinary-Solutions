@@ -17,7 +17,7 @@ public class PawcientsApplication implements WebMvcConfigurer {
 		this.tokenInterceptor = tokenInterceptor;
 	}
 
-	public static ZoneId timeZone = ZoneId.systemDefault();
+	public static ZoneId timeZone = ZoneId.of("Europe/Madrid");
 	public static boolean emailSenderEnable = false;
 
 	public static void main(String[] args) {

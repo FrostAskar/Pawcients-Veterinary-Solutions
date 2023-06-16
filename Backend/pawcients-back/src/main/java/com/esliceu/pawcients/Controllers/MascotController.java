@@ -52,6 +52,13 @@ public class MascotController {
         return result;
     }
 
+    @GetMapping("/mascot/{mascotId}")
+    @CrossOrigin
+    public Mascot getMascotById(@PathVariable String mascotId,
+                                HttpServletRequest req) {
+        return mascotService.findMascotById(mascotId);
+    }
+
     @GetMapping("/client/{clientId}/mascots")
     @CrossOrigin
     public Map<String, Object> getMascotsFromClient(@PathVariable String clientId, HttpServletRequest req, HttpServletResponse res) {
