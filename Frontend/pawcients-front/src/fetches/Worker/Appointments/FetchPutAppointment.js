@@ -1,6 +1,6 @@
 export async function FetchPutAppoinment(appointmentId, completed) {
   const response = await fetch(
-    `http://127.0.0.1:8080/vet/appointment/${appointmentId}`,
+    `${process.env.REACT_APP_API_ENDPOINT}/vet/appointment/${appointmentId}`,
     {
       method: "PUT",
       headers: {

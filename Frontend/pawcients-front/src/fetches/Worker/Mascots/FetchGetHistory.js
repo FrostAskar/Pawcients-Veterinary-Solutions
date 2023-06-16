@@ -1,6 +1,6 @@
 export async function fetchGetHistory(mascotID) {
   const response = await fetch(
-    "http://localhost:8080/vet/mascot/" + mascotID + "/history",
+    process.env.REACT_APP_API_ENDPOINT + "/vet/mascot/" + mascotID + "/history",
     {
       method: "GET",
       headers: {

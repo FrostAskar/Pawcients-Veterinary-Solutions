@@ -123,11 +123,7 @@ public class UserService {
     }
 
     public List<User> getClientsByClinic(String clinicId) {
-        List<User> clientsInClinic = userRepo.findByTypeAndClinicId("client", clinicId);
-        if(clientsInClinic.size() < 1) {
-            throw new NotFoundUserException("No clients were found in this clinic");
-        }
-        return clientsInClinic;
+        return userRepo.findByTypeAndClinicId("client", clinicId);
     }
 
     public User getActualUser(User actualUser) {

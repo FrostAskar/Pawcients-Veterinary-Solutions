@@ -1,12 +1,15 @@
 export async function fetchProfile() {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch("http://localhost:8080/getprofile", {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_API_ENDPOINT}/getprofile`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Profile request failure");
