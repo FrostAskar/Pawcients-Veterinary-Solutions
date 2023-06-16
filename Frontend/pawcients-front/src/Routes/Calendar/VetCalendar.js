@@ -220,11 +220,12 @@ const VetCalendar = () => {
         try {
             const response = await deleteAppointment(profileData.id, selectedEvent.appointmentId);
             setSelectedEvent(null)
-            if (response !== null) {
+            if (response.status === 200) {
                 setIsPopupOpen((prevState) => ({
                     ...prevState,
                     [selectedEvent.appointmentId]: false,
                 }));
+                setViewEvent(false);
                 getAppointments();
             } else {
             }

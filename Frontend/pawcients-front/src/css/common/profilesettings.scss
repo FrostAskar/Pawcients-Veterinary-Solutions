@@ -26,6 +26,7 @@
   button:hover {
     background-color: var(--hover-green);
   }
+
 }
 
 .profile-image-change {
@@ -52,5 +53,14 @@
   }
   input {
     margin-bottom: 10px;
+  }
+}
+
+.settings-title
+{
+  margin-top: 70px;
+
+  @media (max-width: 1200px) {
+    margin-top: 170px;
   }
 }

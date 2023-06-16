@@ -90,6 +90,21 @@ export default function VetDashboard() {
           <section className="row-dashboard">
             <div className="section">
               <div className="section-content">
+                <div className="today-patients">
+                  <div className="today-patients-header">
+                    <h2> Today Patients </h2>
+                  </div>
+                  <div className="today-patients-body">
+                    {visibleTodayAppointments.map((patient, index) => (
+                      <TodayPatient key={index} patient={patient} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="section">
+              <div className="section-content">
                 <div className="total-patients">
                   <div className="total-patients-row">
                     <img src={Paw} alt="paw" height="50px" width="auto" />
@@ -110,22 +125,7 @@ export default function VetDashboard() {
                 </div>
               </div>
             </div>
-          </section>
-          <section className="row-dashboard">
-            <div className="section">
-              <div className="section-content">
-                <div className="today-patients">
-                  <div className="today-patients-header">
-                    <h2> Today Patients </h2>
-                  </div>
-                  <div className="today-patients-body">
-                    {visibleTodayAppointments.map((patient, index) => (
-                      <TodayPatient key={index} patient={patient} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </section>
           <section className="row-dashboard">
             <div className="section">
@@ -137,13 +137,14 @@ export default function VetDashboard() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="appointments" fill="#8884d8" />
+                    <Bar dataKey="appointments" fill="#66d083" />
                   </BarChart>
                 </div>
               </div>
+              {creationMode && <ClientCreation onClose={cancelCreation} />}
             </div>
           </section>
-          {creationMode && <ClientCreation onClose={cancelCreation} />}
+
         </div>
       </div>
     </div>

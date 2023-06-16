@@ -7,5 +7,5 @@ export async function deleteAppointment(clientId, appointmentId) {
           Authorization: token
         },
       });
-      return response.json();;
+      return response;
     }

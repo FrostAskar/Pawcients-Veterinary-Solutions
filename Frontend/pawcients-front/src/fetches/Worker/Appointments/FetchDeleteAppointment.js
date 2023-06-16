@@ -7,5 +7,5 @@ export async function deleteAppointment(vetId, appointmentId) {
           Authorization: token
         },
       });
-      return response.json();;
+      return response;
     }
