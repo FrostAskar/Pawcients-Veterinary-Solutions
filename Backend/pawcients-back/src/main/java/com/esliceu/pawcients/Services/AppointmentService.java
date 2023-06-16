@@ -13,7 +13,6 @@ import com.esliceu.pawcients.Utils.TimeZoneConverter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class AppointmentService {
     }
 
     public List<CalendarAppointmentDTO> getCalendarAppointmentsByVet(String vetId) {
-        List<Appointment> appointments = appointmentRepo.findByWorkerId(vetId);
+        List<Appointment> appointments = appointmentRepo.findByWorkerIdOrderByStartDateAsc(vetId);
         List<CalendarAppointmentDTO> calendarAppointments = new ArrayList<>();
         for(Appointment a : appointments) {
             User u = userService.generateUser(a.getClientId());
@@ -108,7 +107,7 @@ public class AppointmentService {
     }
 
     public List<Appointment> getTodaysAppointments(User actualUser) {
-        List<Appointment> appointments = appointmentRepo.findByWorkerId(actualUser.getId());
+        List<Appointment> appointments = appointmentRepo.findByWorkerIdOrderByStartDateAsc(actualUser.getId());
         List<Appointment> todayAppointments = new ArrayList<>();
         LocalDate today = LocalDate.now();
         for(Appointment a : appointments) {
@@ -123,7 +122,7 @@ public class AppointmentService {
 
     public Appointment getEarliestClientAppointment(String clientId) {
         if(appointmentRepo.existsByClientId(clientId)){
-            return appointmentRepo.findByClientIdOrderByStartDate(clientId).get(0);
+            return appointmentRepo.findByClientIdOrderByStartDateAsc(clientId).get(0);
         } else {
             return null;
         }
