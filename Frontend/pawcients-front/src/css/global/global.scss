@@ -58,8 +58,6 @@
   height: 100vh;
 }
 
-
-
 .dashboard-page {
   background-color: var(--background-page);
 }
@@ -233,5 +231,15 @@
 
   button:hover {
     background-color: var(--hover-green);
+  }
+}
+
+.no-pets {
+  background-color: var(--background-page) ;
+  h1 {
+    text-align: center;
+    font-size: 44px;
+    margin: 50px;
+    color: var(--main-green);
   }
 }

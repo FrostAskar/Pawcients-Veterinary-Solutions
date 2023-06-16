@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "css/client/clientdashboard.css";
+import "css/global/global.scss";
 import { Link } from "react-router-dom";
 import SideNavbarClient from "Routes/Client/SideNavbarClient";
 import { fetchClientMascots } from "fetches/Worker/Clients/fetchClientMascots";
@@ -12,6 +13,8 @@ const MyMascots = () => {
 
   const [mascots, setMascots] = useState([]);
   const [profileData, setProfileData] = useState(null);
+
+  console.log(mascots);
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -35,8 +38,8 @@ const MyMascots = () => {
   return (
     <div className="dashboard">
       {profileData?.type === "vet" ||
-      profileData?.type === "aux" ||
-      profileData?.type === "admin" ? (
+        profileData?.type === "aux" ||
+        profileData?.type === "admin" ? (
         <SideNavbarWorker />
       ) : (
         <SideNavbarClient />
@@ -70,7 +73,17 @@ const MyMascots = () => {
             </div>
           </div>
         ))}
+        {mascots.length === 0 && (
+          <div className="dashboard-page">
+            <div className="no-pets">
+              <h1>No pets yet</h1>
+            </div>
+          </div>
+        )
+        }
+
       </div>
+
     </div>
   );
 };

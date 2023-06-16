@@ -186,7 +186,7 @@ const VetCalendar = () => {
     const handleEventInfo = () => {
         setViewEvent(!viewEvent);
     };
-    
+
 
     const changeEditMode = () => {
         setEditMode(!editMode);
@@ -266,8 +266,8 @@ const VetCalendar = () => {
                                         <div className='clasic-form'>
                                             <label htmlFor="type">Appointment type</label>
                                             <select name="type" id="type">
-                                                <option value="vaccine">Vaccine</option>
                                                 <option value="checkup">Checkup</option>
+                                                <option value="vaccine">Vaccine</option>
                                                 <option value="surgery">Surgery</option>
                                                 <option value="cures">Cures</option>
                                             </select>

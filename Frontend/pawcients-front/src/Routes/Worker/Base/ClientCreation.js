@@ -13,7 +13,6 @@ export default function ClientCreation({ onClose, onAccept }) {
         try {
             // Fetch para login de cliente
             const response = await fetchClientRegister(name, surname, email, phone);
-            
             if (response.status === 200) {
                 onClose();
                 onAccept();
