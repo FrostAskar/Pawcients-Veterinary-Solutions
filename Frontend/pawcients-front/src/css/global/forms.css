@@ -1,3 +1,7 @@
+* {
+  padding: 0;
+  margin: 0;
+}
 .page-container {
   display: flex;
   align-items: center;
@@ -117,14 +121,14 @@ select {
   background-color: #90cea3;
 }
 
-/* Sign up */ 
+/* Sign up */
 
 .signup-details {
   display: flex;
-  
 }
 
-.clinic-details, .vet-details {
+.clinic-details,
+.vet-details {
   padding: 5px 60px;
 }
 
@@ -133,9 +137,9 @@ select {
   color: var(--main-green);
 }
 
-.vet-details{
-    border-right: 2px solid #bbcdc3;
-  }
+.vet-details {
+  border-right: 2px solid #bbcdc3;
+}
 
 form {
   display: flex;
@@ -159,7 +163,6 @@ input {
   border: 2px solid #bbcdc3;
   border-radius: 0.5rem;
 }
-
 
 @media only screen and (max-width: 768px) {
   .page-container {

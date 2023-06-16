@@ -20,9 +20,7 @@
   border-radius: 5%;
 }
 
-
-
-/* Modal */ 
+/* Modal */
 
 .modal {
   position: fixed;
@@ -48,8 +46,8 @@
   border-radius: 15px;
   text-align: center;
   h1 {
-      font-size: 28px;
-  }  
+    font-size: 28px;
+  }
 }
 
 /* Dashboard */
@@ -105,7 +103,6 @@
     color: var(--dark-grey);
   }
 }
-
 
 /* NavBar */
 
@@ -194,7 +191,6 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-
 .clasic-button:hover {
   background-color: var(--hover-green);
 }
@@ -206,9 +202,7 @@
   background-color: rgba(226, 72, 72, 0.842);
 }
 
-
 /* Inputs */
-
 
 .clasic-form {
   label {
@@ -219,15 +213,16 @@
   }
 
   input,
-  textarea, select {
+  textarea,
+  select {
     width: 100%;
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: var(--input-color)
+    background-color: var(--input-color);
   }
 
-  button{
+  button {
     background-color: var(--main-green);
     color: #fff;
     padding: 10px 20px;
@@ -241,5 +236,4 @@
   button:hover {
     background-color: var(--hover-green);
   }
-
 }
