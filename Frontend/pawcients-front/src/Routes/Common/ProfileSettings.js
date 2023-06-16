@@ -15,6 +15,7 @@ const ProfileSettings = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [profileData, setProfileData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const getProfileData = async () => {
@@ -38,7 +39,7 @@ const ProfileSettings = () => {
         console.log("Password changed successfully");
       }
     } else {
-      console.log("Passwords don't match");
+      setErrorMessage("Passwords don't match");
     }
   };
   const handleProfileImageChange = (event) => {
@@ -68,7 +69,7 @@ const ProfileSettings = () => {
       if (response.status === 200) {
         window.location.href = "/profilesettings";
       } else {
-        console.log("Failed to save profile data");
+        setErrorMessage("Error al guardar los datos");
       }
     });
   };
@@ -76,8 +77,8 @@ const ProfileSettings = () => {
   return (
     <div className="dashboard">
       {profileData?.type === "vet" ||
-        profileData?.type === "aux" ||
-        profileData?.type === "admin" ? (
+      profileData?.type === "aux" ||
+      profileData?.type === "admin" ? (
         <SideNavbarWorker />
       ) : (
         <SideNavbarClient />
@@ -155,10 +156,9 @@ const ProfileSettings = () => {
                 Change Password
               </button>
             </div>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
           </div>
         </div>
-
-
       </div>
     </div>
   );
