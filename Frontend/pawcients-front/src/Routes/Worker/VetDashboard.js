@@ -13,6 +13,7 @@ import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from "recharts";
 import { fetchNext7Days } from "fetches/Worker/Appointments/FetchNext7Days";
 
+
 export default function VetDashboard() {
   const [todayAppointments, setTodayAppointments] = useState([]);
   const [visibleTodayAppointments, setVisibleTodayAppointments] = useState([]);
@@ -20,12 +21,35 @@ export default function VetDashboard() {
   const [title, setTitle] = useState("");
   const [next7days, setNext7days] = useState([]);
 
+  const [graphicWidth, setGraphicWidth] = useState(0);
+  const [graphicHeight, setGraphicHeight] = useState(0);
+
   useEffect(() => {
     const getGraphData = async () => {
       const next7daysData = await fetchNext7Days();
       setNext7days(next7daysData.nextSevenDaysAppointments);
     };
     getGraphData();
+  }, []);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      if (window.innerWidth <= 600) {
+        setGraphicWidth(320);
+        setGraphicHeight(200);
+      } else {
+        setGraphicWidth(700);
+        setGraphicHeight(200);
+      }
+    };
+  
+    handleWindowResize(); 
+  
+    window.addEventListener("resize", handleWindowResize); 
+  
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -88,7 +112,7 @@ export default function VetDashboard() {
             </button>
           </div>
           <section className="row-dashboard">
-            <div className="section">
+            <div className="section" id="section-today-patients">
               <div className="section-content">
                 <div className="today-patients">
                   <div className="today-patients-header">
@@ -132,7 +156,7 @@ export default function VetDashboard() {
               <div className="section-content">
                 <div className="appointments-graphic">
                   <h2>Citas</h2>
-                  <BarChart width={700} height={200} data={next7days}>
+                  <BarChart width={graphicWidth} height={graphicHeight} data={next7days}>
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />

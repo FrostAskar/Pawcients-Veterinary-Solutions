@@ -17,6 +17,7 @@
 .section {
   margin: 10px;
   border-radius: 5%;
+  
 }
 
 /* Modal */
@@ -65,6 +66,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 }
 
 /* Dashboard header */

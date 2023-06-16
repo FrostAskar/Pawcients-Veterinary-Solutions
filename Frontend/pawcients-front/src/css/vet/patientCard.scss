@@ -9,6 +9,13 @@
     }
 }
 
+@media (max-width: 600px) {
+    .patient-card-wrapper i {
+        font-size: 35px;
+    }
+
+}
+
 #type-icon, #status {
     flex-basis: 15%
 }
