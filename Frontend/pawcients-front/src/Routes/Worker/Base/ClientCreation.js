@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { fetchClientRegister } from "fetches/Worker/Clients/FetchClientRegister";
 
-export default function ClientCreation({ onClose }) {
+export default function ClientCreation({ onClose, onAccept }) {
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e) => {
@@ -16,6 +16,7 @@ export default function ClientCreation({ onClose }) {
             
             if (response.status === 200) {
                 onClose();
+                onAccept();
             } else if (response.status === 409) {
                 // Mensaje de error para cliente
                 const data = await response.json();
