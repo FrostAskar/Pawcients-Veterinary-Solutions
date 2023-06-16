@@ -18,6 +18,7 @@ public class PawcientsApplication implements WebMvcConfigurer {
 	}
 
 	public static ZoneId timeZone = ZoneId.systemDefault();
+	public static boolean emailSenderEnable = false;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PawcientsApplication.class, args);

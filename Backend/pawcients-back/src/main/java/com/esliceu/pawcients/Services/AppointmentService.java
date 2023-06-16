@@ -55,13 +55,37 @@ public class AppointmentService {
         return calendarAppointments;
     }
 
-    public List<Appointment> getAppointmentsByVetAndClient(String vetId, String clientId) {
-        return appointmentRepo.findByWorkerIdAndClientId(vetId, clientId);
+    public List<CalendarAppointmentDTO> getCalendarAppointmentsByClient(String clientId) {
+        List<Appointment> appointments = appointmentRepo.findByClientId(clientId);
+        List<CalendarAppointmentDTO> calendarAppointments = new ArrayList<>();
+        for(Appointment a : appointments) {
+            User u = userService.generateUser(a.getWorkerId());
+            Mascot m = mascotService.findMascotById(a.getMascotId());
+            CalendarAppointmentDTO cadto = new CalendarAppointmentDTO();
+            cadto.setTitle(m.getName() + "/" + u.getName() + " " + u.getSurname());
+            cadto.setStartDate(timeZoneConverter.transformIntoClinicTimeZone(a.getStartDate()));
+            cadto.setEndDate(timeZoneConverter.transformIntoClinicTimeZone(a.getEndDate()));
+            cadto.setType(a.getType());
+            cadto.setAppointmentId(a.getId());
+            calendarAppointments.add(cadto);
+        }
+        return calendarAppointments;
     }
 
-    //VetId inserted just in case of checks?? Not really sure right now
     public String createVetAppointment(AppointmentForm appointmentForm, String vetId) {
         checkAppointmentExists(appointmentForm, vetId);
+        Appointment appointment = new Appointment(null,
+                appointmentForm.getStartDate(),
+                appointmentForm.getEndDate(),
+                appointmentForm.getWorkerId(),
+                appointmentForm.getClientId(),
+                appointmentForm.getMascotId(),
+                appointmentForm.getTypeAppointment());
+        return appointmentRepo.save(appointment).getId();
+    }
+
+    public String createClientAppointment(AppointmentForm appointmentForm, String clientId) {
+        checkAppointmentExists(appointmentForm, appointmentForm.getWorkerId());
         Appointment appointment = new Appointment(null,
                 appointmentForm.getStartDate(),
                 appointmentForm.getEndDate(),
@@ -78,18 +102,6 @@ public class AppointmentService {
         throw new AppointmentDuplicationException("This hour is already occupied for this vet");
     }
 
-    public String createClientAppointment(AppointmentForm appointmentForm, String clientId) {
-        checkAppointmentExists(appointmentForm, appointmentForm.getWorkerId());
-        Appointment appointment = new Appointment(null,
-                appointmentForm.getStartDate(),
-                appointmentForm.getEndDate(),
-                appointmentForm.getWorkerId(),
-                appointmentForm.getClientId(),
-                appointmentForm.getMascotId(),
-                appointmentForm.getTypeAppointment());
-        return appointmentRepo.save(appointment).getId();
-    }
-
     public String deleteAppointment(String appointmentId, String userId) {
         Appointment appointment;
         if (appointmentRepo.findById(appointmentId).isEmpty()) {
@@ -98,7 +110,7 @@ public class AppointmentService {
             appointment = appointmentRepo.findById(appointmentId).get();
         }
         User user = userService.generateUser(userId);
-        if(user.getType().equals("admin")) {
+        if(!user.getType().equals("client")) {
             appointmentRepo.deleteById(appointmentId);
         } else if (user.getId().equals(userId)) {
             appointmentRepo.deleteById(appointmentId);
@@ -148,23 +160,6 @@ public class AppointmentService {
                 appointmentRepo.deleteById(a.getId());
             }
         }
-    }
-
-    public List<CalendarAppointmentDTO> getCalendarAppointmentsByClient(String clientId) {
-        List<Appointment> appointments = appointmentRepo.findByClientId(clientId);
-        List<CalendarAppointmentDTO> calendarAppointments = new ArrayList<>();
-        for(Appointment a : appointments) {
-            User u = userService.generateUser(a.getWorkerId());
-            Mascot m = mascotService.findMascotById(a.getMascotId());
-            CalendarAppointmentDTO cadto = new CalendarAppointmentDTO();
-            cadto.setTitle(m.getName() + "/" + u.getName() + " " + u.getSurname());
-            cadto.setStartDate(timeZoneConverter.transformIntoClinicTimeZone(a.getStartDate()));
-            cadto.setEndDate(timeZoneConverter.transformIntoClinicTimeZone(a.getEndDate()));
-            cadto.setType(a.getType());
-            cadto.setAppointmentId(a.getId());
-            calendarAppointments.add(cadto);
-        }
-        return calendarAppointments;
     }
 
     public String completeAppointment(Appointment appointment, AppointmentForm appointmentForm) {

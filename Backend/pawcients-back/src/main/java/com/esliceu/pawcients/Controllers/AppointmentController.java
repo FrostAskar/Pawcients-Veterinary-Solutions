@@ -92,6 +92,41 @@ public class AppointmentController {
         return result;
     }
 
+    @GetMapping("/vet/appointments")
+    @CrossOrigin
+    public Map<String, Object> getTodayAppointmentsForVet(HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        User actualUser = (User) req.getAttribute("user");
+        List<Appointment> todayAppointments = appointmentService.getTodaysAppointments(actualUser);
+        List<TodayAppointmentsDTO> todayData = new ArrayList<>();
+        for(Appointment a : todayAppointments) {
+            TodayAppointmentsDTO tadto = new TodayAppointmentsDTO();
+            tadto.setUser(userService.generateUser(a.getClientId()));
+            tadto.setMascot(mascotService.findMascotById(a.getMascotId()));
+            tadto.setAppointment(a);
+            todayData.add(tadto);
+        }
+        result.put("appointments", todayData);
+        return result;
+    }
+
+    @GetMapping("/vet/appointmentgraph")
+    @CrossOrigin
+    public Map<String, Object> getAppointmentsForGraphic(HttpServletRequest req, HttpServletResponse res) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            List<NextSevenDaysAppointmentsDTO> nextAppointments = appointmentService.getNextSevenDaysAppointmentsCount(actualUser);
+            result.put("nextSevenDaysAppointments", nextAppointments);
+            res.setStatus(200);
+        } catch (ExpiredUserException | UnauthorizedUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        }
+        return result;
+    }
+
     @PostMapping("/vet/{vetId}/appointment")
     @CrossOrigin
     public Map<String, Object> vetCreatesAppointment(@PathVariable String vetId,
@@ -182,25 +217,6 @@ public class AppointmentController {
         return result;
     }
 
-
-    @GetMapping("/vet/appointments")
-    @CrossOrigin
-    public Map<String, Object> getTodayAppointmentsForVet(HttpServletRequest req) {
-        Map<String, Object> result = new HashMap<>();
-        User actualUser = (User) req.getAttribute("user");
-        List<Appointment> todayAppointments = appointmentService.getTodaysAppointments(actualUser);
-        List<TodayAppointmentsDTO> todayData = new ArrayList<>();
-        for(Appointment a : todayAppointments) {
-            TodayAppointmentsDTO tadto = new TodayAppointmentsDTO();
-            tadto.setUser(userService.generateUser(a.getClientId()));
-            tadto.setMascot(mascotService.findMascotById(a.getMascotId()));
-            tadto.setAppointment(a);
-            todayData.add(tadto);
-        }
-        result.put("appointments", todayData);
-        return result;
-    }
-
     @PutMapping("/vet/appointment/{appointmentId}")
     @CrossOrigin
     public Map<String, Object> updateAppointment(@PathVariable String appointmentId,
@@ -229,20 +245,4 @@ public class AppointmentController {
         return result;
     }
 
-    @GetMapping("/vet/appointmentgraph")
-    @CrossOrigin
-    public Map<String, Object> getAppointmentsForGraphic(HttpServletRequest req, HttpServletResponse res) {
-        Map<String, Object> result = new HashMap<>();
-        try {
-            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
-            permissionService.isActualUserWorker(actualUser);
-            List<NextSevenDaysAppointmentsDTO> nextAppointments = appointmentService.getNextSevenDaysAppointmentsCount(actualUser);
-            result.put("nextSevenDaysAppointments", nextAppointments);
-            res.setStatus(200);
-        } catch (ExpiredUserException | UnauthorizedUserException e) {
-            result.put("error", e.getMessage());
-            res.setStatus(401);
-        }
-        return result;
-    }
 }

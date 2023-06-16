@@ -30,30 +30,8 @@ public class MascotController {
         this.permissionService = permissionService;
     }
 
-    @GetMapping("/mascots")
-    @CrossOrigin
-    public Map<String, Object> getAllMascotsInClinic(HttpServletRequest req, HttpServletResponse res) {
-        Map<String, Object> result = new HashMap<>();
-        List<Mascot> mascots = new ArrayList<>();
-        try {
-            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
-            permissionService.isActualUserWorker(actualUser);
-            List<User> usersInClinic = userService.getUsersByClinic(actualUser.getClinicId());
-            for (User user : usersInClinic) {
-                mascots = mascotService.findMascotsByUser(user.getId());
-            }
-            result.put("mascots", mascots);
-            res.setStatus(200);
-        } catch (UnauthorizedUserException | ExpiredUserException e) {
-            result.put("error", e.getMessage());
-            res.setStatus(401);
-        }
-        return result;
-    }
-
     @GetMapping("/client/{clientId}/mascot/{mascotId}")
     @CrossOrigin
-    //TODO check if mascot belongs to user
     public Map<String, Object> getMascot(@PathVariable String mascotId, @PathVariable String clientId,
                                          HttpServletResponse res, HttpServletRequest req) {
         Map<String, Object> result = new HashMap<>();
@@ -92,48 +70,6 @@ public class MascotController {
         return result;
     }
 
-    /*
-     * TODO
-     *  #####################################
-     *  ESTO PROBABLEMENTE SOBRE
-     *  #####################################
-     */
-    @PostMapping("/mascot")
-    @CrossOrigin
-    public List<Mascot> searchMascot(@RequestBody FindMascotForm findMascotForm) {
-        return mascotService.findMascotByForm(findMascotForm);
-    }
-
-    @PostMapping("/client/{clientId}/mascot")
-    @CrossOrigin
-    public Map<String, Object> registerMascot (@RequestBody RegisterMascotForm registerMascotForm,
-                                               @PathVariable String clientId,
-                                               HttpServletResponse res, HttpServletRequest req) {
-        Map<String, Object> result = new HashMap<>();
-        try {
-            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
-            permissionService.isActualUserWorker(actualUser);
-            Mascot mascot = new Mascot(
-                    null,
-                    actualUser.getClinicId(),
-                    registerMascotForm.getMascotName(),
-                    registerMascotForm.getSpecies(),
-                    registerMascotForm.getBreed(),
-                    registerMascotForm.getGender(),
-                    registerMascotForm.getBirthDate(),
-                    clientId);
-            String mascotId =  mascotService.saveMascot(mascot);
-            result.put("mascotId", mascotId);
-        } catch (UnauthorizedUserException | ExpiredUserException e) {
-            result.put("error", e.getMessage());
-            res.setStatus(401);
-        } catch (NotFoundUserException e){
-            result.put("error", e.getMessage());
-            res.setStatus(409);
-        }
-        return result;
-    }
-
     @GetMapping("/vet/mascots")
     @CrossOrigin
     public Map<String, Object> getMascotsByClinic(HttpServletRequest req, HttpServletResponse res) {
@@ -164,7 +100,6 @@ public class MascotController {
         return result;
     }
 
-    //TODO CHECK IF IS VETERINARY TO RETRIEVE THE MASCOT (SECURITY)
     @GetMapping("/vet/mascot/{mascotId}")
     @CrossOrigin
     public Map<String, Object> getMascotById(@PathVariable String mascotId, HttpServletRequest req, HttpServletResponse res) {
@@ -185,11 +120,34 @@ public class MascotController {
         return result;
     }
 
-    @GetMapping("/mascot/{mascotId}")
+    @PostMapping("/client/{clientId}/mascot")
     @CrossOrigin
-    public Mascot getMascotById(@PathVariable String mascotId,
-                                HttpServletRequest req) {
-        return mascotService.findMascotById(mascotId);
+    public Map<String, Object> registerMascot(@RequestBody RegisterMascotForm registerMascotForm,
+                                              @PathVariable String clientId,
+                                              HttpServletResponse res, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserWorker(actualUser);
+            Mascot mascot = new Mascot(
+                    null,
+                    actualUser.getClinicId(),
+                    registerMascotForm.getMascotName(),
+                    registerMascotForm.getSpecies(),
+                    registerMascotForm.getBreed(),
+                    registerMascotForm.getGender(),
+                    registerMascotForm.getBirthDate(),
+                    clientId);
+            String mascotId =  mascotService.saveMascot(mascot);
+            result.put("mascotId", mascotId);
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        } catch (NotFoundUserException e){
+            result.put("error", e.getMessage());
+            res.setStatus(409);
+        }
+        return result;
     }
 
     @PutMapping("/mascot/{mascotId}")
@@ -213,6 +171,5 @@ public class MascotController {
         }
         return "ok";
     }
-
 
 }

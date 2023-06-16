@@ -40,7 +40,6 @@ public class EmailSenderService {
         }
     }
 
-    // TODO End verification welcome message
     public String SendWelcomeEmail(User user, String tempPassword) {
 
 //        HTML code to send welcome email

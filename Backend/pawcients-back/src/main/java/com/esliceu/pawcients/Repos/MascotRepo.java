@@ -12,9 +12,7 @@ import java.util.List;
 public interface MascotRepo extends MongoRepository<Mascot, String> {
 
     List<Mascot> findByOwnerId(String owner_id);
-    List<Mascot> findByIdAndOwnerId(String mascot_id, String owner_id);
-
-    List<Mascot> findByName(String mascot_name);
 
     List<Mascot> findByClinicId(String clinicId);
+
 }

@@ -3,6 +3,7 @@ package com.esliceu.pawcients.Services;
 import com.esliceu.pawcients.Exceptions.*;
 import com.esliceu.pawcients.Forms.*;
 import com.esliceu.pawcients.Models.User;
+import com.esliceu.pawcients.PawcientsApplication;
 import com.esliceu.pawcients.Repos.UserRepo;
 import com.esliceu.pawcients.Utils.Encrypt;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class UserService {
         return userRepo.save(user).getId();
     }
 
-    public String saveUser(User user, User actualUser) {
+    public String saveUser(User user) {
         if(!checkEmailValidity(user.getEmail()))
             throw new IncorrectRegisterException("Email is not a valid email");
         if (checkEmailIsInUse(user))
@@ -43,9 +44,9 @@ public class UserService {
         System.out.println(tempPassword);
         user.setVerificationCodeEmail(verificationCode);
         user.setPassword(Encrypt.sha512(verificationCode));
-
-        System.out.println("Email verification is disabled. --Dámaso");//Send verification email
-//        emailSenderService.SendWelcomeEmail(user, tempPassword);
+        if(PawcientsApplication.emailSenderEnable) {
+            emailSenderService.SendWelcomeEmail(user, tempPassword);
+        }
         return userRepo.save(user).getId();
     }
 
@@ -76,50 +77,9 @@ public class UserService {
         return userRepo.findById(userId).get();
     }
 
-    //Debugging to get data from users through postman
-    public List<User> getUsersByForm(FindUserForm fuf) {
-        List<User> users = new ArrayList<>();
-        if(!fuf.getId().isEmpty()) {
-            try {
-                users.add(userRepo.findById(fuf.getId()).get());
-            } catch (NoSuchElementException e){
-                throw new NotFoundUserException("This user ID does not exist");
-            }
-        } else if(!fuf.getEmail().isEmpty()){
-            try {
-                users = userRepo.findByEmail(fuf.getEmail());
-            } catch (NoSuchElementException e){
-                throw new NotFoundUserException("This user email does not exist");
-            }
-        } else if(!fuf.getName().isEmpty() && !fuf.getSurname().isEmpty()) {
-            try {
-                users = userRepo.findByNameAndSurname(fuf.getName(), fuf.getSurname());
-            } catch (NoSuchElementException e){
-                throw new NotFoundUserException("This user does not exist");
-            }
-        } else if(!fuf.getPhone().isEmpty()) {
-            try {
-                users = userRepo.findByPhone(fuf.getPhone());
-            } catch (NoSuchElementException e){
-                throw new NotFoundUserException("This user phone does not exist");
-            }
-        } else if(!fuf.getName().isEmpty()) {
-            try {
-                users = userRepo.findByName(fuf.getName());
-            } catch (NoSuchElementException e){
-                throw new NotFoundUserException("This user name does not exist");
-            }
-        } else if(!fuf.getSurname().isEmpty()) {
-            try {
-                users = userRepo.findBySurname(fuf.getSurname());
-            } catch (NoSuchElementException e){
-                throw new NotFoundUserException("This user surname does not exist");
-            }
-        }
-        return users;
-    }
-
-    public String deleteUser(User targetUser, User actualUser) {
+    public String deleteUser(User targetUser) {
+        if (targetUser.getType().equals("admin"))
+            throw new FailedActionException("Admin can not be deleted");
         userRepo.deleteById(targetUser.getId());
         //Additional check. If no more users for that clinic, delete the clinic
         List<User> usersOnClinic = getUsersByClinic(targetUser.getClinicId());
@@ -154,7 +114,9 @@ public class UserService {
         if(userRepo.findByEmail(email).get(0).getVerificationCodeEmail().equals(code)) {
             user.setVerificationCodeEmailCheck(true);
             userRepo.save(user);
-//            emailSenderService.sendEmailWithoutAttachment(email, "Email verified", "Your email has been verified successfully!");
+            if(PawcientsApplication.emailSenderEnable) {
+                emailSenderService.sendEmailWithoutAttachment(email, "Email verified", "Your email has been verified successfully!");
+            }
         } else {
             throw new IncorrectVerificationCodeException("Verification code does not match up");
         }

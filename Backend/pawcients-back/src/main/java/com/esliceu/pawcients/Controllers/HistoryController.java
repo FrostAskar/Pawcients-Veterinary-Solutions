@@ -62,7 +62,7 @@ public class HistoryController {
 
     @PostMapping("/mascot/{mascotId}/history")
     @CrossOrigin
-    public Map<String, Object> createHistory(@PathVariable String mascotId,
+    public Map<String, Object> createVisitForHistory(@PathVariable String mascotId,
                                              HttpServletRequest req, HttpServletResponse res,
                                              @RequestBody UpdateHistoryForm updateHistoryForm) {
         Map<String, Object> result = new HashMap<>();

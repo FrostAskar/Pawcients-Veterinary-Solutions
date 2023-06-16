@@ -22,7 +22,6 @@ public class HistoryService {
         this.historyRepo = historyRepo;
     }
 
-    //TODO Create exception for this
     public History getHistoryFromMascot(Mascot mascot) {
         if(mascot.getHistoryId() != null) {
             return historyRepo.findById(mascot.getHistoryId()).get();

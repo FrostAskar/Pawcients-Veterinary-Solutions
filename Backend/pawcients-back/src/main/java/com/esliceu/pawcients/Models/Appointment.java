@@ -5,10 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-/*
-    Appointment is a visit that a mascot does to a vet/aux and is requested by the owner
-*/
-
 @Document(collection = "Appointment")
 public class Appointment {
 

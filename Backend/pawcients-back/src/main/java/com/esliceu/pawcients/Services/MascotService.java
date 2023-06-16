@@ -28,25 +28,6 @@ public class MascotService {
         this.userService = userService;
     }
 
-    public List<Mascot> findMascotByForm(FindMascotForm findMascotForm) {
-        List<Mascot> mascots = new ArrayList<>();
-
-        if(!findMascotForm.getMascot_id().isEmpty()){
-            mascots.add(mascotRepo.findById(findMascotForm.getMascot_id()).get());
-        }else if(!findMascotForm.getOwner_id().isEmpty()) {
-            mascots = mascotRepo.findByOwnerId(findMascotForm.getOwner_id());
-        }else if(!findMascotForm.getMascot_name().isEmpty()) {
-            mascots = mascotRepo.findByName(findMascotForm.getMascot_name());
-        }else if(!findMascotForm.getOwner_name().isEmpty()) {
-            User owner = userService.generateUser(findMascotForm.getOwner_name());
-            mascots = mascotRepo.findByOwnerId(owner.getId());
-        }else {
-            throw new NotFoundMascotException("Mascot not found on database");
-        }
-
-        return mascots;
-    }
-
     public Mascot findMascotById(String mascotId) {
         if (mascotRepo.findById(mascotId).isEmpty()) {
             throw new NotFoundMascotException("This mascot does not exist");
