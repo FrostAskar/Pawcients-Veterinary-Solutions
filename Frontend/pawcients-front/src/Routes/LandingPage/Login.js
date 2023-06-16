@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Logo from "media/logo.png";
 
 import "css/global/forms.css";
-
+import "css/global/global.scss";
+import "css/global/variables.css";
 import { fetchLogin } from "fetches/Global/FetchLogin";
 import ChangePasswordModal from "Routes/LandingPage/Modals/ChangePasswordModal";
 import { Link } from "react-router-dom";

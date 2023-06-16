@@ -10,22 +10,8 @@ import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getTodayAppointments } from "fetches/Worker/Appointments/FetchGetTodayAppointments";
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
-import {
-  BarChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Bar,
-  CartesianGrid,
-} from "recharts";
+import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from "recharts";
 import { fetchNext7Days } from "fetches/Worker/Appointments/FetchNext7Days";
-
-const animals = [
-  { date: "Dogs", citas: 30 },
-  { date: "Cats", citas: 45 },
-  { date: "Others", citas: 25 },
-];
 
 export default function VetDashboard() {
   const [todayAppointments, setTodayAppointments] = useState([]);

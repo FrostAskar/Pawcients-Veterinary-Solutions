@@ -12,7 +12,7 @@ function ChangePasswordModal({ onClose }) {
   };
 
   return (
-    <div className="modal management">
+    <div className="modal managementpage">
       <div className="modal-content">
         <h2 className="management-header">Forgot Password</h2>
         <form className="creation-section" onSubmit={handleSubmit}>
