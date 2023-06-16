@@ -4,7 +4,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import SideNavbarClient from 'Routes/Client/SideNavbarClient';
 import { useState, useEffect, useCallback } from 'react';
 import { getAllAppointments } from 'fetches/Client/Appointments/FetchGetAllAppoinments';
-import { getVetAppointments } from 'fetches/Worker/Appointments/FetchGetVetAppointments';
+import { getVetAppointments } from 'fetches/Client/Appointments/FetchGetVetAppointments';
 import { addAppointment } from 'fetches/Client/Appointments/FetchAddAppointment';
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
@@ -25,7 +25,6 @@ const ClientCalendar = () => {
     const [events, setEvents] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
     const [workers, setWorkers] = useState([]);
-    const [workersEvents, setWorkersEvents] = useState([]);
     const [mascots, setMascots] = useState([]);
     const [selectedVet, setSelectedVet] = useState("");
     const [selectedMascot, setSelectedMascot] = useState("");
@@ -56,11 +55,9 @@ const ClientCalendar = () => {
         }
     }, []);
 
-
     useEffect(() => {
         getAppointments();
         obtainWorkers();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getAppointments])
 
     useEffect(() => {
@@ -74,14 +71,15 @@ const ClientCalendar = () => {
         if (workerData.length > 0) {
             setSelectedVet(workerData[0].id);
         }
-        setAvailableAppointments();
     };
 
     const setAvailableAppointments = async () => {
         var scheduledHours = [];
+        setAvailableHours(allowedHours);
+        var workersEvents = [];
         if (selectedVet) {
             const eventsData = await getVetAppointments(selectedVet);
-            setWorkersEvents(formatDate(eventsData));
+            workersEvents = formatDate(eventsData.calendarAppointments);
             setAvailableHours(allowedHours);
             const dayEvents = workersEvents.filter(event => {
                 return event.startDate.toDateString() === selectedDate.toDateString();
@@ -93,9 +91,10 @@ const ClientCalendar = () => {
                     const formattedDate = date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
                     scheduledHours.push(formattedDate);
                 }
-                setAvailableHours(allowedHours.filter(event => !scheduledHours.includes(event)));
+                const availablesTimes = allowedHours.filter(event => !scheduledHours.includes(event));
+                setAvailableHours(availablesTimes);
                 setSelectedTime(availableHours[0]);
-                scheduledHours = [];
+                console.log(scheduledHours);
             }
         }
 
@@ -129,6 +128,7 @@ const ClientCalendar = () => {
 
     const openModal = () => {
         setAddEventModal(true);
+        setAvailableAppointments();
 
     };
 
@@ -158,7 +158,7 @@ const ClientCalendar = () => {
             if (response != null) {
                 setAddEventModal(false);
                 getAppointments();
-                setAvailableHours(allowedHours.filter(event => event !== selectedTime));
+                setAvailableAppointments();
             }
         } catch (e) {
             //setErrorMessage("Error en la conexión con el servidor");
@@ -168,7 +168,6 @@ const ClientCalendar = () => {
     const handleChangeVet = async (e) => {
         e.preventDefault();
         setSelectedVet(e.target.value)
-        setAvailableAppointments();
     }
 
     function setTime(time) {
