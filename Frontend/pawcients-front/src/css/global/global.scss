@@ -24,7 +24,7 @@
 
 .modal {
   position: fixed;
-  z-index: 1;
+  z-index: 4;
   padding: 25px 0px;
   left: 0;
   top: 0;
@@ -58,9 +58,7 @@
   height: 100vh;
 }
 
-.dashboard-content {
-  //height: 100vh;
-}
+
 
 .dashboard-page {
   background-color: var(--background-page);
@@ -196,7 +194,7 @@
 }
 
 #cancel-button {
-  background-color: rgb(226, 72, 72);
+  background-color: var(--cancel-color);
 }
 #cancel-button:hover {
   background-color: rgba(226, 72, 72, 0.842);

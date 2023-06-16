@@ -193,7 +193,8 @@ export default function CustomerManagement() {
                               <i className="material-icons">delete</i>
                             </button>
                           </td>
-                          {isPopupOpen[item.client.id] && (
+                        </tr>
+                        {isPopupOpen[item.client.id] && (
                             <div>
                               <ConfirmationPopup
                                 onCancel={(e) =>
@@ -202,10 +203,10 @@ export default function CustomerManagement() {
                                 onConfirm={(e) =>
                                   handleConfirm(e, item.client.id)
                                 }
+                                item="client"
                               />
                             </div>
                           )}
-                        </tr>
                       </tbody>
                     ))}
                   </table>

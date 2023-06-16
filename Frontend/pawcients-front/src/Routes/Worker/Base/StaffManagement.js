@@ -157,15 +157,16 @@ export default function StaffManagement() {
                               <i className="material-icons">delete</i>
                             </button>
                           </td>
-                          {isPopupOpen[worker.id] && (
+                        </tr>
+                        {isPopupOpen[worker.id] && (
                             <div>
                               <ConfirmationPopup
                                 onCancel={handleCancel}
                                 onConfirm={(e) => handleConfirm(e, worker.id)}
+                                item="worker"
                               />
                             </div>
                           )}
-                        </tr>
                       </tbody>
                     ))}
                   </table>

@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     margin: 20px;
+  
 
     button {
         padding: 10px;
@@ -24,10 +25,6 @@
     border: none;
 }
 
-.rbc-current-time-indicator {
-    z-index: 1;
-}
-
 #event-modal {
     padding: 70px 0px;
 }
@@ -38,7 +35,7 @@
     justify-content: center;
 
     h2 {
-        margin-bottom: 7px;
+        margin: 7px;
     }
 
     p {
@@ -68,6 +65,22 @@
     }
 }
 
+#event-info-section {
+    position: relative;
+}
+
 .select-time {
     font-size: 16px;
+}
+
+.close-icon {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    cursor: pointer;
+    width: fit-content;
+
+    i {
+        font-size: 28px;
+    }
 }

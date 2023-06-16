@@ -17,6 +17,7 @@ const VetCalendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [addEvent, setAddEvent] = useState(false);
+    const [viewEvent, setViewEvent] = useState(false);
     const [addEventButton, setAddEventButton] = useState(false);
     const [events, setEvents] = useState([]);
     const [editMode, setEditMode] = useState(false);
@@ -45,7 +46,7 @@ const VetCalendar = () => {
             setEvents(formatDate(eventsData.calendarAppointments));
 
         } catch (error) {
-            
+
         }
     }, []);
 
@@ -53,10 +54,6 @@ const VetCalendar = () => {
         getAppointments();
         obtainClientsAndFirstMascot();
     }, [getAppointments])
-
-    useEffect(() => {
-
-    }, []);
 
 
     useEffect(() => {
@@ -78,6 +75,11 @@ const VetCalendar = () => {
         }
     }, [selectedClient, location]);
 
+    useEffect(() => {
+        setAvailableAppointments();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedDate]);
+
 
     const obtainClientsAndFirstMascot = async () => {
         const clientsData = await getClients();
@@ -96,7 +98,6 @@ const VetCalendar = () => {
 
     const handleDateSelect = date => {
         setSelectedDate(date);
-        setAvailableAppointments();
     };
 
     function setAvailableAppointments() {
@@ -129,6 +130,7 @@ const VetCalendar = () => {
 
     const handleEventSelect = event => {
         setSelectedEvent(event);
+        setViewEvent(true);
     };
 
     const formatDate = (eventsData) => {
@@ -177,10 +179,14 @@ const VetCalendar = () => {
     const openModal = () => {
         setAddEvent(true);
     };
-
     const closeModal = () => {
         setAddEvent(false);
     };
+
+    const handleEventInfo = () => {
+        setViewEvent(!viewEvent);
+    };
+    
 
     const changeEditMode = () => {
         setEditMode(!editMode);
@@ -245,10 +251,13 @@ const VetCalendar = () => {
                         onView={handleView}
                         style={{ height: 600 }}
                     />
-                    {selectedEvent && (
+                    {viewEvent && (
                         <div className="event-info">
-                            <div className="section">
-                                <div className="section-content">
+                            <div className="modal">
+                                <div className="modal-content" id="event-info-section">
+                                    <div className='close-icon' onClick={handleEventInfo}>
+                                        <i className='material-icons'>close</i>
+                                    </div>
                                     <h2>{selectedEvent.title}</h2>
                                     {!editMode
                                         ?
@@ -290,6 +299,7 @@ const VetCalendar = () => {
                                                     <ConfirmationPopup
                                                         onCancel={(e) => handleCancel(e)}
                                                         onConfirm={(e) => handleConfirm(e)}
+                                                        item="appointment"
                                                     />
                                                 </div>
                                             )}

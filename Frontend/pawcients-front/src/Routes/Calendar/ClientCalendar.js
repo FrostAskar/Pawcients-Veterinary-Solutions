@@ -9,8 +9,10 @@ import { addAppointment } from 'fetches/Client/Appointments/FetchAddAppointment'
 import { fetchProfile } from "fetches/Global/getProfile";
 import { getWorkers } from "fetches/Worker/Staff/FetchGetWorkers";
 import { getMascotsByClient } from 'fetches/Worker/Mascots/FetchGetMascotsByClient'
+import { ConfirmationPopup } from "Routes/Common/PopUp";
 import 'css/calendar/calendar.scss';
 import 'css/global/global.scss';
+import { deleteAppointment } from 'fetches/Client/Appointments/FetchDeleteAppointment';
 
 const ClientCalendar = () => {
     const [profileData, setProfileData] = useState(null);
@@ -18,6 +20,7 @@ const ClientCalendar = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [addEventButton, setAddEventButton] = useState(false);
     const [addEventModal, setAddEventModal] = useState(false);
+    const [viewEvent, setViewEvent] = useState(false);
     const localizer = momentLocalizer(moment);
     const [events, setEvents] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
@@ -29,6 +32,7 @@ const ClientCalendar = () => {
     const allowedHours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00', '19:00'];
     const [availableHours, setAvailableHours] = useState(allowedHours);
     const [selectedTime, setSelectedTime] = useState(availableHours[0]);
+    const [isPopupOpen, setIsPopupOpen] = useState({});
     const minTime = new Date();
     minTime.setHours(8, 0, 0);
     const maxTime = new Date();
@@ -56,7 +60,13 @@ const ClientCalendar = () => {
     useEffect(() => {
         getAppointments();
         obtainWorkers();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getAppointments])
+
+    useEffect(() => {
+        setAvailableAppointments();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedVet]);
 
     const obtainWorkers = async () => {
         const workerData = await getWorkers();
@@ -64,9 +74,10 @@ const ClientCalendar = () => {
         if (workerData.length > 0) {
             setSelectedVet(workerData[0].id);
         }
+        setAvailableAppointments();
     };
 
-    const setAvailableAppointments =  async() => {
+    const setAvailableAppointments = async () => {
         var scheduledHours = [];
         if (selectedVet) {
             const eventsData = await getVetAppointments(selectedVet);
@@ -99,6 +110,7 @@ const ClientCalendar = () => {
 
     const handleEventSelect = event => {
         setSelectedEvent(event);
+        setViewEvent(true);
     };
 
     const handleDateSelect = date => {
@@ -117,11 +129,15 @@ const ClientCalendar = () => {
 
     const openModal = () => {
         setAddEventModal(true);
-        setAvailableAppointments();
+
     };
 
     const closeModal = () => {
         setAddEventModal(false);
+    };
+
+    const handleEventInfo = () => {
+        setViewEvent(!viewEvent);
     };
 
     const handleAddEvent = async (e) => {
@@ -155,17 +171,47 @@ const ClientCalendar = () => {
         setAvailableAppointments();
     }
 
-    
-
-    const handleDeleteClick = (e) => {
-    }
-
     function setTime(time) {
         const date = new Date(time);
         return date.getHours().toString().padStart(2, '0') + ":" + (date.getMinutes() === 0 ? "00" : date.getMinutes());
     }
 
-    
+    //Delete Pop up 
+
+    const handleDeleteClick = (e) => {
+        e.preventDefault();
+        setIsPopupOpen((prevState) => ({
+            ...prevState,
+            [selectedEvent.appointmentId]: true,
+        }));
+    };
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setIsPopupOpen((prevState) => ({
+            ...prevState,
+            [selectedEvent.appointmentId]: false,
+        }));
+    };
+
+    const handleConfirm = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await deleteAppointment(profileData.id, selectedEvent.appointmentId);
+            setSelectedEvent(null)
+            if (response !== null) {
+                setIsPopupOpen((prevState) => ({
+                    ...prevState,
+                    [selectedEvent.appointmentId]: false,
+                }));
+                getAppointments();
+            } else {
+            }
+        } catch (error) {
+        }
+    };
+
+
 
     return (
         <div className="dashboard">
@@ -186,10 +232,13 @@ const ClientCalendar = () => {
                         onView={handleView}
                         style={{ height: 600 }}
                     />
-                    {selectedEvent && (
+                    {viewEvent && (
                         <div className="event-info">
-                            <div className="section">
-                                <div className="section-content">
+                            <div className="modal">
+                                <div className="modal-content">
+                                    <div className='close-icon' onClick={handleEventInfo}>
+                                        <i className='material-icons'>close</i>
+                                    </div>
                                     <h2>{selectedEvent.title}</h2>
                                     <p>{selectedEvent.type}</p>
                                     <div>
@@ -199,6 +248,15 @@ const ClientCalendar = () => {
                                     <div className='buttons'>
                                         <button className='clasic-button' id="cancel-button" onClick={(e) => handleDeleteClick(e)}>Delete</button>
                                     </div>
+                                    {isPopupOpen[selectedEvent.appointmentId] && (
+                                        <div>
+                                            <ConfirmationPopup
+                                                onCancel={(e) => handleCancel(e)}
+                                                onConfirm={(e) => handleConfirm(e)}
+                                                item="appointment"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
