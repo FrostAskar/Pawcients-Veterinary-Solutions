@@ -54,6 +54,25 @@ public class AppointmentController {
         return result;
     }
 
+    @GetMapping("/client/vet/{vetId}/appointment")
+    @CrossOrigin
+    public Map<String, Object> getVetAppointments(@PathVariable String vetId,
+                                               HttpServletResponse res, HttpServletRequest req) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, actualUser.getId());
+            List<CalendarAppointmentDTO> calendarAppointments = appointmentService.getCalendarAppointmentsByVet(vetId);
+            result.put("calendarAppointments", calendarAppointments);
+            res.setStatus(200);
+        } catch (ExpiredUserException e) {
+            result.put("error", e.getMessage());
+            res.setStatus(401);
+        }
+        return result;
+    }
+
     @GetMapping("/client/{clientId}/appointment")
     @CrossOrigin
     public Map<String, Object> getAppointmentsByClient(@PathVariable String clientId,
