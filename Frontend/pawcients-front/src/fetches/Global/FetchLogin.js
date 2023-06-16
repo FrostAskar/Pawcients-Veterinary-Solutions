@@ -15,6 +15,5 @@ export async function fetchLogin(email, password) {
     window.location.href = "/clientdashboard";
   }
 
-
   return data;
 }
