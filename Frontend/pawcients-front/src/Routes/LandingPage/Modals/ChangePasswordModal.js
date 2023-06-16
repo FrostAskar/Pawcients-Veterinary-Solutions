@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import "css/global/global.scss";
-import "css/vet/dataManagement.scss";
-import "css/vet/mascotInfoModal.css";
 import { fetchPasswordReset } from "fetches/Global/FetchFrogotPassword";
 
 function ChangePasswordModal({ onClose }) {
