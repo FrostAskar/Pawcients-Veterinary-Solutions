@@ -188,11 +188,16 @@ public class AppointmentController {
                                                  @RequestBody AppointmentForm appointmentForm,
                                                  HttpServletRequest req, HttpServletResponse res) {
         Map<String, Object> result = new HashMap<>();
+        String modifiedAppointmentId;
         try {
             User actualUser = userService.getActualUser((User) req.getAttribute("user"));
             permissionService.isActualUserWorker(actualUser);
             Appointment appointment = appointmentService.findAppointmentById(appointmentId);
-            String modifiedAppointmentId = appointmentService.completeAppointment(appointment, appointmentForm);
+            if(appointmentForm.isCompleted()) {
+                modifiedAppointmentId = appointmentService.completeAppointment(appointment, appointmentForm);
+            } else {
+                modifiedAppointmentId = appointmentService.updateAppointment(appointment, appointmentForm);
+            }
             result.put("modified appointmentId", modifiedAppointmentId);
             res.setStatus(200);
         } catch (ExpiredUserException | UnauthorizedUserException e) {

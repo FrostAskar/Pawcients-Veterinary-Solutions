@@ -172,4 +172,11 @@ public class AppointmentService {
         appointment.setCompleted(appointmentForm.isCompleted());
         return appointmentRepo.save(appointment).getId();
     }
+
+    public String updateAppointment(Appointment appointment, AppointmentForm appointmentForm) {
+        appointment.setStartDate(appointmentForm.getStartDate());
+        appointment.setEndDate(appointmentForm.getEndDate());
+        appointment.setType(appointmentForm.getTypeAppointment());
+        return appointmentRepo.save(appointment).getId();
+    }
 }

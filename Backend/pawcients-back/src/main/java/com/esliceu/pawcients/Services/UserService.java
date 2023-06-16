@@ -180,4 +180,22 @@ public class UserService {
             throw new NotFoundUserException("This email is not registered");
         return userRepo.findByEmail(email).get(0);
     }
+
+    public String updateUserPassword(User actualUser, ChangePasswordForm changePasswordForm) {
+        if(changePasswordForm.getCurrentpassword().isEmpty() || changePasswordForm.getNewpassword().isEmpty())
+            throw new InvalidPasswordException("Passwords cannot be empty");
+        if(changePasswordForm.getCurrentpassword().equals(changePasswordForm.getNewpassword()))
+            throw new InvalidPasswordException("New passwords can not match with old password");
+        if(!actualUser.getPassword().equals(Encrypt.sha512(changePasswordForm.getCurrentpassword())))
+            throw new InvalidPasswordException("Current password is incorrect");
+        actualUser.setPassword(Encrypt.sha512(changePasswordForm.getNewpassword()));
+        return userRepo.save(actualUser).getId();
+    }
+
+    public String updateUser(User actualUser, UpdateUserForm updateUserForm) {
+        actualUser.setName(updateUserForm.getName());
+        actualUser.setSurname(updateUserForm.getSurname());
+        actualUser.setPhone(updateUserForm.getPhone());
+        return userRepo.save(actualUser).getId();
+    }
 }
