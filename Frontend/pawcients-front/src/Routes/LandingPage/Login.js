@@ -6,6 +6,7 @@ import "css/global/global.scss";
 import "css/global/variables.css";
 import { fetchLogin } from "fetches/Global/FetchLogin";
 import ChangePasswordModal from "Routes/LandingPage/Modals/ChangePasswordModal";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -56,13 +57,9 @@ function Login() {
               {errorMessage && <p className="error-message">{errorMessage}</p>}
               {/* Froget pass */}
               <br></br>
-              <button
-                type="button"
-                onClick={openModal}
-                className="forgot-password-link"
-              >
+              <Link onClick={openModal} className="forgot-password-link" to="#">
                 Forgot password?
-              </button>
+              </Link>
             </form>
           </div>
         </div>
