@@ -43,7 +43,10 @@ export default function MascotCreation({ onClose, clientID, onAccept }) {
                         <select name="species">
                             <option value="Dog">Dog</option>
                             <option value="Cat">Cat</option>
-                            <option value="Others">Others</option>
+                            <option value="Cat">Rabbit</option>
+                            <option value="Cat">Hamster</option>
+                            <option value="Cat">Bird</option>
+                            <option value="Others">Other</option>
                         </select>
                         <label htmlFor="race">Breed</label>
                         <input type="text" name="race" id="race" required />
