@@ -124,21 +124,6 @@ export default function VetDashboard() {
                 </div>
               </div>
             </div>
-            <div className="section">
-              <div className="section-content">
-                <div className="patients-type">
-                  <h3>Patients by type</h3>
-                  <BarChart width={500} height={300} data={animals}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="value" fill="#8884d8" />
-                  </BarChart>
-                </div>
-              </div>
-            </div>
           </section>
           <section className="row-dashboard">
             <div className="section">

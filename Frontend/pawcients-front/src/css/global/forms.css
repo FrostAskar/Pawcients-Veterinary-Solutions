@@ -19,6 +19,12 @@
   max-width: 100%;
 }
 
+select {
+  font-size: 14px;
+  line-height: 2;
+}
+
+
 .main-container {
   display: flex;
   flex-direction: column;
