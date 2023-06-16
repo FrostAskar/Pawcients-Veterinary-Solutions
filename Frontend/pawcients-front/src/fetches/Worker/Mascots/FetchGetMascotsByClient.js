@@ -12,7 +12,6 @@ export async function getMascotsByClient(clientID) {
         throw new Error("Mascots request failed");
       } else if (response.ok) {
         const data = await response.json();
-        console.log(data);
         return data;
       }
     } catch (error) {

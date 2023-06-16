@@ -45,7 +45,7 @@ const VetCalendar = () => {
             setEvents(formatDate(eventsData.calendarAppointments));
 
         } catch (error) {
-            setErrorMessage("Error en la conexión con el servidor");
+            
         }
     }, []);
 

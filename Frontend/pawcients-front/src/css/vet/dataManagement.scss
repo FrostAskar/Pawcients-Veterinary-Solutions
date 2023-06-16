@@ -27,34 +27,95 @@
   text-align: center;
   margin-top: 15px;
   font-size: 18px;
+
   td {
     border-bottom: 1px solid var(--grey);
     padding: 15px 15px;
   }
+
   th {
     border-bottom: 1px solid var(--dark-grey);
     padding: 15px 15px;
   }
 }
 
+@media (max-width: 1200px) {
+  .management-table {
+
+    td,
+    th {
+      padding: 10px;
+    }
+  }
+}
+
+
+
+@media (max-width: 600px) {
+  .management-table {
+    width: 100%;
+    td,
+    th {
+      padding: 7px;
+    }
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr:nth-of-type(2n) {
+    background-color: inherit;
+  }
+
+  tr td:first-child {
+    background: #f0f0f0;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  tbody td {
+    display: block;
+    text-align: center;
+  }
+
+  tbody td:before {
+    content: attr(data-th);
+    display: block;
+    text-align: center;
+  }
+  .management {
+    h1 {
+      font-size: 20px;
+      margin-right: 20px;
+    }
+  }
+
+}
+
 /* Creation form */
 
 .creation-section {
+
   input,
   select {
     width: 200px;
     margin-bottom: 15px;
   }
+
   button {
     margin: 10px;
   }
+
   button[type="button"] {
     background-color: rgb(226, 72, 72);
   }
+
   button[type="button"]:hover {
     background-color: rgba(226, 72, 72, 0.842);
   }
 }
+
 .success-message {
   color: green;
   font-size: 20px;
