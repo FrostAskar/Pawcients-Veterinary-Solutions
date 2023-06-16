@@ -1,6 +1,6 @@
 export async function fetchClientMascots(clientID) {
   const response = await fetch(
-    "http://localhost:8080/client/" + clientID + "/mascots",
+    process.env.REACT_APP_API_ENDPOINT + "/client/" + clientID + "/mascots",
     {
       method: "GET",
       headers: {

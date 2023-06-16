@@ -57,7 +57,7 @@ export async function fetchAddHistoryDeworming(history, mascotID) {
 }
 export async function fetchAddHistoryCheckup(history, mascotID) {
   const response = await fetch(
-    "http://127.0.0.1:8080/mascot/" + mascotID + "/history",
+    process.env.REACT_APP_API_ENDPOINT + "/mascot/" + mascotID + "/history",
     {
       method: "POST",
       headers: {
