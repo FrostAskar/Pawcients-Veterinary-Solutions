@@ -1,0 +1,8 @@
+/*.css
+    cache-control: max-age=31536000
+/*.scss
+    cache-control: max-age=31536000
+/*.png
+    cache-control: max-age=31536000
+/*.svg
+    cache-control: max-age=31536000
