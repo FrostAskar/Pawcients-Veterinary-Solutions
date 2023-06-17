@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "media/logo.png";
+import Logo from "media/logo.webp";
 
 import "css/global/forms.css";
 import "css/global/global.scss";

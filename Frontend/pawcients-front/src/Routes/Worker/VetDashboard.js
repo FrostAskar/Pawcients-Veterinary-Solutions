@@ -4,7 +4,7 @@ import "css/vet/vetHome.scss";
 import TodayPatient from "Routes/Worker/TodayPatient";
 import SideNavbarWorker from "Routes/Worker/SideNavbarWorker";
 import FilterComponent from "Routes/Common/FilterComponent";
-import Paw from "../../media/paw.png";
+import Paw from "../../media/paw.webp";
 import ClientCreation from "Routes/Worker/Base/ClientCreation";
 import React, { useState, useEffect } from "react";
 import { fetchProfile } from "fetches/Global/getProfile";
@@ -12,7 +12,6 @@ import { getTodayAppointments } from "fetches/Worker/Appointments/FetchGetTodayA
 import { getClients } from "fetches/Worker/Clients/FetchGetClients";
 import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from "recharts";
 import { fetchNext7Days } from "fetches/Worker/Appointments/FetchNext7Days";
-
 
 export default function VetDashboard() {
   const [todayAppointments, setTodayAppointments] = useState([]);
@@ -42,11 +41,11 @@ export default function VetDashboard() {
         setGraphicHeight(200);
       }
     };
-  
-    handleWindowResize(); 
-  
-    window.addEventListener("resize", handleWindowResize); 
-  
+
+    handleWindowResize();
+
+    window.addEventListener("resize", handleWindowResize);
+
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
@@ -149,14 +148,17 @@ export default function VetDashboard() {
                 </div>
               </div>
             </div>
-
           </section>
           <section className="row-dashboard">
             <div className="section">
               <div className="section-content">
                 <div className="appointments-graphic">
                   <h2>Citas</h2>
-                  <BarChart width={graphicWidth} height={graphicHeight} data={next7days}>
+                  <BarChart
+                    width={graphicWidth}
+                    height={graphicHeight}
+                    data={next7days}
+                  >
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />
@@ -168,7 +170,6 @@ export default function VetDashboard() {
               {creationMode && <ClientCreation onClose={cancelCreation} />}
             </div>
           </section>
-
         </div>
       </div>
     </div>

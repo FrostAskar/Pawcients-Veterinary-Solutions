@@ -1,7 +1,7 @@
 import React from "react";
 import "css/landingPage/aboutus.scss";
 import "css/global/variables.css";
-import pawcientsImage from "media/logo.png";
+import pawcientsImage from "media/logo.webp";
 
 const AboutUs = () => {
   return (

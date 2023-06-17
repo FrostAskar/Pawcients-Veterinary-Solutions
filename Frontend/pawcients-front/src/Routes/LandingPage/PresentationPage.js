@@ -1,17 +1,19 @@
 import React from "react";
 import "css/landingPage/presentationPage.css";
 import "css/global/variables.css";
-import pawcientsLogo from "media/paw.png";
-import clinicImage from "media/clinic.png";
-import veterinarianImage from "media/vet.png";
-import patientImage from "media/pet.png";
+import pawcientsLogo from "media/paw.webp";
+import clinicImage from "media/clinic.webp";
+import veterinarianImage from "media/vet.webp";
+import patientImage from "media/pet.webp";
 
 const PresentationPage = () => {
   return (
     <div className="presentation-page">
       <div className="presentation-header">
         <img src={pawcientsLogo} alt="Pawcients Logo" className="logo-image" />
-        <h1 className="presentation-title">Pawcients: The Ultimate Veterinary Clinic Management Software</h1>
+        <h1 className="presentation-title">
+          Pawcients: The Ultimate Veterinary Clinic Management Software
+        </h1>
       </div>
       <div className="presentation-content">
         <div className="presentation-section">

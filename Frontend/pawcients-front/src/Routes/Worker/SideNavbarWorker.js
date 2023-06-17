@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Logo from "media/paw.png";
+import Logo from "media/paw.webp";
 import { Link } from "react-router-dom";
 import "css/global/global.scss";
 import "css/global/variables.css";

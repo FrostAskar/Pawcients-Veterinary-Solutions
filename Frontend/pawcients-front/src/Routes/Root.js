@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "css/common/navbar.css";
 import "css/global/variables.css";
-import Paw from "media/paw.png";
+import Paw from "media/paw.webp";
 
 export default function NavbarLanding() {
   const location = useLocation();

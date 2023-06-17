@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "css/common/notfound.css";
-import Logo from "media/logo.png";
+import Logo from "media/logo.webp";
 
 const NotFoundPage = () => {
   return (

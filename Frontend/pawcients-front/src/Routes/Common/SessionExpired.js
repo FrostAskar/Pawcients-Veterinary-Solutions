@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import animalImg from "media/pet.png";
+import animalImg from "media/pet.webp";
 
 const SessionExpired = () => {
   return (

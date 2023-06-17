@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "media/logo.png";
+import Logo from "media/logo.webp";
 
 import { fetchSignup } from "fetches/Worker/FetchSignUp";
 import "css/global/global.scss";
@@ -119,7 +119,12 @@ function SignUp() {
                   />
 
                   <label htmlFor="clinicPhone">Clinic Phone</label>
-                  <input type="country" name="clinicPhone" id="clinicPhone" required />
+                  <input
+                    type="country"
+                    name="clinicPhone"
+                    id="clinicPhone"
+                    required
+                  />
 
                   <label htmlFor="streetAddress">Street Address</label>
                   <input
@@ -139,12 +144,13 @@ function SignUp() {
 
                   <label htmlFor="zipCode">Zip Code</label>
                   <input type="text" name="zipCode" id="zipCode" required />
-
                 </div>
               </div>
               {/* Captcha: */}
 
-              <button className="form-button" type="submit">Sign up</button>
+              <button className="form-button" type="submit">
+                Sign up
+              </button>
               {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
           </div>

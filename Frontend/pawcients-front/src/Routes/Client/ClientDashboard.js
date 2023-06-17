@@ -2,10 +2,10 @@ import "css/client/clientdashboard.css";
 import "css/global/global.scss";
 
 import { Link } from "react-router-dom";
-import NotificationLogo from "media/notificacion.png";
-import ConfiguracionLogo from "media/configuraciones.png";
-import Grafico from "media/grafico.png";
-import Euro from "media/euro.png";
+import NotificationLogo from "media/notificacion.webp";
+import ConfiguracionLogo from "media/configuraciones.webp";
+import Grafico from "media/grafico.webp";
+import Euro from "media/euro.webp";
 import SideNavbarClient from "./SideNavbarClient";
 
 //TODO FETCH PROFILE DATA
