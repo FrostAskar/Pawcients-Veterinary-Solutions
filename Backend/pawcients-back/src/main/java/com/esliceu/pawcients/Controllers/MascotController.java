@@ -55,7 +55,16 @@ public class MascotController {
     @GetMapping("/mascot/{mascotId}")
     @CrossOrigin
     public Mascot getMascotById(@PathVariable String mascotId,
-                                HttpServletRequest req) {
+                                HttpServletRequest req, HttpServletResponse res, String fix) {
+        try{
+            Mascot mascot = mascotService.findMascotById(mascotId);
+            User actualUser = userService.getActualUser((User) req.getAttribute("user"));
+            permissionService.isActualUserVerified(actualUser);
+            permissionService.isActualUserAuthorized(actualUser, mascot.getOwnerId());
+        } catch (UnauthorizedUserException | UnverifiedUserException e) {
+            res.setStatus(401);
+            return null;
+        }
         return mascotService.findMascotById(mascotId);
     }
 
