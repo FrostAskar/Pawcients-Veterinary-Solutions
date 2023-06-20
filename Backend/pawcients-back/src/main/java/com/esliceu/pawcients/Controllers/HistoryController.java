@@ -50,7 +50,7 @@ public class HistoryController {
             History history = historyService.getHistoryFromMascot(mascot);
             result.put("history", history);
             res.setStatus(200);
-        } catch (ExpiredUserException e) {
+        } catch (UnauthorizedUserException | ExpiredUserException e) {
             result.put("error", e.getMessage());
             res.setStatus(401);
         } catch (NotFoundMascotException | NotFoundHistoryException e) {
