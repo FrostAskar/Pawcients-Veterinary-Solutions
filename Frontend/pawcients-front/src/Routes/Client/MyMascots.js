@@ -14,8 +14,6 @@ const MyMascots = () => {
   const [mascots, setMascots] = useState([]);
   const [profileData, setProfileData] = useState(null);
 
-  console.log(mascots);
-
   useEffect(() => {
     const getProfileData = async () => {
       const profileData = await fetchProfile();
