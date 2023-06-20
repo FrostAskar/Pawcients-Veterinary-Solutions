@@ -32,11 +32,5 @@ export async function fetchSignup(
     }
   );
 
-  const data = await response.json();
-
-  if (response.status === 200) {
-    window.location.href = "/login";
-  }
-
-  return data;
+  return response;
 }

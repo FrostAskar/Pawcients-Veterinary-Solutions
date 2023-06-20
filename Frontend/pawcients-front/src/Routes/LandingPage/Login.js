@@ -25,11 +25,11 @@ function Login() {
       await fetchLogin(email, password).then((response) => {
         localStorage.setItem("IAT", response.iat);
         if (response.status === 401) {
-          setErrorMessage("Email o contraseña incorrectos");
+          setErrorMessage("Email or password incorrect");
         }
       });
     } catch (error) {
-      setErrorMessage("Email o contraseña incorrectos");
+      setErrorMessage("Email or password incorrect");
     }
   };
 

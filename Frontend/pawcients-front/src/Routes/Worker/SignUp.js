@@ -43,12 +43,13 @@ function SignUp() {
           clinicZipCode,
           clinicPhoneNumber
         );
-        if (response.success) {
+        if (response.status === 200) {
           // Redirección a Home o Login
           window.location.href = "/login";
-        } else {
+        } else if (response.status === 409){
           // Mensaje de error para cliente
-          setErrorMessage(response.message);
+          const data = await response.json()
+          setErrorMessage(data.error);
         }
       } catch (error) {
         console.log(error);
