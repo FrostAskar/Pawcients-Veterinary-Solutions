@@ -182,189 +182,190 @@ const AnimalManagementPage = () => {
   return (
     <div className="dashboard">
       {profileData?.type === "vet" ||
-      profileData?.type === "aux" ||
-      profileData?.type === "admin" ? (
+        profileData?.type === "aux" ||
+        profileData?.type === "admin" ? (
         <SideNavbarWorker />
       ) : (
         <SideNavbarClient />
       )}
-      <div className="showbuttons">
-        <div className="animal-management-page">
-          <div className="animal-profile">
-            <div className="profile-header">
-              <img
-                src={
-                  selectedImage !== null
-                    ? selectedImage
-                    : image === null
-                    ? "https://img.freepik.com/vector-gratis/silueta-pastor-aleman-diseno-plano_23-2150283164.jpg"
-                    : selectedImage || image
-                }
-                alt={name}
-                className="animal-image"
-              />
+      <div className="dashboard-page">
+          <div className="animal-management-page">
+            <div className="animal-profile">
+              <div className="profile-header">
+                <img
+                  src={
+                    selectedImage !== null
+                      ? selectedImage
+                      : image === null
+                        ? "https://img.freepik.com/vector-gratis/silueta-pastor-aleman-diseno-plano_23-2150283164.jpg"
+                        : selectedImage || image
+                  }
+                  alt={name}
+                  className="animal-image"
+                />
 
-              {isEditing && (
-                <div className="image-upload">
-                  <input
-                    className="animalprofile-input"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
+                {isEditing && (
+                  <div className="image-upload">
+                    <input
+                      className="animalprofile-input"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                )}
+                <div className="animal-details"></div>
+              </div>
+              <div className="profile-details">
+                <h2 className="animal-name">
+                  <strong>Name: {animalData.name}</strong>
+                </h2>
+                <div className="animal-details-species">
+                  <p>
+                    <strong>Species:</strong>{" "}
+                    {isEditing ? (
+                      <input
+                        className="animalprofile-input"
+                        type="text"
+                        name="species"
+                        value={species}
+                        onChange={handleChange}
+                      />
+                    ) : (
+                      species
+                    )}
+                  </p>
                 </div>
-              )}
-              <div className="animal-details"></div>
-            </div>
-            <div className="profile-details">
-              <h2 className="animal-name">
-                <strong>Name: {animalData.name}</strong>
-              </h2>
-              <div className="animal-details-species">
+                <h3 className="section-title">Profile Details</h3>
                 <p>
-                  <strong>Species:</strong>{" "}
+                  <strong>Breed:</strong>{" "}
                   {isEditing ? (
                     <input
                       className="animalprofile-input"
                       type="text"
-                      name="species"
-                      value={species}
+                      name="breed"
+                      value={breed}
                       onChange={handleChange}
                     />
                   ) : (
-                    species
+                    breed
                   )}
                 </p>
-              </div>
-              <h3 className="section-title">Profile Details</h3>
-              <p>
-                <strong>Breed:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    className="animalprofile-input"
-                    type="text"
-                    name="breed"
-                    value={breed}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  breed
-                )}
-              </p>
-              <p>
-                <strong>Age:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    className="animalprofile-input"
-                    type="date"
-                    name="birthDate"
-                    onChange={handleChange}
-                    value={birthDate}
-                  />
-                ) : (
-                  //geT bitrhdate and calculate
+                <p>
+                  <strong>Age:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      className="animalprofile-input"
+                      type="date"
+                      name="birthDate"
+                      onChange={handleChange}
+                      value={birthDate}
+                    />
+                  ) : (
+                    //geT bitrhdate and calculate
 
-                  differenceInYears(new Date(), parseISO(birthDate))
-                )}
-              </p>
-              <p>
-                <strong>Gender:</strong>{" "}
+                    differenceInYears(new Date(), parseISO(birthDate))
+                  )}
+                </p>
+                <p>
+                  <strong>Gender:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      className="animalprofile-input"
+                      type="text"
+                      name="gender"
+                      value={gender}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    gender
+                  )}
+                </p>
+                <p>
+                  <strong>Weight:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      className="animalprofile-input"
+                      type="text"
+                      name="weight"
+                      value={weight}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    weight
+                  )}
+                </p>
+                <p>
+                  <strong>Color:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      className="animalprofile-input"
+                      type="text"
+                      name="color"
+                      value={color}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    color
+                  )}
+                </p>
+                <p>
+                  <strong>Identification Number:</strong>{" "}
+                  {isEditing ? (
+                    <input
+                      className="animalprofile-input"
+                      type="text"
+                      name="identificationNumber"
+                      value={identificationNumber}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    animalData.identificationNumber
+                  )}
+                </p>
                 {isEditing ? (
-                  <input
-                    className="animalprofile-input"
-                    type="text"
-                    name="gender"
-                    value={gender}
-                    onChange={handleChange}
-                  />
+                  <button onClick={handleSaveClick}>Save</button>
                 ) : (
-                  gender
+                  <button onClick={handleEditClick}>Edit</button>
                 )}
-              </p>
-              <p>
-                <strong>Weight:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    className="animalprofile-input"
-                    type="text"
-                    name="weight"
-                    value={weight}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  weight
-                )}
-              </p>
-              <p>
-                <strong>Color:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    className="animalprofile-input"
-                    type="text"
-                    name="color"
-                    value={color}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  color
-                )}
-              </p>
-              <p>
-                <strong>Identification Number:</strong>{" "}
-                {isEditing ? (
-                  <input
-                    className="animalprofile-input"
-                    type="text"
-                    name="identificationNumber"
-                    value={identificationNumber}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  animalData.identificationNumber
-                )}
-              </p>
-              {isEditing ? (
-                <button onClick={handleSaveClick}>Save</button>
+              </div>
+              {visits && visits.length > 0 ? (
+                <div>
+                  <h3 className="section-title">Visits History</h3>
+                  <ul>
+                    {visits.map((visit, index) => (
+                      <li key={index}>
+                        <p>Date: {visit.date}</p>
+                        <p>Notes: {visit.notes}</p>
+                        {visit.vaccine && (
+                          <>
+                            <p>Vaccine: {visit.vaccine.name}</p>
+                            <p>Renewal: {visit.vaccine.renewalDate}</p>
+                          </>
+                        )}
+                        {visit.surgery && (
+                          <>
+                            <p>Surgery: {visit.surgery.name}</p>
+                          </>
+                        )}
+
+                        {visit.deworming && (
+                          <>
+                            <p>Deworming: {visit.deworming.name}</p>
+                          </>
+                        )}
+                        <hr />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : (
-                <button onClick={handleEditClick}>Edit</button>
+                <p>No visit history available.</p>
               )}
             </div>
-            {visits && visits.length > 0 ? (
-              <div>
-                <h3 className="section-title">Visits History</h3>
-                <ul>
-                  {visits.map((visit, index) => (
-                    <li key={index}>
-                      <p>Date: {visit.date}</p>
-                      <p>Notes: {visit.notes}</p>
-                      {visit.vaccine && (
-                        <>
-                          <p>Vaccine: {visit.vaccine.name}</p>
-                          <p>Renewal: {visit.vaccine.renewalDate}</p>
-                        </>
-                      )}
-                      {visit.surgery && (
-                        <>
-                          <p>Surgery: {visit.surgery.name}</p>
-                        </>
-                      )}
-
-                      {visit.deworming && (
-                        <>
-                          <p>Deworming: {visit.deworming.name}</p>
-                        </>
-                      )}
-                      <hr />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <p>No visit history available.</p>
-            )}
           </div>
         </div>
-      </div>
+
     </div>
   );
 };
